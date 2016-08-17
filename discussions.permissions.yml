@@ -1,0 +1,4 @@
+administer discussion groups:
+  title: 'Administer Discussion Groups.'
+  description: 'Add, edit, and remove Discussion Groups.'
+  restrict access: TRUE

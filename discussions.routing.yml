@@ -3,21 +3,29 @@ discussion_group.admin:
   defaults:
     _entity_list: 'discussion_group'
     _title: 'Discussion Groups'
+  requirements:
+    _permission: 'administer discussion groups'
 
 discussion_group.add:
   path: '/admin/config/discussions/groups/add'
   defaults:
     _entity_form: 'discussion_group.add'
     _title: 'Add Discussion Group'
+  requirements:
+    _permission: 'administer discussion groups'
 
 entity.discussion_group.edit_form:
   path: '/admin/config/discussions/groups/{discussion_group}'
   defaults:
     _entity_form: 'discussion_group.edit'
     _title: 'Edit Discussion Group'
+  requirements:
+    _permission: 'administer discussion groups'
 
 entity.discussion_group.delete_form:
   path: '/admin/config/discussions/groups/{discussion_group}/delete'
   defaults:
     _entity_form: 'discussion_group.delete'
     _title: 'Delete Discussion Group'
+  requirements:
+    _permission: 'administer discussion groups'
