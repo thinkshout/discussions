@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\discussion\Entity;
+namespace Drupal\discussions\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 
