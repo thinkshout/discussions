@@ -1,0 +1,18 @@
+# Schema for the configuration files of the discussions module.
+
+discussions.discussion_group.*:
+  type: config_entity
+  label: 'Discussion Group'
+  mapping:
+    id:
+      type: string
+      label: 'Machine Name'
+    title:
+      type: string
+      label: 'Title'
+    description:
+      type: text
+      label: 'Description'
+    private:
+      type: boolean
+      label: 'Private'
