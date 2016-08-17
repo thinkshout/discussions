@@ -2,23 +2,23 @@
 
 namespace Drupal\discussion\Entity;
 
-use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\ContentEntityBase;
 
 /**
  * Defines the Discussion Group Member entity.
  *
  * @ingroup discussion
  *
- * @ConfigEntityType(
+ * @ContentEntityType(
  *   id = "discussion_group_member",
  *   label = @Translation("Discussion Group Member"),
- *   config_prefix = "discussion_group_member",
+ *   base_table = "discussion_group_members",
  *   entity_keys = {
  *     "id" = "id",
- *     "uuid" = "uuid",
+ *     "uuid" = "uuid"
  *   }
  * )
  */
-class DiscussionGroupMember extends ConfigEntityBundleBase implements DiscussionGroupMemberInterface {
+class DiscussionGroupMember extends ContentEntityBase implements DiscussionGroupMemberInterface {
 
 }

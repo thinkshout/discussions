@@ -2,13 +2,13 @@
 
 namespace Drupal\discussions\Entity;
 
-use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 
 /**
  * Provides an interface defining a Discussion Group Member entity.
  *
  * @ingroup discussion
  */
-interface DiscussionGroupMemberInterface extends ConfigEntityInterface {
+interface DiscussionGroupMemberInterface extends ContentEntityInterface {
 
 }
