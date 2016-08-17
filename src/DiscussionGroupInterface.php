@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\discussions\Entity;
+namespace Drupal\discussions;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 

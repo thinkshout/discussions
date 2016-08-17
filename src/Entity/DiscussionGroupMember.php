@@ -3,6 +3,7 @@
 namespace Drupal\discussions\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\discussions\DiscussionGroupMemberInterface;
 
 /**
  * Defines the Discussion Group Member entity.
