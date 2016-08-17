@@ -14,8 +14,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *   label = @Translation("Discussion Group"),
  *   config_prefix = "discussion_group",
  *   entity_keys = {
- *     "id" = "id",
- *     "uuid" = "uuid",
+ *     "id" = "id"
  *   }
  * )
  */
