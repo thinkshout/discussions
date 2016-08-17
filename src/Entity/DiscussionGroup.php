@@ -32,4 +32,32 @@ use Drupal\discussions\DiscussionGroupInterface;
  */
 class DiscussionGroup extends ConfigEntityBundleBase implements DiscussionGroupInterface {
 
+  /**
+   * The machine name of the Discussion Group.
+   *
+   * @var string
+   */
+  public $id;
+
+  /**
+   * The Discussion Group title.
+   *
+   * @var string
+   */
+  public $title;
+
+  /**
+   * The Discussion Group description.
+   *
+   * @var string
+   */
+  public $description;
+
+  /**
+   * The privacy status of the Discussion Group.
+   *
+   * @var boolean
+   */
+  public $private;
+
 }
