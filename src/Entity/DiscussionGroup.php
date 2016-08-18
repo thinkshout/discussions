@@ -27,8 +27,8 @@ use Drupal\discussions\DiscussionGroupInterface;
  *     "id" = "id"
  *   },
  *   links = {
- *     "edit-form" = "/admin/config/discussions/group/{discussion_group}",
- *     "delete-form" = "/admin/config/discussions/group/{discussion_group}/delete"
+ *     "edit-form" = "/admin/config/discussions/groups/{discussion_group}",
+ *     "delete-form" = "/admin/config/discussions/groups/{discussion_group}/delete"
  *   }
  * )
  */
