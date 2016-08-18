@@ -26,7 +26,7 @@ class DiscussionGroupListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    $row['title'] = $entity->label() . ' (Machine name: ' . $entity->id() . ')';
+    $row['title'] = $entity->label();
     $row['private'] = ($entity->private) ? t('Yes') : t('No');
 
     return $row + parent::buildRow($entity);
