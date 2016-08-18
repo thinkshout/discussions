@@ -29,3 +29,47 @@ entity.discussion_group.delete_form:
     _title: 'Delete Discussion Group'
   requirements:
     _permission: 'administer discussion groups'
+
+discussion_group_member.admin:
+  path: '/admin/config/discussions/groups/{discussion_group}/members'
+  defaults:
+    _entity_list: 'discussion_group_member'
+    _title: 'Discussion Group Members'
+  requirements:
+    _permission: 'administer discussion group members'
+
+discussion_group_member.add:
+  path: '/admin/config/discussions/groups/{discussion_group}/members/add'
+  defaults:
+    _entity_form: 'discussion_group_member.add'
+    _title: 'Add Discussion Group Member'
+  options:
+    parameters:
+      discussion_group:
+        type: 'entity:discussion_group'
+  requirements:
+    _permission: 'administer discussion group members'
+
+entity.discussion_group_member.edit_form:
+  path: '/admin/config/discussions/groups/{discussion_group}/members/{discussion_group_member}/edit'
+  defaults:
+    _entity_form: 'discussion_group_member.edit'
+    _title: 'Edit Discussion Group Member'
+  options:
+    parameters:
+      discussion_group:
+        type: 'entity:discussion_group'
+  requirements:
+    _permission: 'administer discussion group members'
+
+entity.discussion_group_member.delete_form:
+  path: '/admin/config/discussions/groups/{discussion_group}/members/{discussion_group_member}/delete'
+  defaults:
+    _entity_form: 'discussion_group_member.delete'
+    _title: 'Delete Discussion Group Member'
+  options:
+    parameters:
+      discussion_group:
+        type: 'entity:discussion_group'
+  requirements:
+    _permission: 'administer discussion group members'
