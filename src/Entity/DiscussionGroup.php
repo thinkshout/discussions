@@ -14,6 +14,7 @@ use Drupal\discussions\DiscussionGroupInterface;
  *   id = "discussion_group",
  *   label = @Translation("Discussion Group"),
  *   handlers = {
+ *     "list_builder" = "Drupal\discussions\Controller\DiscussionGroupListBuilder",
  *     "form" = {
  *       "add" = "Drupal\discussions\Form\DiscussionGroupForm",
  *       "edit" = "Drupal\discussions\Form\DiscussionGroupForm",
@@ -60,5 +61,12 @@ class DiscussionGroup extends ConfigEntityBase implements DiscussionGroupInterfa
    * @var boolean
    */
   public $private;
+
+  /**
+   * @inheritdoc
+   */
+  public function label() {
+    return $this->title;
+  }
 
 }
