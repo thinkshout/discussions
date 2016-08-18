@@ -52,7 +52,12 @@ class DiscussionGroupForm extends EntityForm {
       '#description' => t('The discussion group description (500 characters or less.)'),
     );
 
-    // $form['private']
+    $form['private'] = array(
+      '#type' => 'checkbox',
+      '#title' => 'Private',
+      '#default_value' => $discussion_group->private,
+      '#description' => t('Checked if this group requires a moderator to approve members.'),
+    );
 
     return $form;
   }
