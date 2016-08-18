@@ -2,7 +2,7 @@
 
 namespace Drupal\discussions\Entity;
 
-use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\discussions\DiscussionGroupInterface;
 
 /**
@@ -31,7 +31,7 @@ use Drupal\discussions\DiscussionGroupInterface;
  *   }
  * )
  */
-class DiscussionGroup extends ConfigEntityBundleBase implements DiscussionGroupInterface {
+class DiscussionGroup extends ConfigEntityBase implements DiscussionGroupInterface {
 
   /**
    * The machine name of the Discussion Group.
