@@ -20,6 +20,7 @@ use Drupal\discussions\DiscussionGroupInterface;
  *       "delete" = "Drupal\discussions\Form\DiscussionGroupDeleteForm"
  *     }
  *   },
+ *   admin_permission = "administer discussion groups",
  *   config_prefix = "discussion_group",
  *   entity_keys = {
  *     "id" = "id"
