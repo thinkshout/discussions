@@ -38,6 +38,17 @@ discussion_group_member.admin:
   requirements:
     _permission: 'administer discussion group members'
 
+entity.discussion_group_member.canonical:
+  path: '/admin/config/discussions/groups/{discussion_group}/members/{discussion_group_member}'
+  defaults:
+    _title: 'Edit Discussion Group Member'
+  options:
+    parameters:
+      discussion_group:
+        type: 'entity:discussion_group'
+  requirements:
+    _permission: 'administer discussion group members'
+
 discussion_group_member.add:
   path: '/admin/config/discussions/groups/{discussion_group}/members/add'
   defaults:
