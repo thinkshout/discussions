@@ -17,6 +17,7 @@ class DiscussionGroupMemberListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['mail'] = $this->t('Mail');
+    $header['pending'] = $this->t('Pending Approval');
 
     return $header + parent::buildHeader();
   }
@@ -28,6 +29,7 @@ class DiscussionGroupMemberListBuilder extends EntityListBuilder {
     $user = $entity->user->entity;
 
     $row['mail'] = $user->mail->value;
+    $row['pending'] = ($entity->pending->value == 1) ? $this->t('Yes') : $this->t('No');
 
     return $row + parent::buildRow($entity);
   }
