@@ -16,6 +16,7 @@ use Drupal\discussions\DiscussionGroupMemberInterface;
  *   id = "discussion_group_member",
  *   label = @Translation("Discussion Group Member"),
  *   handlers = {
+ *     "list_builder" = "Drupal\discussions\Controller\DiscussionGroupMemberListBuilder",
  *     "form" = {
  *       "add" = "Drupal\discussions\Form\DiscussionGroupMemberForm",
  *       "edit" = "Drupal\discussions\Form\DiscussionGroupMemberForm",
