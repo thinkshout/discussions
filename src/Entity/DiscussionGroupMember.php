@@ -17,7 +17,7 @@ use Drupal\discussions\DiscussionGroupMemberInterface;
  *     "form" = {
  *       "add" = "Drupal\discussions\Form\DiscussionGroupMemberForm",
  *       "edit" = "Drupal\discussions\Form\DiscussionGroupMemberForm",
- *       "delete" = "Drupal\discussions\Form\DiscussionGroupMemberDeleteForm",
+ *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *     }
  *   },
  *   base_table = "discussion_group_members",
