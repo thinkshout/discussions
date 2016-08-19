@@ -5,6 +5,13 @@ entity.discussion.canonical:
   requirements:
     _permission: 'administer discussions'
 
+entity.discussion.collection:
+  path: '/discussions'
+  defaults:
+    _title: 'Discussions'
+  requirements:
+    _permission: 'administer discussions'
+
 discussion.add:
   path: '/discussions/add'
   defaults:
@@ -26,6 +33,14 @@ entity.discussion.edit:
   defaults:
     _entity_form: 'discussion.edit'
     _title: 'Edit Discussion'
+  requirements:
+    _permission: 'administer discussions'
+
+entity.discussion_type.collection:
+  path: '/admin/structure/discussions/discussion_type'
+  defaults:
+    _entity_list: 'discussion_type'
+    _title: 'Discussion Types'
   requirements:
     _permission: 'administer discussions'
 
