@@ -15,6 +15,7 @@ use Drupal\discussions\DiscussionInterface;
  * @ContentEntityType(
  *   id = "discussion",
  *   label = @Translation("Discussion"),
+ *   bundle_label = @Translation("Discussion Type"),
  *   handlers = {
  *     "form" = {
  *       "add" = "Drupal\discussions\Form\DiscussionForm",
@@ -31,7 +32,9 @@ use Drupal\discussions\DiscussionInterface;
  *   links = {
  *     "canonical" = "/discussions/{group}/{discussion_group}",
  *     "add-form" = "/discussions/{group}/add"
- *   }
+ *   },
+ *   bundle_entity_type = "discussion_type",
+ *   field_ui_base_route = "entity.discussion_type.edit_form"
  * )
  */
 class Discussion extends ContentEntityBase implements DiscussionInterface {

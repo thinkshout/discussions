@@ -16,3 +16,16 @@ discussions.discussion_group.*:
     private:
       type: boolean
       label: 'Private'
+
+discussions.discussion_type.*:
+  type: config_entity
+  label: 'Discussion Type'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string

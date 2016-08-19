@@ -119,3 +119,34 @@ entity.discussion.edit:
         type: 'entity:group'
   requirements:
     _permission: 'administer discussions'
+
+discussion_type.admin:
+  path: '/admin/structure/discussions/discussion_type'
+  defaults:
+    _entity_list: 'discussion_type'
+    _title: 'Discussion Types'
+  requirements:
+    _permission: 'administer discussions'
+
+entity.discussion_type.add_form:
+  path: '/admin/structure/discussions/discussion_type/add'
+  defaults:
+    _entity_form: 'discussion_type.add'
+    _title: 'Add Discussion Type'
+  requirements:
+    _permission: 'administer discussions'
+
+entity.discussion_type.edit_form:
+  path: '/admin/structure/discussions/discussion_type/{discussion_type}/edit'
+  defaults:
+    _entity_form: 'discussion_type.edit'
+  requirements:
+    _permission: 'administer discussions'
+
+entity.discussion_type.delete_form:
+  path: '/admin/structure/discussions/discussion_type/{discussion_type}/delete'
+  defaults:
+    _entity_form: 'discussion_type.delete'
+    _title: 'Delete Discussion Type'
+  requirements:
+    _entity_access: 'discussion_type.delete'
