@@ -86,37 +86,25 @@ entity.discussion_group_member.delete_form:
     _permission: 'administer discussion group members'
 
 entity.discussion.canonical:
-  path: '/discussions/{group}/{discussion}'
+  path: '/discussions/{discussion}'
   defaults:
     _title: 'Discussion'
-  options:
-    parameters:
-      group:
-        type: 'entity:group'
   requirements:
     _permission: 'administer discussions'
 
 discussion.add:
-  path: '/discussions/{group}/add'
+  path: '/discussions/add'
   defaults:
     _entity_form: 'discussion.add'
     _title: 'Add Discussion'
-  options:
-    parameters:
-      group:
-        type: 'entity:group'
   requirements:
     _permission: 'administer discussions'
 
 entity.discussion.edit:
-  path: '/discussions/{group}/{discussion}/edit'
+  path: '/discussions/{discussion}/edit'
   defaults:
     _entity_form: 'discussion.edit'
     _title: 'Edit Discussion'
-  options:
-    parameters:
-      group:
-        type: 'entity:group'
   requirements:
     _permission: 'administer discussions'
 

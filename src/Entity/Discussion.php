@@ -45,11 +45,6 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['group'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Group'))
-      ->setRequired(TRUE)
-      ->setSetting('target_type', 'group');
-
     $fields['user'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('User'))
       ->setRequired(TRUE)

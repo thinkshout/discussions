@@ -19,9 +19,6 @@ class DiscussionForm extends ContentEntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     $entity = $this->entity;
 
-    $group = \Drupal::routeMatch()->getParameter('group');
-    $entity->set('group', $group);
-
     $user = User::load(\Drupal::currentUser()->id());
     $entity->set('user', $user);
 
@@ -41,7 +38,6 @@ class DiscussionForm extends ContentEntityForm {
     }
 
     $form_state->setRedirect('entity.discussion.canonical', array(
-      'discussion_group' => $group->id(),
       'discussion' => $entity->id(),
     ));
   }
