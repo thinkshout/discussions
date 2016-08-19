@@ -95,6 +95,14 @@ entity.discussion.canonical:
 discussion.add:
   path: '/discussions/add'
   defaults:
+    _controller: '\Drupal\discussions\Controller\DiscussionController::add'
+    _title: 'Add Discussion'
+  requirements:
+    _permission: 'administer discussions'
+
+discussion.add_form:
+  path: '/discussions/add/{discussion_type}'
+  defaults:
     _entity_form: 'discussion.add'
     _title: 'Add Discussion'
   requirements:
@@ -116,7 +124,7 @@ discussion_type.admin:
   requirements:
     _permission: 'administer discussions'
 
-entity.discussion_type.add_form:
+discussion_type.add_form:
   path: '/admin/structure/discussions/discussion_type/add'
   defaults:
     _entity_form: 'discussion_type.add'

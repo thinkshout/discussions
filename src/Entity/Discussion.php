@@ -18,6 +18,7 @@ use Drupal\discussions\DiscussionInterface;
  *   bundle_label = @Translation("Discussion Type"),
  *   handlers = {
  *     "form" = {
+ *       "default" = "Drupal\discussions\Form\DiscussionForm",
  *       "add" = "Drupal\discussions\Form\DiscussionForm",
  *       "edit" = "Drupal\discussions\Form\DiscussionForm",
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
@@ -27,14 +28,15 @@ use Drupal\discussions\DiscussionInterface;
  *   admin_permission = "administer discussions",
  *   entity_keys = {
  *     "id" = "id",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "bundle" = "type"
  *   },
  *   links = {
  *     "canonical" = "/discussions/{group}/{discussion_group}",
  *     "add-form" = "/discussions/{group}/add"
  *   },
  *   bundle_entity_type = "discussion_type",
- *   field_ui_base_route = "entity.discussion_type.edit_form"
+ *   field_ui_base_route = "entity.discussion_type.edit-form"
  * )
  */
 class Discussion extends ContentEntityBase implements DiscussionInterface {
