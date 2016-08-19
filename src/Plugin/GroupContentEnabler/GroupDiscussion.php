@@ -5,10 +5,8 @@ namespace Drupal\discussions\Plugin\GroupContentEnabler;
 use Drupal\discussions\Entity\DiscussionType;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Plugin\GroupContentEnablerBase;
-use Drupal\node\Entity\NodeType;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\Routing\Route;
 
 /**
  * Provides a content enabler for Discussions.
@@ -41,11 +39,11 @@ class GroupDiscussion extends GroupContentEnablerBase {
     $type = $this->getEntityBundle();
     $operations = [];
 
-    if ($group->hasPermission("create $type node", $account)) {
-      $route_params = ['group' => $group->id(), 'node_type' => $this->getEntityBundle()];
-      $operations["gnode-create-$type"] = [
+    if ($group->hasPermission("create $type discussion", $account)) {
+      $route_params = ['group' => $group->id(), 'discussion_type' => $this->getEntityBundle()];
+      $operations["discussion-create-$type"] = [
         'title' => $this->t('Create @type', ['@type' => $this->getDiscussionType()->label()]),
-        'url' => new Url('entity.group_content.group_node_add_form', $route_params),
+        'url' => new Url('discussion.add', $route_params),
         'weight' => 30,
       ];
     }
@@ -63,40 +61,48 @@ class GroupDiscussion extends GroupContentEnablerBase {
     $plugin_id = $this->getPluginId();
     unset($permissions["access $plugin_id overview"]);
 
-    // Add our own permissions for managing the actual nodes.
+    // Add our own permissions for managing the actual discussions.
     $type = $this->getEntityBundle();
-    $type_arg = ['%node_type' => $this->getDiscussionType()->label()];
+    $type_arg = ['%discussion_type' => $this->getDiscussionType()->label()];
     $defaults = [
       'title_args' => $type_arg,
-      'description' => 'Only applies to %node_type nodes that belong to this group.',
+      'description' => 'Only applies to %discussion_type discussions that belong to this group.',
       'description_args' => $type_arg,
     ];
 
-    $permissions["view $type node"] = [
-        'title' => '%node_type: View content',
-      ] + $defaults;
+    $permissions["view $type discussion"] = [
+      'title' => '%discussion_type: View discussion',
+    ] + $defaults;
 
-    $permissions["create $type node"] = [
-        'title' => '%node_type: Create new content',
-        'description' => 'Allows you to create %node_type nodes that immediately belong to this group.',
-        'description_args' => $type_arg,
-      ] + $defaults;
+    $permissions["create $type discussion"] = [
+      'title' => '%discussion_type: Create new discussion',
+      'description' => 'Allows you to create %discussion_type discussions that immediately belong to this group.',
+      'description_args' => $type_arg,
+    ] + $defaults;
 
-    $permissions["edit own $type node"] = [
-        'title' => '%node_type: Edit own content',
-      ] + $defaults;
+    $permissions["edit own $type discussion"] = [
+      'title' => '%discussion_type: Edit own discussion',
+    ] + $defaults;
 
-    $permissions["edit any $type node"] = [
-        'title' => '%node_type: Edit any content',
-      ] + $defaults;
+    $permissions["edit any $type discussion"] = [
+      'title' => '%discussion_type: Edit any discussion',
+    ] + $defaults;
 
-    $permissions["delete own $type node"] = [
-        'title' => '%node_type: Delete own content',
-      ] + $defaults;
+    $permissions["delete own $type discussion"] = [
+      'title' => '%discussion_type: Delete own discussion',
+    ] + $defaults;
 
-    $permissions["delete any $type node"] = [
-        'title' => '%node_type: Delete any content',
-      ] + $defaults;
+    $permissions["delete any $type discussion"] = [
+      'title' => '%discussion_type: Delete any discussion',
+    ] + $defaults;
+
+    $permissions["reply to own $type discussion"] = [
+      'title' => '%discussion_type: Reply to own discussion',
+    ] + $defaults;
+
+    $permissions["reply to any $type discussion"] = [
+      'title' => '%discussion_type: Reply to any discussion',
+    ] + $defaults;
 
     return $permissions;
   }
