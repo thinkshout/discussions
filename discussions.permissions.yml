@@ -1,13 +1,3 @@
-administer discussion groups:
-  title: 'Administer Discussion Groups.'
-  description: 'Add, edit, and remove Discussion Groups.'
-  restrict access: TRUE
-
-administer discussion group members:
-  title: 'Administer Discussion Group Members.'
-  description: 'Add, edit, and remove Discussion Group Members.'
-  restrict access: TRUE
-
 administer discussions:
   title: 'Administer Discussions.'
   description: 'Add, edit, and remove Discussions.'

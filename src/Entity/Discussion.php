@@ -32,8 +32,8 @@ use Drupal\discussions\DiscussionInterface;
  *     "bundle" = "type"
  *   },
  *   links = {
- *     "canonical" = "/discussions/{group}/{discussion_group}",
- *     "add-form" = "/discussions/{group}/add"
+ *     "canonical" = "/discussions/{discussion}",
+ *     "add-form" = "/discussions/add"
  *   },
  *   bundle_entity_type = "discussion_type",
  *   field_ui_base_route = "entity.discussion_type.edit-form"
@@ -99,12 +99,12 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
-      ->setDescription(t('The time that the Discussion Group Member was created.'))
+      ->setDescription(t('The time that the Discussion was created.'))
       ->setRevisionable(TRUE);
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the Discussion Group Member was last edited.'))
+      ->setDescription(t('The time that the Discussion was last edited.'))
       ->setRevisionable(TRUE);
 
     return $fields;
