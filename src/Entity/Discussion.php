@@ -97,19 +97,6 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['private'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Private Discussion'))
-      ->setDescription(t('A boolean indicating whether the Discussion is private, regardless of Discussion Group privacy status.'))
-      ->setDefaultValue(FALSE)
-      ->setDisplayOptions('form', array(
-        'type' => 'boolean_checkbox',
-        'settings' => array(
-          'display_label' => TRUE,
-        ),
-        'weight' => 0,
-      ))
-      ->setDisplayConfigurable('form', TRUE);
-
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
       ->setDescription(t('The time that the Discussion Group Member was created.'))
