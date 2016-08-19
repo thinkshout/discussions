@@ -7,3 +7,6 @@ view discussions:
   title: 'View Discussions.'
   description: 'View Discussions.'
   restrict access: TRUE
+
+permission_callbacks:
+  - \Drupal\discussions\DiscussionPermissions::discussionTypePermissions
