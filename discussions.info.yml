@@ -3,3 +3,7 @@ type: module
 description: 'Adds discussion groups to Drupal.'
 package: Discussions
 core: 8.x
+dependencies:
+  - entity
+  - field
+  - group
