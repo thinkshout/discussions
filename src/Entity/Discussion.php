@@ -35,8 +35,7 @@ use Drupal\discussions\DiscussionInterface;
  *     "canonical" = "/discussions/{discussion}",
  *     "add-form" = "/discussions/add"
  *   },
- *   bundle_entity_type = "discussion_type",
- *   field_ui_base_route = "entity.discussion_type.edit-form"
+ *   bundle_entity_type = "discussion_type"
  * )
  */
 class Discussion extends ContentEntityBase implements DiscussionInterface {
