@@ -24,7 +24,7 @@ function template_preprocess_discussions_discussion_add_list(&$variables) {
   $query = \Drupal::request()->query->all();
   foreach ($variables['content'] as $type) {
     $variables['types'][$type->id()] = array(
-      'link' => Link::fromTextAndUrl($type->label(), Url::fromRoute('discussion.add_form', array(
+      'link' => Link::fromTextAndUrl($type->label(), Url::fromRoute('entity.discussion.add_form', array(
         'discussion_type' => $type->id(),
       ), array('query' => $query))),
       'description' => array(

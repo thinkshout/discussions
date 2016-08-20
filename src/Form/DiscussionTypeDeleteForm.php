@@ -24,7 +24,7 @@ class DiscussionTypeDeleteForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('discussion_type.admin');
+    return new Url('entity.discussion_type.collection');
   }
 
   /**

@@ -1,0 +1,11 @@
+discussion.add:
+  route_name: entity.discussion.add
+  title: 'Add Discussion'
+  appears_on:
+    - entity.discussion.collection
+
+discussion_type.add:
+  route_name: entity.discussion_type.add_form
+  title: 'Add Discussion type'
+  appears_on:
+    - entity.discussion_type.collection

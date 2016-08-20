@@ -43,7 +43,7 @@ class GroupDiscussion extends GroupContentEnablerBase {
       $route_params = ['group' => $group->id(), 'discussion_type' => $this->getEntityBundle()];
       $operations["discussion-create-$type"] = [
         'title' => $this->t('Create @type', ['@type' => $this->getDiscussionType()->label()]),
-        'url' => new Url('discussion.add', $route_params),
+        'url' => new Url('entity.discussion.add', $route_params),
         'weight' => 30,
       ];
     }

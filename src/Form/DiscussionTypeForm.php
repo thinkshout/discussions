@@ -59,7 +59,7 @@ class DiscussionTypeForm extends EntityForm {
         )));
     }
 
-    $form_state->setRedirect('discussion_type.admin');
+    $form_state->setRedirect('entity.discussion_type.collection');
   }
 
 }
