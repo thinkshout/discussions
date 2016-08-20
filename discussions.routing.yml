@@ -8,6 +8,7 @@ entity.discussion.canonical:
 entity.discussion.collection:
   path: '/discussions'
   defaults:
+    _entity_list: 'discussion'
     _title: 'Discussions'
   requirements:
     _permission: 'administer discussions'
