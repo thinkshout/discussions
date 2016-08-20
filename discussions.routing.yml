@@ -24,8 +24,12 @@ entity.discussion.add:
 entity.discussion.add_form:
   path: '/discussions/add/{discussion_type}'
   defaults:
-    _entity_form: 'entity.discussion.add'
+    _controller: '\Drupal\discussions\Controller\DiscussionController::addForm'
     _title: 'Add Discussion'
+  options:
+    parameters:
+      discussion_type:
+        type: 'entity:discussion_type'
   requirements:
     _permission: 'administer discussions'
 
