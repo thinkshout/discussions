@@ -14,6 +14,7 @@ class DiscussionListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
+    $header['type'] = $this->t('Type');
     $header['subject'] = $this->t('Subject');
     return $header + parent::buildHeader();
   }
@@ -22,7 +23,8 @@ class DiscussionListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    $row['subject'] = $entity->title;
+    $row['type'] = $entity->bundle();
+    $row['subject'] = $entity->subject->value;
 
     return $row + parent::buildRow($entity);
   }
