@@ -17,6 +17,7 @@ use Drupal\discussions\DiscussionInterface;
  *   label = @Translation("Discussion"),
  *   bundle_label = @Translation("Discussion Type"),
  *   handlers = {
+ *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\discussions\Controller\DiscussionListBuilder",
  *     "form" = {
  *       "default" = "Drupal\discussions\Form\DiscussionForm",

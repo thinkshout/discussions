@@ -1,6 +1,7 @@
 entity.discussion.canonical:
   path: '/discussions/{discussion}'
   defaults:
+    _entity_view: 'discussion'
     _title: 'Discussion'
   requirements:
     _permission: 'administer discussions'
