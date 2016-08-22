@@ -3,9 +3,9 @@ administer discussions:
   description: 'Add, edit, and remove Discussions.'
   restrict access: TRUE
 
-view discussions:
-  title: 'View Discussions.'
-  description: 'View Discussions.'
+access discussions:
+  title: 'Access Discussions.'
+  description: 'Access Discussions.'
   restrict access: TRUE
 
 permission_callbacks:

@@ -4,7 +4,7 @@ entity.discussion.canonical:
     _entity_view: 'discussion'
     _title: 'Discussion'
   requirements:
-    _permission: 'administer discussions'
+    _permission: 'access discussions'
 
 entity.discussion.collection:
   path: '/discussions'
@@ -12,7 +12,7 @@ entity.discussion.collection:
     _entity_list: 'discussion'
     _title: 'Discussions'
   requirements:
-    _permission: 'administer discussions'
+    _permission: 'access discussions'
 
 entity.discussion.add:
   path: '/discussions/add'
@@ -20,7 +20,7 @@ entity.discussion.add:
     _controller: '\Drupal\discussions\Controller\DiscussionController::add'
     _title: 'Add Discussion'
   requirements:
-    _permission: 'administer discussions'
+    _permission: 'access discussions'
 
 entity.discussion.add_form:
   path: '/discussions/add/{discussion_type}'
@@ -32,7 +32,7 @@ entity.discussion.add_form:
       discussion_type:
         type: 'entity:discussion_type'
   requirements:
-    _permission: 'administer discussions'
+    _permission: 'access discussions'
 
 entity.discussion.edit:
   path: '/discussions/{discussion}/edit'
@@ -40,7 +40,7 @@ entity.discussion.edit:
     _entity_form: 'discussion.edit'
     _title: 'Edit Discussion'
   requirements:
-    _permission: 'administer discussions'
+    _permission: 'access discussions'
 
 entity.discussion_type.collection:
   path: '/admin/structure/discussions/discussion_type'
