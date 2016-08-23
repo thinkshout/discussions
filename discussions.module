@@ -6,6 +6,14 @@
  */
 
 /**
+ * Implements hook_entity_type_alter().
+ */
+function discussions_entity_type_alter(array &$entity_types) {
+  $entity_types['discussion']->setFormClass('discussion-form', 'Drupal\discussions\Form\DiscussionForm');
+  $entity_types['group_content']->setFormClass('discussion-form', 'Drupal\discussions\Form\DiscussionForm');
+}
+
+/**
  * Implements hook_theme().
  */
 function discussions_theme() {
