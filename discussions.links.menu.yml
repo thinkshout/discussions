@@ -1,9 +1,3 @@
-entity.discussion.collection:
-  title: Discussions
-  route_name: entity.discussion.collection
-  parent: system.admin_content
-  description: 'List Discussions.'
-
 entity.discussion_type.collection:
   title: 'Discussion types'
   route_name: entity.discussion_type.collection
