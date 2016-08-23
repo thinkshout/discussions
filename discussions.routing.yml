@@ -29,7 +29,7 @@ entity.group_content.group_discussion_add_form:
   options:
     _group_operation_route: 'TRUE'
   requirements:
-    _group_node_add_access: 'TRUE'
+    _group_discussion_add_access: 'TRUE'
 
 entity.discussion.add_form:
   path: '/discussions/add/{discussion_type}'
