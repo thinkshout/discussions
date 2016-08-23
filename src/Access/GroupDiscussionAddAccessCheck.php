@@ -30,7 +30,7 @@ class GroupDiscussionAddAccessCheck implements AccessInterface {
    *   The access result.
    */
   public function access(Route $route, AccountInterface $account, GroupInterface $group, DiscussionTypeInterface $discussion_type) {
-    $needs_access = $route->getRequirement('_group_discussion_access') === 'TRUE';
+    $needs_access = $route->getRequirement('_group_discussion_add_access') === 'TRUE';
 
     // We can only get the group Discussion Type ID if the plugin is installed.
     $plugin_id = 'group_discussion:' . $discussion_type->id();

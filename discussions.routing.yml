@@ -15,7 +15,7 @@ entity.discussion.collection:
     _entity_list: 'discussion'
     _title: 'Discussions'
   requirements:
-    _group_discussion_access: 'TRUE'
+    _group_discussion_add_access: 'TRUE'
   options:
     _group_operation_route: 'TRUE'
   #requirements:
