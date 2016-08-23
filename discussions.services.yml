@@ -1,5 +1,5 @@
 services:
   access_check.discussions:
-    class: Drupal\discussions\Access\GroupDiscussionAccessCheck
+    class: Drupal\discussions\Access\GroupDiscussionAddAccessCheck
     tags:
       - { name: access_check, applies_to: _group_discussion_access }

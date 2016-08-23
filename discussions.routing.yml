@@ -22,16 +22,14 @@ entity.discussion.collection:
   #  _permission: 'access discussions'
 
 entity.group_content.group_discussion_add_form:
-  path: '/discussions/add/{discussion_type}'
+  path: '/group/{group}/discussion/add/{discussion_type}'
   defaults:
     _controller: '\Drupal\discussions\Controller\GroupDiscussionController::addForm'
     _title: 'Add Discussion'
   options:
-    parameters:
-      discussion_type:
-        type: 'entity:discussion_type'
+    _group_operation_route: 'TRUE'
   requirements:
-    _permission: 'access discussions'
+    _group_node_add_access: 'TRUE'
 
 entity.discussion.add_form:
   path: '/discussions/add/{discussion_type}'
