@@ -29,7 +29,7 @@ class GroupDiscussionRouteProvider {
     }
 
     // Add Discussion.
-    $routes['entity.group_content.group_discussion_add'] = new Route('group/{group}/discussion/add');
+    $routes['entity.group_content.group_discussion_add'] = new Route('group/{group}/discussion/create');
     $routes['entity.group_content.group_discussion_add']
       ->setDefaults([
         '_title' => 'Create Discussion',
