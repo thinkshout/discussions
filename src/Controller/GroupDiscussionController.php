@@ -9,6 +9,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\discussions\DiscussionTypeInterface;
+use Drupal\discussions\Entity\Discussion;
 use Drupal\group\Entity\GroupContent;
 use Drupal\group\Entity\GroupInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -153,12 +154,7 @@ class GroupDiscussionController extends ControllerBase {
     $plugin_id = 'group_discussion:' . $discussion_type->id();
     $storage_id = $plugin_id . ':' . $group->id();
 
-    /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
-    $plugin = $group->getGroupType()->getContentPlugin($plugin_id);
-    $entity = GroupContent::create([
-      'type' => $plugin->getContentTypeConfigId(),
-      'gid' => $group->id(),
-    ]);
+    $entity = Discussion::create(['type' => $discussion_type->id()]);
 
     // Return the form with the group and storage ID added to the form state.
     $extra = ['group' => $group, 'storage_id' => $storage_id];
