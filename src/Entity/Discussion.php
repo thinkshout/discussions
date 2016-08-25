@@ -103,6 +103,23 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['comments'] = BaseFieldDefinition::create('comment')
+      ->setLabel(t('Comments'))
+      ->setDescription(t('Replies to the Discussion.'))
+      ->setSettings(array(
+        'comment_type' => 'discussions_reply',
+        'default_mode' => 1,
+        'per_page' => 50,
+        'anonymous' => 0,
+        'form_location' => TRUE,
+        'preview' => 0,
+      ))
+      ->setDefaultValue(array(
+        'status' => 2,
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
       ->setDescription(t('The time that the Discussion was created.'))
