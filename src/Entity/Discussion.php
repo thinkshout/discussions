@@ -19,6 +19,7 @@ use Drupal\discussions\DiscussionInterface;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\discussions\Controller\DiscussionListBuilder",
+ *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
  *       "default" = "Drupal\discussions\Form\DiscussionForm",
  *       "add" = "Drupal\discussions\Form\DiscussionForm",
