@@ -34,10 +34,6 @@ use Drupal\discussions\DiscussionInterface;
  *     "uuid" = "uuid",
  *     "bundle" = "type"
  *   },
- *   links = {
- *     "canonical" = "/discussions/{discussion}",
- *     "add-form" = "/discussions/add"
- *   },
  *   bundle_entity_type = "discussion_type"
  * )
  */

@@ -1,26 +1,6 @@
 route_callbacks:
   - '\Drupal\discussions\Routing\GroupDiscussionRouteProvider::getRoutes'
 
-entity.discussion.canonical:
-  path: '/discussions/{discussion}'
-  defaults:
-    _entity_view: 'discussion'
-    _title: 'Discussion'
-  requirements:
-    _permission: 'access discussions'
-
-entity.discussion.collection:
-  path: '/discussions'
-  defaults:
-    _entity_list: 'discussion'
-    _title: 'Discussions'
-  requirements:
-    _group_discussion_add_access: 'TRUE'
-  options:
-    _group_operation_route: 'TRUE'
-  #requirements:
-  #  _permission: 'access discussions'
-
 entity.group_content.group_discussion_add_form:
   path: '/group/{group}/discussion/create/{discussion_type}'
   defaults:
@@ -30,26 +10,6 @@ entity.group_content.group_discussion_add_form:
     _group_operation_route: 'TRUE'
   requirements:
     _group_discussion_add_access: 'TRUE'
-
-entity.discussion.add_form:
-  path: '/discussions/add/{discussion_type}'
-  defaults:
-    _controller: '\Drupal\discussions\Controller\DiscussionController::addForm'
-    _title: 'Add Discussion'
-  options:
-    parameters:
-      discussion_type:
-        type: 'entity:discussion_type'
-  requirements:
-    _permission: 'access discussions'
-
-entity.discussion.edit:
-  path: '/discussions/{discussion}/edit'
-  defaults:
-    _entity_form: 'discussion.edit'
-    _title: 'Edit Discussion'
-  requirements:
-    _permission: 'access discussions'
 
 entity.discussion_type.collection:
   path: '/admin/structure/discussions/discussion_type'
