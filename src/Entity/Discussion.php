@@ -34,7 +34,8 @@ use Drupal\discussions\DiscussionInterface;
  *     "uuid" = "uuid",
  *     "bundle" = "type"
  *   },
- *   bundle_entity_type = "discussion_type"
+ *   bundle_entity_type = "discussion_type",
+ *   field_ui_base_route = "entity.group_content.group_discussion_add_form"
  * )
  */
 class Discussion extends ContentEntityBase implements DiscussionInterface {
