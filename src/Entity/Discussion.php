@@ -46,6 +46,13 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
   /**
    * {@inheritdoc}
    */
+  public function label() {
+    return $this->subject->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
