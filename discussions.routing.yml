@@ -1,6 +1,14 @@
 route_callbacks:
   - '\Drupal\discussions\Routing\GroupDiscussionRouteProvider::getRoutes'
 
+entity.discussion.canonical:
+  path: '/group/{group}/discussion/{discussion}'
+  defaults:
+    _entity_view: 'discussion'
+    _title: 'Discussion'
+  requirements:
+    _permission: 'access discussions'
+
 entity.group_content.group_discussion_add_form:
   path: '/group/{group}/discussion/create/{discussion_type}'
   defaults:
