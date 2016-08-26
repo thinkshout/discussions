@@ -117,6 +117,14 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ->setDefaultValue(array(
         'status' => 2,
       ))
+      ->setDisplayOptions('form', array(
+        'type' => 'comment',
+        'weight' => 0,
+      ))
+      ->setDisplayOptions('view', array(
+        'type' => 'comment',
+        'weight' => 0,
+      ))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
