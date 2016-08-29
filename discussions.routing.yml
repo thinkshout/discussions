@@ -10,7 +10,8 @@ discussions.config.discussion_form:
     _permission: 'administer discussions'
 
 entity.discussion.canonical:
-  path: '/group/{group}/discussion/{discussion}'
+  # TODO: Move discussion under group route.
+  path: '/discussion/{discussion}'
   defaults:
     _entity_view: 'discussion'
     _title: 'Discussion'
