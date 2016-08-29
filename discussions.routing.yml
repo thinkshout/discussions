@@ -36,6 +36,14 @@ entity.discussion.edit_form:
     # TODO: Access handler to validate discussion belongs to given group.
     _permission: 'administer discussions'
 
+entity.discussion.delete_form:
+  path: '/group/{group}/discussion/{discussion}/delete'
+  defaults:
+    _entity_form: 'discussion.delete'
+  requirements:
+    # TODO: Access handler to validate discussion belongs to given group.
+    _permission: 'administer discussions'
+
 entity.discussion_type.collection:
   path: '/admin/structure/discussions/discussion_type'
   defaults:
