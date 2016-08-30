@@ -40,7 +40,7 @@ function discussions_entity_extra_field_info() {
 
   foreach (GroupType::loadMultiple() as $group_type) {
     // Add discussions field to group entity.
-    $extra['group'][$group_type]['display']['discussions'] = array(
+    $extra['group'][$group_type->id()]['display']['discussions'] = array(
       'label' => t('Discussions'),
       'description' => t('List of discussions in group.'),
       'weight' => 100,
