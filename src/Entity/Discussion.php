@@ -61,11 +61,6 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ->setDescription(t('The user ID of the discussion creator.'))
       ->setSetting('unsigned', TRUE);
 
-    $fields['user'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('User'))
-      ->setRequired(TRUE)
-      ->setSetting('target_type', 'user');
-
     $fields['subject'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Subject'))
       ->setDescription(t('The Discussion subject.'))
