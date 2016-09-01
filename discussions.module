@@ -132,3 +132,20 @@ function discussions_views_query_alter(ViewExecutable $view, QueryPluginBase $qu
     }
   }
 }
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function discussions_views_data_alter(&$data) {
+
+  $data['discussions']['current_user'] = array(
+    'title' => t('Discussions by current user'),
+    'filter' => array(
+      'title' => t('Discussions by current user'),
+      'help' => t('Filters discussions by the current user.'),
+      'field' => 'user',
+      'id' => 'discussions_current_user'
+    ),
+  );
+
+}

@@ -12,3 +12,6 @@ discussions.discussion_type.*:
       label: 'Label'
     uuid:
       type: string
+    uid:
+      type: integer
+      label: 'User ID'

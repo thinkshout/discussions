@@ -19,8 +19,7 @@ class DiscussionForm extends ContentEntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     $entity = $this->entity;
 
-    $user = User::load(\Drupal::currentUser()->id());
-    $entity->set('user', $user);
+    $entity->set('uid', \Drupal::currentUser()->id());
 
     $status = parent::save($form, $form_state);
 
