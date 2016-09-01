@@ -21,21 +21,6 @@ function discussions_entity_type_alter(array &$entity_types) {
 }
 
 /**
- * Implements hook_theme().
- */
-function discussions_theme() {
-  $theme = [];
-
-  $theme['discussions_discussion_add_list'] = array(
-    'render element' => 'content',
-    'variables' => array('content' => NULL),
-    'file' => 'discussions.page.inc',
-  );
-
-  return $theme;
-}
-
-/**
  * Implements hook_entity_extra_field_info().
  */
 function discussions_entity_extra_field_info() {
