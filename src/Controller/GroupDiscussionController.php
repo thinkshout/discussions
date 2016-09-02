@@ -10,9 +10,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\discussions\DiscussionTypeInterface;
 use Drupal\discussions\Entity\Discussion;
-use Drupal\group\Entity\GroupContent;
 use Drupal\group\Entity\GroupInterface;
-use Drupal\user\PrivateTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -22,13 +20,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @ingroup discussions
  */
 class GroupDiscussionController extends ControllerBase {
-
-  /**
-   * The private store for temporary group Discussions.
-   *
-   * @var \Drupal\user\PrivateTempStore
-   */
-  protected $privateTempStore;
 
   /**
    * The entity type manager.
@@ -54,8 +45,6 @@ class GroupDiscussionController extends ControllerBase {
   /**
    * Constructs a new GroupDiscussionController.
    *
-   * @param \Drupal\user\PrivateTempStoreFactory $temp_store_factory
-   *   The factory for the temp store object.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\Core\Entity\EntityFormBuilderInterface $entity_form_builder
@@ -63,8 +52,7 @@ class GroupDiscussionController extends ControllerBase {
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer.
    */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, EntityFormBuilderInterface $entity_form_builder, RendererInterface $renderer) {
-    $this->privateTempStore = $temp_store_factory->get('discussion_add_temp');
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityFormBuilderInterface $entity_form_builder, RendererInterface $renderer) {
     $this->entityTypeManager = $entity_type_manager;
     $this->entityFormBuilder = $entity_form_builder;
     $this->renderer = $renderer;
@@ -75,7 +63,6 @@ class GroupDiscussionController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('user.private_tempstore'),
       $container->get('entity_type.manager'),
       $container->get('entity.form_builder'),
       $container->get('renderer')
@@ -164,30 +151,18 @@ class GroupDiscussionController extends ControllerBase {
    */
   public function addForm(GroupInterface $group, DiscussionTypeInterface $discussion_type) {
     $plugin_id = 'group_discussion:' . $discussion_type->id();
-    $storage_id = $plugin_id . ':' . $group->id();
 
-    // If we are on step one, we need to build a Discussion form.
-    if ($this->privateTempStore->get("$storage_id:step") !== 2) {
-      $this->privateTempStore->set("$storage_id:step", 1);
+    $plugin = $group->getGroupType()->getContentPlugin($plugin_id);
 
-      // Only create a new Discussion if we have nothing stored.
-      if (!$entity = $this->privateTempStore->get("$storage_id:discussion")) {
-        $entity = Discussion::create(['type' => $discussion_type->id()]);
-      }
-    }
-    // If we are on step two, we need to build a group content form.
-    else {
-      /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
-      $plugin = $group->getGroupType()->getContentPlugin($plugin_id);
-      $entity = GroupContent::create([
-        'type' => $plugin->getContentTypeConfigId(),
-        'gid' => $group->id(),
-      ]);
-    }
+    $entity = Discussion::create(['type' => $discussion_type->id()]);
 
-    // Return the form with the group and storage ID added to the form state.
-    $extra = ['group' => $group, 'storage_id' => $storage_id];
-    return $this->entityFormBuilder()->getForm($entity, 'discussion-form', $extra);
+    // Return the form with the group and plugin ID added to the form state.
+    $extra = [
+      'group' => $group,
+      'plugin' => $plugin,
+    ];
+
+    return $this->entityFormBuilder()->getForm($entity, 'add-to-group', $extra);
   }
 
 }

@@ -24,7 +24,8 @@ use Drupal\discussions\DiscussionInterface;
  *       "default" = "Drupal\discussions\Form\DiscussionForm",
  *       "add" = "Drupal\discussions\Form\DiscussionForm",
  *       "edit" = "Drupal\discussions\Form\DiscussionForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
+ *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
+ *       "add-to-group" = "Drupal\discussions\Form\GroupDiscussionForm"
  *     }
  *   },
  *   base_table = "discussions",
