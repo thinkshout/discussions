@@ -5,7 +5,6 @@ namespace Drupal\discussions\Plugin\views\filter;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\group\Entity\Group;
 use Drupal\views\Plugin\views\filter\Equality;
-use Drupal\views\Views;
 
 /**
  * Filters groups by current user.
