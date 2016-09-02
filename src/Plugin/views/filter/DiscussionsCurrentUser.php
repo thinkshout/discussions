@@ -14,8 +14,7 @@ use Drupal\views\Plugin\views\filter\BooleanOperator;
 class DiscussionsCurrentUser extends BooleanOperator {
 
   /**
-   * Override the query so that no filtering takes place if the user doesn't
-   * select any options.
+   * @inheritdoc
    */
   public function query() {
     $this->ensureMyTable();
