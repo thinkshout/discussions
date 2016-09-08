@@ -17,7 +17,7 @@ class GroupDiscussionDeriver extends DeriverBase {
       $this->derivatives[$name] = array(
         'entity_bundle' => $name,
         'label' => t('Group Discussion') . " ($label)",
-        'description' => t('Adds %type discussions to groups both publicly and privately.', array('%type' => $label)),
+        'description' => t('Adds %type discussions to groups.', array('%type' => $label)),
       ) + $base_plugin_definition;
     }
 

@@ -14,7 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
  * @GroupContentEnabler(
  *   id = "group_discussion",
  *   label = @Translation("Group Discussion"),
- *   description = @Translation("Adds Discussions to groups both publicly and privately."),
+ *   description = @Translation("Adds discussions to groups."),
  *   entity_type_id = "discussion",
  *   deriver = "Drupal\discussions\Plugin\GroupContentEnabler\GroupDiscussionDeriver"
  * )
