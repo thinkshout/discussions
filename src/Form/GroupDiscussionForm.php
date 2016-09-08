@@ -20,9 +20,6 @@ class GroupDiscussionForm extends ContentEntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    // TODO: Remove once body field is removed from discussion entity.
-    unset($form['body']);
-
     $form['comment'] = array(
       '#type' => 'textarea',
       '#title' => t('Text'),
