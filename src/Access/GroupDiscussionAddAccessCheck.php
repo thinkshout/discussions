@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Route;
 class GroupDiscussionAddAccessCheck implements AccessInterface {
 
   /**
-   * Checks Group Discussion access.
+   * Checks a user's permission to create group discussions.
    *
    * @param \Symfony\Component\Routing\Route $route
    *   The route to check against.
