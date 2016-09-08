@@ -85,28 +85,6 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['body'] = BaseFieldDefinition::create('text')
-      ->setLabel(t('Body'))
-      ->setDescription(t('The Discussion text.'))
-      ->setSettings(array(
-        'default_value' => '',
-        'text_processing' => 0,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'text',
-        'settings' => array(
-          'display_label' => TRUE,
-        ),
-        'weight' => 0,
-      ))
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'text',
-        'weight' => 0,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
     $fields['comments'] = BaseFieldDefinition::create('comment')
       ->setLabel(t('Comments'))
       ->setDescription(t('Replies to the Discussion.'))
