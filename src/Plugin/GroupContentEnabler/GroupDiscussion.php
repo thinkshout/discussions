@@ -61,7 +61,7 @@ class GroupDiscussion extends GroupContentEnablerBase {
     $plugin_id = $this->getPluginId();
     unset($permissions["access $plugin_id overview"]);
 
-    // Add our own permissions for managing the actual discussions.
+    // Add permissions for managing discussions.
     $type = $this->getEntityBundle();
     $type_arg = ['%discussion_type' => $this->getDiscussionType()->label()];
     $defaults = [
