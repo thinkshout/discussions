@@ -55,7 +55,7 @@ class GroupDiscussion extends GroupContentEnablerBase {
    * {@inheritdoc}
    */
   public function getPermissions() {
-    $permissions = parent::getPermissions();
+    $permissions = [];
 
     // Unset unwanted permissions defined by the base plugin.
     $plugin_id = $this->getPluginId();
