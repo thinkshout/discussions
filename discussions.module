@@ -37,13 +37,17 @@ function discussions_entity_extra_field_info() {
 function discussions_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
   // Add fields to group entity.
   if (isset($build['#entity_type']) && ($build['#entity_type'] == 'group')) {
-    // Populate discussions field.
-    $build['discussions'] = array(
-      '#type' => 'view',
-      '#name' => 'discussions_group_discussions',
-      '#display_id' => 'default',
-      '#arguments' => array($entity->id()),
-    );
+    // Populate discussions field only if current user is a member of the group.
+
+    /** @var \Drupal\group\Entity\Group $entity */
+    if ($entity->getMember(\Drupal::currentUser())) {
+      $build['discussions'] = array(
+        '#type' => 'view',
+        '#name' => 'discussions_group_discussions',
+        '#display_id' => 'default',
+        '#arguments' => array($entity->id()),
+      );
+    }
   }
 }
 
