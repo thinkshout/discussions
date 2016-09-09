@@ -16,7 +16,7 @@ entity.discussion.canonical:
     _entity_view: 'discussion'
     _title: 'Discussion'
   requirements:
-    _permission: 'access discussions'
+    _entity_access: 'discussion.view'
 
 entity.group_content.group_discussion_add_form:
   path: '/group/{group}/discussion/create/{discussion_type}'

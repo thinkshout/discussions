@@ -26,7 +26,8 @@ use Drupal\discussions\DiscussionInterface;
  *       "edit" = "Drupal\discussions\Form\DiscussionForm",
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *       "add-to-group" = "Drupal\discussions\Form\GroupDiscussionForm"
- *     }
+ *     },
+ *     "access" = "Drupal\discussions\DiscussionAccessControlHandler",
  *   },
  *   base_table = "discussions",
  *   admin_permission = "administer discussions",
