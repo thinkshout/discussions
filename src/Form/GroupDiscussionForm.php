@@ -50,6 +50,7 @@ class GroupDiscussionForm extends ContentEntityForm {
         $comment = Comment::create([
           'comment_type' => 'discussions_reply',
           'entity_id' => $entity->id(),
+          'subject' => $entity->subject,
           'uid' => $user->id(),
           'name' => $user->getAccountName(),
           'status' => Comment::PUBLISHED,
