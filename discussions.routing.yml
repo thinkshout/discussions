@@ -14,7 +14,7 @@ entity.discussion.canonical:
   path: '/discussion/{discussion}'
   defaults:
     _entity_view: 'discussion'
-    _title: 'Discussion'
+    _title_callback: 'Drupal\discussions\Controller\GroupDiscussionController::getTitle'
   requirements:
     _entity_access: 'discussion.view'
 
