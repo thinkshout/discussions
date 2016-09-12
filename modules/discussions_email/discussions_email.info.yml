@@ -1,0 +1,7 @@
+name: Discussions Email
+type: module
+description: Create discussions by sending emails.
+core: 8.x
+package: Discussions
+dependencies:
+  - discussions

@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains discussions_email.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function discussions_email_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the discussions_email module.
+    case 'help.page.discussions_email':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Create discussions by sending emails.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
