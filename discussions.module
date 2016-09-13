@@ -201,7 +201,7 @@ function discussions_form_alter(&$form, FormStateInterface $form_state, $form_id
 }
 
 /**
- * Implements hook_theme_registry_alter()
+ * Implements hook_theme_registry_alter().
  */
 function discussions_theme_registry_alter(&$theme_registry) {
   $theme_registry['comment']['path'] = drupal_get_path('module', 'discussions') . '/templates';
