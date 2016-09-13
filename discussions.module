@@ -231,14 +231,6 @@ function discussions_views_pre_render(ViewExecutable $view) {
 }
 
 /**
- * Implements hook_form_alter().
- */
-function discussions_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Hide comments open/closed radio button.
-  $form['comments']['#access'] = FALSE;
-}
-
-/**
  * Implements hook_theme_registry_alter().
  */
 function discussions_theme_registry_alter(&$theme_registry) {
