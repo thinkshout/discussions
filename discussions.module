@@ -163,7 +163,7 @@ function discussions_views_data_alter(&$data) {
       'title' => t('Discussions by current user'),
       'help' => t('Filters discussions by the current user.'),
       'field' => 'user',
-      'id' => 'discussions_current_user'
+      'id' => 'discussions_current_user',
     ),
   );
 
@@ -173,7 +173,7 @@ function discussions_views_data_alter(&$data) {
       'title' => t('Groups by current user'),
       'help' => t('Filters groups by the current user.'),
       'field' => 'uid',
-      'id' => 'groups_current_user'
+      'id' => 'groups_current_user',
     ),
   );
 
