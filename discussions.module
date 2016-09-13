@@ -244,3 +244,15 @@ function discussions_form_alter(&$form, FormStateInterface $form_state, $form_id
 function discussions_theme_registry_alter(&$theme_registry) {
   $theme_registry['comment']['path'] = drupal_get_path('module', 'discussions') . '/templates';
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function discussions_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Change current user topics select element to checkbox.
+  $form['current_user']['#type'] = 'checkbox';
+  $form['current_user']['#default_value'] = FALSE;
+  unset($form['current_user']['#options']);
+
+  $form['current_user']['#weight'] = 1;
+}
