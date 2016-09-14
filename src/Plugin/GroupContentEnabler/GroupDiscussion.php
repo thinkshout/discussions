@@ -96,14 +96,6 @@ class GroupDiscussion extends GroupContentEnablerBase {
       'title' => '%discussion_type: Delete any discussion',
     ] + $defaults;
 
-    $permissions["reply to own $type discussion"] = [
-      'title' => '%discussion_type: Reply to own discussion',
-    ] + $defaults;
-
-    $permissions["reply to any $type discussion"] = [
-      'title' => '%discussion_type: Reply to any discussion',
-    ] + $defaults;
-
     return $permissions;
   }
 
