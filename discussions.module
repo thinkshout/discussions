@@ -5,9 +5,12 @@
  * Adds discussion groups to Drupal.
  */
 
+use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\discussions\Entity\DiscussionType;
 use Drupal\group\Entity\GroupContentType;
 use Drupal\group\Entity\GroupType;
@@ -31,16 +34,6 @@ function discussions_entity_extra_field_info() {
     );
   }
 
-  foreach (DiscussionType::loadMultiple() as $discussion_type) {
-    // Add group field to discussion entity.
-    $extra['discussion'][$discussion_type->id()]['display']['group'] = array(
-      'label' => t('Group'),
-      'description' => t('The group this discussion belongs to.'),
-      'weight' => 0,
-      'visible' => TRUE,
-    );
-  }
-
   return $extra;
 }
 
@@ -58,34 +51,6 @@ function discussions_entity_view_alter(array &$build, EntityInterface $entity, E
       '#display_id' => 'default',
       '#arguments' => array($entity->id()),
     );
-  }
-
-  // Add fields to discussion entity.
-  if (isset($build['#entity_type']) && ($build['#entity_type'] == 'discussion')) {
-    // Populate group field.
-    /** @var \Drupal\discussions\Entity\Discussion $entity */
-    $type = $entity->bundle();
-
-    $group_content_types = GroupContentType::loadByContentPluginId("group_discussion:$type");
-
-    if (!empty($group_content_types)) {
-      $group_contents = \Drupal::entityTypeManager()
-        ->getStorage('group_content')
-        ->loadByProperties([
-          'type' => array_keys($group_content_types),
-          'entity_id' => $entity->id(),
-        ]);
-    }
-
-    if (!empty($group_contents)) {
-      /** @var \Drupal\group\Entity\GroupContentInterface $group_content */
-      $group_content = array_values($group_contents)[0];
-      $group = $group_content->getGroup();
-
-      $build['group'] = array(
-        '#markup' => \Drupal\Core\Link::fromTextAndUrl($group->label(), \Drupal\Core\Url::fromRoute('entity.group.canonical', array('group' => $group->id())))->toString(),
-      );
-    }
   }
 }
 
@@ -247,4 +212,37 @@ function discussions_form_views_exposed_form_alter(&$form, FormStateInterface $f
   unset($form['current_user']['#options']);
 
   $form['current_user']['#weight'] = 1;
+}
+
+/**
+ * Implements hook_system_breadcrumb_alter().
+ */
+function discussions_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatchInterface $route_match, array $context) {
+  if ($route_match->getRouteName() == 'entity.discussion.canonical') {
+    // Add discussion group breadcrumb to discussion route.
+    $discussion = $route_match->getParameter('discussion');
+
+    if (!empty($discussion)) {
+      $type = $discussion->bundle();
+
+      $group_content_types = GroupContentType::loadByContentPluginId("group_discussion:$type");
+
+      if (!empty($group_content_types)) {
+        $group_contents = \Drupal::entityTypeManager()
+          ->getStorage('group_content')
+          ->loadByProperties([
+            'type' => array_keys($group_content_types),
+            'entity_id' => $discussion->id(),
+          ]);
+      }
+
+      if (!empty($group_contents)) {
+        /** @var \Drupal\group\Entity\GroupContentInterface $group_content */
+        $group_content = array_values($group_contents)[0];
+        $group = $group_content->getGroup();
+
+        $breadcrumb->addLink(Link::createFromRoute($group->label(), 'entity.group.canonical', array('group' => $group->id())));
+      }
+    }
+  }
 }
