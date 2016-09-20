@@ -245,3 +245,21 @@ function discussions_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatch
     }
   }
 }
+
+/**
+ * Implements hook_form_alter().
+ */
+function discussions_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (\Drupal::routeMatch()->getRouteName() == 'entity.group.preferences') {
+    $form['actions']['submit']['#submit'][] = 'discussions_preferences_form_post_submit';
+  }
+}
+
+/**
+ * Submit handler for group preferences form.
+ */
+function discussions_preferences_form_post_submit($form, FormStateInterface $form_state) {
+  /** @var \Drupal\group\Entity\Group $group */
+  $group = \Drupal::routeMatch()->getParameter('group');
+  $form_state->setRedirect('entity.group.preferences', ['group' => $group->id()]);
+}
