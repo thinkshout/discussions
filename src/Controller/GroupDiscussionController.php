@@ -4,6 +4,7 @@ namespace Drupal\discussions\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityFormBuilderInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
@@ -163,6 +164,19 @@ class GroupDiscussionController extends ControllerBase {
     ];
 
     return $this->entityFormBuilder()->getForm($entity, 'add-to-group', $extra);
+  }
+
+  /**
+   * Provides the page title for this controller.
+   *
+   * @param EntityInterface $discussion
+   *   The discussion entity.
+   *
+   * @return string
+   *   The page title.
+   */
+  public function getTitle(EntityInterface $discussion) {
+    return $discussion->label();
   }
 
 }

@@ -87,7 +87,7 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['comments'] = BaseFieldDefinition::create('comment')
-      ->setLabel(t('Comments'))
+      ->setLabel(t('Replies'))
       ->setDescription(t('Replies to the Discussion.'))
       ->setSettings(array(
         'comment_type' => 'discussions_reply',
