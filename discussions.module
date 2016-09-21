@@ -18,6 +18,16 @@ use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
 /**
+ * Implements hook_entity_insert().
+ */
+function discussions_group_content_type_insert(EntityInterface $entity) {
+  /** \Drupal\group\Entity\GroupContentType $entity */
+  if ($entity->getContentPlugin() == 'group_membership') {
+    // TODO: Add discussions_email_frequency field automatically.
+  }
+}
+
+/**
  * Implements hook_entity_extra_field_info().
  */
 function discussions_entity_extra_field_info() {
