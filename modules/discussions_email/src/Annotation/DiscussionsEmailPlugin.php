@@ -32,4 +32,13 @@ class DiscussionsEmailPlugin extends Plugin {
    * @ingroup plugin_translatable
    */
   public $label;
+
+  /**
+   * A short description of the plugin.
+   *
+   * @var \Drupal\Core\Annotation\Translation
+   *
+   * @ingroup plugin_translatable
+   */
+  public $description;
 }
