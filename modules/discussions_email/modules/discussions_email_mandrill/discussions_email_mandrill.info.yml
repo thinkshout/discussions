@@ -1,0 +1,7 @@
+name: Discussions Email Mandrill
+type: module
+description: Mandrill plugin for discussions by email..
+core: 8.x
+package: Discussions
+dependencies:
+  - discussions_email
