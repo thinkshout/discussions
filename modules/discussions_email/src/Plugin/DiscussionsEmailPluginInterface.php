@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\discussions\Plugin;
+namespace Drupal\discussions_email\Plugin;
 
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
@@ -8,9 +8,9 @@ use Drupal\Component\Plugin\PluginInspectionInterface;
 /**
  * Defines the interface for discussions email plugins.
  *
- * @see \Drupal\filter\Annotation\Filter
- * @see \Drupal\filter\FilterPluginManager
- * @see \Drupal\filter\Plugin\FilterBase
+ * @see \Drupal\discussions_email\Annotation\DiscussionsEmailPlugin
+ * @see \Drupal\discussions_email\DiscussionsEmailPluginManager
+ * @see \Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase
  * @see plugin_api
  */
 interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, PluginInspectionInterface {

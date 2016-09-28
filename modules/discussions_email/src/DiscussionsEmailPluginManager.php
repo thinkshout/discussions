@@ -31,8 +31,8 @@ class DiscussionsEmailPluginManager extends DefaultPluginManager {
       'Plugin/DiscussionsEmail',
       $namespaces,
       $module_handler,
-      'Drupal\discussions\Plugin\DiscussionsEmailPluginInterface',
-      'Drupal\Core\Archiver\Annotation\Archiver'
+      'Drupal\discussions_email\Plugin\DiscussionsEmailPluginInterface',
+      'Drupal\discussions_email\Annotation\DiscussionsEmailPlugin'
     );
     $this->alterInfo('discussions_email_info');
     $this->setCacheBackend($cache_backend, 'discussions_email_plugins');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\discussions\Plugin;
+namespace Drupal\discussions_email\Plugin;
 
 use Drupal\Core\Plugin\PluginBase;
 

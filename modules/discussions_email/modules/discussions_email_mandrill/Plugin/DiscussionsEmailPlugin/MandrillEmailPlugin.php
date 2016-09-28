@@ -2,7 +2,7 @@
 
 namespace Drupal\discussions_email_mandrill\Plugin\MandrillEmailPlugin;
 
-use Drupal\discussions\Plugin\DiscussionsEmailPluginBase;
+use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
 
 /**
  * Provides a content enabler for users.
