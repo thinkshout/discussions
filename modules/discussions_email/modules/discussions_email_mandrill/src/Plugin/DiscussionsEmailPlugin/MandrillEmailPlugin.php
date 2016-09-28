@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\discussions_email_mandrill\Plugin\MandrillEmailPlugin;
+namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
 
