@@ -1,0 +1,7 @@
+discussions_email.config:
+  path: 'admin/config/discussions/email'
+  defaults:
+    _form: '\Drupal\discussions_email\Form\DiscussionsEmailSettingsForm'
+    _title: 'Discussions Email Settings'
+  requirements:
+    _permission: 'administer discussions email'
