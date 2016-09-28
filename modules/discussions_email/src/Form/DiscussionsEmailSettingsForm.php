@@ -27,17 +27,24 @@ class DiscussionsEmailSettingsForm extends ConfigFormBase {
     $email_plugin_manager = \Drupal::service('plugin.manager.discussions_email');
     $email_plugin_definitions = $email_plugin_manager->getDefinitions();
 
-    // TODO: Get installed email plugins.
     // TODO: Display notice if no email plugins installed.
 
-    $email_plugin_options = array();
-
-    $form['discussions_email_plugin_id'] = array(
-      '#type' => 'select',
-      '#title' => t('Email Plugin'),
-      '#options' => $email_plugin_options,
-      '#default_value' => $config->get('discussions_email_plugin_id'),
+    $email_plugin_options = array(
+      '' => t('None'),
     );
+
+    if (!empty($email_plugin_definitions)) {
+      foreach ($email_plugin_definitions as $id => $definition) {
+        $email_plugin_options[$id] = $definition['label'];
+      }
+
+      $form['discussions_email_plugin_id'] = array(
+        '#type' => 'select',
+        '#title' => t('Email Plugin'),
+        '#options' => $email_plugin_options,
+        '#default_value' => $config->get('discussions_email_plugin_id'),
+      );
+    }
 
     return parent::buildForm($form, $form_state);
   }
