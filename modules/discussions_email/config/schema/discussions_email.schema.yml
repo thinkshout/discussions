@@ -1,6 +1,6 @@
 # Schema for the configuration files of the discussions module.
 
-discussions.settings:
+discussions_email.settings:
   type: config_object
   label: 'Discussions email settings'
   mapping:
