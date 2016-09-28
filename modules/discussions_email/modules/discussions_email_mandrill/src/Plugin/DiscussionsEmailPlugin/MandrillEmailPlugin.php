@@ -10,7 +10,7 @@ use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
  * @DiscussionsEmailPlugin(
  *   id = "discussions_email_mandrill",
  *   label = @Translation("Mandrill Email Plugin for Discussions"),
- *   description = @Translation("Allows discussions to be sent via email using Mandrill."),
+ *   description = @Translation("Allows discussions to be sent via email using Mandrill.")
  * )
  */
 class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
