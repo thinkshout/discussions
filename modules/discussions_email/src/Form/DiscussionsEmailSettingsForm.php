@@ -23,6 +23,7 @@ class DiscussionsEmailSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('discussions_email.settings');
 
+    /** @var \Drupal\discussions_email\DiscussionsEmailPluginManager $email_plugin_manager */
     $email_plugin_manager = \Drupal::service('plugin.manager.discussions_email');
     $email_plugin_definitions = $email_plugin_manager->getDefinitions();
 
