@@ -5,6 +5,7 @@
  * Contains discussions_email.module..
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -20,5 +21,22 @@ function discussions_email_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function discussions_email_group_type_insert(EntityInterface $entity) {
+  // TODO: Add discussions_email_address field automatically.
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function discussions_email_group_content_type_insert(EntityInterface $entity) {
+  /** @var \Drupal\group\Entity\GroupContentType $entity */
+  if ($entity->getContentPlugin() == 'group_membership') {
+    // TODO: Add discussions_email_frequency field automatically.
   }
 }
