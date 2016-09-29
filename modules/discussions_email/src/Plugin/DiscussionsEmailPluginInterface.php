@@ -21,7 +21,7 @@ interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, P
    * @return bool
    *   TRUE if the source is valid, FALSE otherwise.
    */
-  public function validateSource();
+  public function validateWebhookSource();
 
   /**
    * Process data received from email provider via a webhook update.

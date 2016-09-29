@@ -18,7 +18,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function validateSource() {
+  public function validateWebhookSource() {
 
   }
 

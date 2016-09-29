@@ -33,7 +33,7 @@ class DiscussionsEmailWebhookController extends ControllerBase {
     $plugin = $email_plugin_manager->createInstance($email_plugin_id);
 
     // Attempt to validate webhook update source.
-    if (!$plugin->validateSource()) {
+    if (!$plugin->validateWebhookSource()) {
       return Response::create(0);
     }
 
