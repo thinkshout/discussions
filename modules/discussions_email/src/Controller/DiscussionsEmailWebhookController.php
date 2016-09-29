@@ -14,6 +14,9 @@ class DiscussionsEmailWebhookController extends ControllerBase {
 
   /**
    * Webhook endpoint to process updates from email providers.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   HTTP response object.
    */
   public function endpoint() {
     $config = \Drupal::config('discussions_email.settings');
@@ -38,9 +41,7 @@ class DiscussionsEmailWebhookController extends ControllerBase {
     }
 
     // Process the webhook update.
-    $plugin->processWebhook($_REQUEST);
-
-    return Response::create(1);
+    return $plugin->processWebhook($_REQUEST);
   }
 
 }

@@ -28,6 +28,9 @@ interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, P
    *
    * @param array $data
    *   Data received via webhook request.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   HTTP response object.
    */
   public function processWebhook($data);
 

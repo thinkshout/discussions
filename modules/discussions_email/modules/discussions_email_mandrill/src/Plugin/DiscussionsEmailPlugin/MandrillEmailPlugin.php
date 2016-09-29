@@ -3,6 +3,7 @@
 namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Provides a content enabler for users.
@@ -19,14 +20,25 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
    * {@inheritdoc}
    */
   public function validateWebhookSource() {
-
+    // TODO: Validation.
+    return TRUE;
   }
 
   /**
    * {@inheritdoc}
    */
   public function processWebhook($data) {
+    // Return an empty response if the webhook is being verified.
+    if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
+      return Response::create('');
+    }
 
+    // Get Mandrill events from webhook data.
+    $events = $data['mandrill_events'];
+
+    // TODO: Process events.
+
+    return Response::create(1);
   }
 
   /**
