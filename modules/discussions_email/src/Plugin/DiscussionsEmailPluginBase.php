@@ -28,7 +28,7 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
 
     // Load group using group email.
     $group_ids = \Drupal::entityQuery('group')
-      ->condition('discussions_group_email', $group_email, '=')
+      ->condition('discussions_email_address', $group_email, '=')
       ->execute();
 
     if (!empty($group_ids)) {
