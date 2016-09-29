@@ -18,6 +18,20 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   /**
    * {@inheritdoc}
    */
+  public function validateSource() {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function processWebhook($data) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function defaultConfiguration() {
     $config = parent::defaultConfiguration();
     // TODO: Any Mandrill plugin configuration.

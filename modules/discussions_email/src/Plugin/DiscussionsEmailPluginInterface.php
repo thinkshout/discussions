@@ -15,4 +15,20 @@ use Drupal\Component\Plugin\PluginInspectionInterface;
  */
 interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, PluginInspectionInterface {
 
+  /**
+   * Validates the source of an update sent to the webhook endpoint.
+   *
+   * @return bool
+   *   TRUE if the source is valid, FALSE otherwise.
+   */
+  public function validateSource();
+
+  /**
+   * Process data received from email provider via a webhook update.
+   *
+   * @param array $data
+   *   Data received via webhook request.
+   */
+  public function processWebhook($data);
+
 }
