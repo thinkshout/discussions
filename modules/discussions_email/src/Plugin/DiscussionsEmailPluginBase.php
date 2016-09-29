@@ -3,6 +3,7 @@
 namespace Drupal\discussions_email\Plugin;
 
 use Drupal\Core\Plugin\PluginBase;
+use Drupal\group\Entity\Group;
 
 /**
  * Provides a base class for discussions email plugins.
@@ -21,11 +22,22 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
   public function loadGroupFromEmail($email) {
     $email_parts = explode('@', $email);
 
-    list($group_name, $discussion_id, $parent_comment_id) = explode(self::DISCUSSION_GROUP_EMAIL_SEPARATOR, $email_parts[0]);
+    list($email_username, $discussion_id, $parent_comment_id) = explode(self::DISCUSSION_GROUP_EMAIL_SEPARATOR, $email_parts[0]);
 
-    $group_email = $group_name . '@' . $email_parts[1];
+    $group_email = $email_username . '@' . $email_parts[1];
 
-    // TODO: Load group using group email.
+    // Load group using group email.
+    $group_ids = \Drupal::entityQuery('group')
+      ->condition('discussions_group_email', $group_email, '=')
+      ->execute();
+
+    if (!empty($group_ids)) {
+      $group_id = current(array_keys($group_ids));
+
+      return Group::load($group_id);
+    }
+
+    return NULL;
   }
 
   /**

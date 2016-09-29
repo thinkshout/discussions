@@ -63,7 +63,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
    *   Associative array of message information.
    *   - email (string): The recipient email address in the format:
    *     {string}+{int}+{int}@domain.tld
-   *       - Group ID (string)
+   *       - Group email username (string)
    *       - Discussion ID (int) (optional)
    *       - Parent comment ID (int) (optional)
    *
