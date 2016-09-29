@@ -4,7 +4,6 @@ namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
-use Drupal\user\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -17,6 +16,16 @@ use Symfony\Component\HttpFoundation\Response;
  * )
  */
 class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getInboundDomains() {
+    /** @var \Drupal\mandrill\MandrillAPI $api */
+    $api = \Drupal::service('mandrill.api');
+
+    return $api->getInboundDomains();
+  }
 
   /**
    * {@inheritdoc}

@@ -16,6 +16,15 @@ use Drupal\Component\Plugin\PluginInspectionInterface;
 interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, PluginInspectionInterface {
 
   /**
+   * Gets an array of inbound domains from the email provider.
+   *
+   * @return array
+   *
+   * TODO: Standardize format for response between plugins.
+   */
+  public function getInboundDomains();
+
+  /**
    * Validates the source of an update sent to the webhook endpoint.
    *
    * @return bool
@@ -24,7 +33,7 @@ interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, P
   public function validateWebhookSource();
 
   /**
-   * Process data received from email provider via a webhook update.
+   * Process data received from the email provider via a webhook update.
    *
    * @param array $data
    *   Data received via webhook request.
