@@ -34,4 +34,19 @@ interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, P
    */
   public function processWebhook($data);
 
+  /**
+   * Loads a discussion group using the group's email address.
+   *
+   * @param $email
+   *   An email address in the format:
+   *   {string}+{int}+{int}@domain.tld
+   *     - Group ID (string)
+   *     - Discussion ID (int) (optional)
+   *     - Parent comment ID (int) (optional)
+   *
+   * @return \Drupal\group\Entity\GroupInterface
+   *   The group object.
+   */
+  public function loadGroupFromEmail($email);
+
 }

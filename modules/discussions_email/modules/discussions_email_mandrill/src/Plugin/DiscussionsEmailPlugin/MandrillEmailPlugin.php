@@ -4,6 +4,7 @@ namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
+use Drupal\user\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -57,8 +58,36 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
 
   }
 
+  /**
+   * @param array $message
+   *   Associative array of message information.
+   *   - email (string): The recipient email address in the format:
+   *     {string}+{int}+{int}@domain.tld
+   *       - Group ID (string)
+   *       - Discussion ID (int) (optional)
+   *       - Parent comment ID (int) (optional)
+   *
+   * @return bool
+   *   TRUE if message was successfully processed, FALSE otherwise.
+   */
   protected function processMessage($message) {
+    // TODO: Ignore messages sent from the discussions_email module.
 
+    // Load user using the message sender's email address.
+    $user = user_load_by_mail($message['from_email']);
+
+    if (empty($user)) {
+      // TODO: Log error message.
+      return FALSE;
+    }
+
+    // Load discussion group from group email address.
+    $group = $this->loadGroupFromEmail($message['email']);
+
+    if (empty($group)) {
+      // TODO: Log error message.
+      return FALSE;
+    }
   }
 
   /**

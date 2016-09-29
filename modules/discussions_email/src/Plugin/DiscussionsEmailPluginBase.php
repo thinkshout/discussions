@@ -13,6 +13,21 @@ use Drupal\Core\Plugin\PluginBase;
  */
 abstract class DiscussionsEmailPluginBase extends PluginBase implements DiscussionsEmailPluginInterface {
 
+  const DISCUSSION_GROUP_EMAIL_SEPARATOR = '+';
+
+  /**
+   * {@inheritdoc}
+   */
+  public function loadGroupFromEmail($email) {
+    $email_parts = explode('@', $email);
+
+    list($group_name, $discussion_id, $parent_comment_id) = explode(self::DISCUSSION_GROUP_EMAIL_SEPARATOR, $email_parts[0]);
+
+    $group_email = $group_name . '@' . $email_parts[1];
+
+    // TODO: Load group using group email.
+  }
+
   /**
    * {@inheritdoc}
    */
