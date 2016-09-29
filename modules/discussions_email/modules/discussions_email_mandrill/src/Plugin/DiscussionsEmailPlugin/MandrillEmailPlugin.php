@@ -2,6 +2,7 @@
 
 namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,7 +35,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     }
 
     // Get Mandrill events from webhook data.
-    $events = drupal_json_decode($_POST['mandrill_events']);
+    $events = Json::decode($_POST['mandrill_events']);
 
     // Process Mandrill events.
     foreach ($events as $event) {
