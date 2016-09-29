@@ -5,3 +5,11 @@ discussions_email.config:
     _title: 'Discussions Email Settings'
   requirements:
     _permission: 'administer discussions email'
+
+discussions_email.webhook:
+  path: 'discussions/email/webhook'
+  defaults:
+    _controller: '\Drupal\discussions_email\Controller\DiscussionsEmailWebhookController::endpoint'
+    _title: 'Discussions Email Webhook Endpoint'
+  requirements:
+    _permission: 'access content'
