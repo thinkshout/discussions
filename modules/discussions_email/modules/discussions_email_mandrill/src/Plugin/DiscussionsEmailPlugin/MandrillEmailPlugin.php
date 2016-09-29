@@ -30,15 +30,34 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   public function processWebhook($data) {
     // Return an empty response if the webhook is being verified.
     if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
-      return Response::create('');
+      return Response::create();
     }
 
     // Get Mandrill events from webhook data.
-    $events = $data['mandrill_events'];
+    $events = drupal_json_decode($_POST['mandrill_events']);
 
-    // TODO: Process events.
+    // Process Mandrill events.
+    foreach ($events as $event) {
+      switch ($event['event']) {
+        case 'hard_bounce':
+        case 'reject':
+          $this->processBounce($event['msg']);
+          break;
+        case 'inbound':
+          $this->processMessage($event['msg']);
+          break;
+      }
+    }
 
-    return Response::create(1);
+    return Response::create(count($events) . ' events processed.');
+  }
+
+  protected function processBounce($message) {
+
+  }
+
+  protected function processMessage($message) {
+
   }
 
   /**
