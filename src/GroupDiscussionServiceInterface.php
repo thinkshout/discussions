@@ -23,9 +23,16 @@ interface GroupDiscussionServiceInterface {
   /**
    * Adds a new comment to a discussion.
    *
+   * @param int $discussion_id
+   *   The ID of the discussion.
+   * @param int $user_id
+   *   The ID of the user ID of the comment author.
+   * @param string $comment_body
+   *   The comment text.
+   *
    * @return bool
    *   TRUE if comment added, FALSE otherwise.
    */
-  public function addComment();
+  public function addComment($discussion_id, $user_id, $comment_body);
 
 }

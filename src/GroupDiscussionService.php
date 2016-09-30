@@ -2,6 +2,7 @@
 
 namespace Drupal\discussions;
 
+use Drupal\comment\Entity\Comment;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\group\Entity\GroupContentType;
 
@@ -45,8 +46,25 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function addComment() {
+  public function addComment($discussion_id, $user_id, $comment_body) {
+    $user = \Drupal::currentUser();
 
+    /** @var Discussion $discussion */
+    $discussion = Discussion::load($discussion_id);
+
+    $comment = Comment::create([
+      'comment_type' => 'discussions_reply',
+      'entity_id' => $discussion->id(),
+      'subject' => $discussion->subject,
+      'uid' => $user_id,
+      'name' => $user->getAccountName(),
+      'status' => Comment::PUBLISHED,
+      'entity_type' => 'discussion',
+      'field_name' => 'comments',
+      'comment_body' => $comment_body,
+    ]);
+
+    $comment->save();
   }
 
 }

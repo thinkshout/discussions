@@ -47,19 +47,9 @@ class GroupDiscussionForm extends ContentEntityForm {
     switch ($status) {
       case SAVED_NEW:
         // Add initial comment to discussion.
-        $comment = Comment::create([
-          'comment_type' => 'discussions_reply',
-          'entity_id' => $entity->id(),
-          'subject' => $entity->subject,
-          'uid' => $user->id(),
-          'name' => $user->getAccountName(),
-          'status' => Comment::PUBLISHED,
-          'entity_type' => 'discussion',
-          'field_name' => 'comments',
-          'comment_body' => $form_state->getValue('comment'),
-        ]);
-
-        $comment->save();
+        /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
+        $group_discussion_service = \Drupal::service('discussions.group_discussion');
+        $group_discussion_service->addComment($entity->id(), $user->id(), $form_state->getValue('comment'));
 
         // Add discussion to group.
         $group = $form_state->get('group');
