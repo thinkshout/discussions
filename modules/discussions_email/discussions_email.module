@@ -7,6 +7,8 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\discussions\Entity\Discussion;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_help().
@@ -39,4 +41,32 @@ function discussions_email_group_content_type_insert(EntityInterface $entity) {
   if ($entity->getContentPlugin() == 'group_membership') {
     // TODO: Add discussions_email_frequency field automatically.
   }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function discussions_email_comment_insert(EntityInterface $entity) {
+  /** @var \Drupal\comment\Entity\Comment $entity */
+
+  // Only send email if comment is a reply to a discussion.
+  if ($entity->bundle() != 'discussions_reply') {
+    return;
+  }
+
+  // Load comment author user.
+  $user = User::load($entity->get('uid'));
+
+  // Load parent discussion.
+  $discussion = Discussion::load($entity->get('entity_id'));
+
+  // TODO: Load group containing parent discussion.
+
+  // TODO: Get group members.
+
+  // TODO: Only send to comment author if configured in group settings.
+
+  // TODO: Get current discussions email plugin.
+
+  // TODO: Send email via plugin.
 }
