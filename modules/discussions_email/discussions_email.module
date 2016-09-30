@@ -10,6 +10,10 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\user\Entity\User;
 
+define('DISCUSSIONS_EMAIL_FREQUENCY_NONE', 1);
+define('DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL', 2);
+define('DISCUSSIONS_EMAIL_FREQUENCY_DIGEST', 3);
+
 /**
  * Implements hook_help().
  */
@@ -66,7 +70,22 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   // Load group containing parent discussion.
   $group = $group_discussion_service->getDiscussionGroup($discussion->id());
 
-  // TODO: Get group members.
+  // Select group members to send email update to.
+  foreach ($group->getMembers() as $member) {
+    // Skip unapproved group members.
+    if ($member->requiresApproval()) {
+      continue;
+    }
+
+    if ($member->getGroupContent()->hasField('discussions_email_frequency')) {
+      $email_frequency = $member->getGroupContent()->get('discussions_email_frequency')->value;
+
+      // Skip members who choose not to receive individual updates.
+      if ($email_frequency != DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL)) {
+        return;
+      }
+    }
+  }
 
   // TODO: Only send to comment author if configured in group settings.
 
