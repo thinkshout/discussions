@@ -264,36 +264,3 @@ function discussions_preferences_form_post_submit($form, FormStateInterface $for
   $group = \Drupal::routeMatch()->getParameter('group');
   $form_state->setRedirect('entity.group.preferences', ['group' => $group->id()]);
 }
-
-/**
- * @param \Drupal\group\Entity\Group $group
- * @param int $discussion_id
- *
- * @return \Drupal\discussions\Entity\Discussion
- *   The discussion.
- *
- * TODO: Turn this into a service?
- */
-function discussions_get_group_discussion(Group $group, $discussion_id) {
-  // Loop through the group's installed plugins to find the plugin that was
-  // used when creating the group discussion.
-
-  /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
-  foreach ($group->getGroupType()->getInstalledContentPlugins() as $plugin) {
-
-    // Attempt to load the discussion through any group discussion plugins.
-    if ($plugin->getBaseId() == 'group_discussion') {
-      $group_discussions = $group->getContentByEntityId($plugin->getPluginId(), $discussion_id);
-
-      // If the discussion was loaded, return it here.
-      if (!empty($group_discussions)) {
-        /** @var \Drupal\group\Entity\GroupContent $group_discussion */
-        $group_discussion = current(array_values($group_discussions));
-        return $group_discussion->getEntity();
-      }
-    }
-  }
-
-  // Unable to find a discussion matching the given ID.
-  return NULL;
-}
