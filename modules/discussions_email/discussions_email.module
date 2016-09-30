@@ -81,7 +81,7 @@ function discussions_email_comment_insert(EntityInterface $entity) {
       $email_frequency = $member->getGroupContent()->get('discussions_email_frequency')->value;
 
       // Skip members who choose not to receive individual updates.
-      if ($email_frequency != DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL)) {
+      if ($email_frequency != DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL) {
         return;
       }
     }
@@ -89,7 +89,22 @@ function discussions_email_comment_insert(EntityInterface $entity) {
 
   // TODO: Only send to comment author if configured in group settings.
 
-  // TODO: Get current discussions email plugin.
+  // Get ID of the currently enabled discussions email plugin.
+  $config = \Drupal::config('discussions_email.settings');
+  $email_plugin_id = $config->get('discussions_email_plugin_id');
+
+  // Don't attempt to send email without an enabled plugin.
+  if (empty($email_plugin_id)) {
+    return;
+  }
+
+  /** @var \Drupal\discussions_email\DiscussionsEmailPluginManager $email_plugin_manager */
+  $email_plugin_manager = \Drupal::service('plugin.manager.discussions_email');
+
+  /** @var \Drupal\discussions_email\Plugin\DiscussionsEmailPluginInterface $plugin */
+  $plugin = $email_plugin_manager->createInstance($email_plugin_id);
 
   // TODO: Send email via plugin.
+
+
 }

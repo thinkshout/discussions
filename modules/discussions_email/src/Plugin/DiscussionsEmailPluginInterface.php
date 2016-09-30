@@ -4,6 +4,8 @@ namespace Drupal\discussions_email\Plugin;
 
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
+use Drupal\discussions\Entity\Discussion;
+use Drupal\group\Entity\Group;
 
 /**
  * Defines the interface for discussions email plugins.
@@ -69,5 +71,21 @@ interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, P
    *
    */
   public function filterEmailReply($message);
+
+  /**
+   * Sends an email message.
+   *
+   * @param string $from_address
+   *   The sender email address.
+   * @param array $to_addresses
+   *   Array of recipient email addresses.
+   * @param string $message
+   *   The email message.
+   * @param \Drupal\group\Entity\Group $group
+   *   The discussion group containing the recipients.
+   * @param \Drupal\discussions\Entity\Discussion $discussion
+   *   The discussion the email message originated from.
+   */
+  public function sendEmail($from_address, $to_addresses, $message, Group $group = NULL, Discussion $discussion = NULL);
 
 }

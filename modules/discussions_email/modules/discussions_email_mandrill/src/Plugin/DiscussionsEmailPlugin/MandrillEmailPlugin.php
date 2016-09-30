@@ -4,6 +4,7 @@ namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\discussions\Entity\Discussion;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
 use Drupal\group\Entity\Group;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,6 +64,13 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     }
 
     return Response::create(count($events) . ' events processed.');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function sendEmail($from_address, $to_addresses, $message, Group $group = NULL, Discussion $discussion = NULL) {
+
   }
 
   protected function processBounce($message) {
