@@ -58,4 +58,16 @@ interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, P
    */
   public function loadGroupFromEmail($email);
 
+  /**
+   * Removes HTML markup from email messages based on group configuration.
+   *
+   * @param string $message
+   *   The original email message.
+   *
+   * @return string
+   *   The filtered email message.
+   *
+   */
+  public function filterEmailReply($message);
+
 }

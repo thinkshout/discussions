@@ -43,6 +43,14 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
   /**
    * {@inheritdoc}
    */
+  public function filterEmailReply($message) {
+    // TODO: Implement filter message based on filtered div class config.
+    return $message;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getConfiguration() {
     return $this->configuration;
   }
