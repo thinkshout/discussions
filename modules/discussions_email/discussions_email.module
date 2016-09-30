@@ -55,12 +55,16 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   }
 
   // Load comment author user.
-  $user = User::load($entity->get('uid'));
+  $user = User::load($entity->get('uid')->getValue());
 
   // Load parent discussion.
-  $discussion = Discussion::load($entity->get('entity_id'));
+  $discussion = $entity->getCommentedEntity();
 
-  // TODO: Load group containing parent discussion.
+  /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
+  $group_discussion_service = \Drupal::service('discussions.group_discussion');
+
+  // Load group containing parent discussion.
+  $group = $group_discussion_service->getDiscussionGroup($discussion->id());
 
   // TODO: Get group members.
 

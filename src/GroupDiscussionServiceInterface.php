@@ -21,6 +21,19 @@ interface GroupDiscussionServiceInterface {
   public function getGroupDiscussion($group_id, $discussion_id);
 
   /**
+   * Gets the group a given discussion is part of.
+   *
+   * Assumes the discussion only exists in one group.
+   *
+   * @param int $discussion_id
+   *   The ID of the discussion.
+   *
+   * @return \Drupal\group\Entity\Group
+   *   The discussion group.
+   */
+  public function getDiscussionGroup($discussion_id);
+
+  /**
    * Adds a new comment to a discussion.
    *
    * @param int $discussion_id
