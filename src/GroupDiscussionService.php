@@ -52,6 +52,10 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
     /** @var Discussion $discussion */
     $discussion = Discussion::load($discussion_id);
 
+    if (empty($discussion)) {
+      return FALSE;
+    }
+
     $comment = Comment::create([
       'comment_type' => 'discussions_reply',
       'entity_id' => $discussion->id(),
@@ -64,7 +68,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
       'comment_body' => $comment_body,
     ]);
 
-    $comment->save();
+    return $comment->save();
   }
 
 }
