@@ -1,4 +1,7 @@
 services:
+  discussions.group_discussion:
+    class: Drupal\discussions\GroupDiscussionService
+
   access_check.discussions:
     class: Drupal\discussions\Access\GroupDiscussionAddAccessCheck
     tags:
