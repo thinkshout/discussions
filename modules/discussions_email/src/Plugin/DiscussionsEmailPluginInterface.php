@@ -79,13 +79,13 @@ interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, P
    *   The sender email address.
    * @param array $to_addresses
    *   Array of recipient email addresses.
-   * @param string $message
-   *   The email message.
+   * @param string $body
+   *   The email body.
    * @param \Drupal\group\Entity\Group $group
    *   The discussion group containing the recipients.
    * @param \Drupal\discussions\Entity\Discussion $discussion
    *   The discussion the email message originated from.
    */
-  public function sendEmail($from_address, $to_addresses, $message, Group $group = NULL, Discussion $discussion = NULL);
+  public function sendEmail($from_address, $to_addresses, $body, Group $group = NULL, Discussion $discussion = NULL);
 
 }

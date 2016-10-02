@@ -69,7 +69,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function sendEmail($from_address, $to_addresses, $message, Group $group = NULL, Discussion $discussion = NULL) {
+  public function sendEmail($from_address, $to_addresses, $body, Group $group = NULL, Discussion $discussion = NULL) {
 
   }
 

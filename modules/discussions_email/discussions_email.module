@@ -14,6 +14,8 @@ define('DISCUSSIONS_EMAIL_FREQUENCY_NONE', 1);
 define('DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL', 2);
 define('DISCUSSIONS_EMAIL_FREQUENCY_DIGEST', 3);
 
+define('DISCUSSION_GROUP_EMAIL_SEPARATOR', '+');
+
 /**
  * Implements hook_help().
  */
@@ -70,6 +72,8 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   // Load group containing parent discussion.
   $group = $group_discussion_service->getDiscussionGroup($discussion->id());
 
+  $to_addresses = [];
+
   // Select group members to send email update to.
   foreach ($group->getMembers() as $member) {
     // Skip unapproved group members.
@@ -82,12 +86,19 @@ function discussions_email_comment_insert(EntityInterface $entity) {
 
       // Skip members who choose not to receive individual updates.
       if ($email_frequency != DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL) {
-        return;
+        continue;
       }
+
+      $to_addresses[] = $member->getUser()->getEmail();
     }
   }
 
   // TODO: Only send to comment author if configured in group settings.
+
+  // Only send email if there's at least one valid recipient.
+  if (empty($to_addresses)) {
+    return;
+  }
 
   // Get ID of the currently enabled discussions email plugin.
   $config = \Drupal::config('discussions_email.settings');
@@ -104,7 +115,12 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   /** @var \Drupal\discussions_email\Plugin\DiscussionsEmailPluginInterface $plugin */
   $plugin = $email_plugin_manager->createInstance($email_plugin_id);
 
-  // TODO: Send email via plugin.
+  // Send email via plugin.
+  $group_email_address = $group->get('discussions_email_address')->value;
+  list($from_user, $from_domain) = explode('@', $group_email_address);
+  $from_address = $from_user . DISCUSSION_GROUP_EMAIL_SEPARATOR . $group->id() . DISCUSSION_GROUP_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
 
+  $body = $entity->get('comment_body')->value;
 
+  $plugin->sendEmail($from_address, $to_addresses, $body, $group, $discussion);
 }
