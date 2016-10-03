@@ -2,6 +2,7 @@
 
 namespace Drupal\discussions_email\Plugin;
 
+use Drupal\comment\Entity\Comment;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
 use Drupal\discussions\Entity\Discussion;
@@ -75,17 +76,21 @@ interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, P
   /**
    * Sends an email message.
    *
-   * @param string $from_address
-   *   The sender email address.
-   * @param array $to_addresses
-   *   Array of recipient email addresses.
-   * @param string $body
-   *   The email body.
+   * @param array $message
+   *   Associative array of message data with the following keys:
+   *   - id (string) The message ID.
+   *   - from_name (string) The sender name.
+   *   - from_email (string) The sender email address.
+   *   - to (array) Recipient email addresses.
+   *   - subject (string) The message subject.
+   *   - body (string) The message body.
    * @param \Drupal\group\Entity\Group $group
    *   The discussion group containing the recipients.
    * @param \Drupal\discussions\Entity\Discussion $discussion
    *   The discussion the email message originated from.
+   * @param \Drupal\comment\Entity\Comment $comment
+   *   The discussion comment contained in this email.
    */
-  public function sendEmail($from_address, $to_addresses, $body, Group $group = NULL, Discussion $discussion = NULL);
+  public function sendEmail($message, Group $group = NULL, Discussion $discussion = NULL, Comment $comment = NULL);
 
 }

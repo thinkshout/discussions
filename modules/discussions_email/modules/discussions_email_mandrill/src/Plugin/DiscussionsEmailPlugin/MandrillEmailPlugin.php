@@ -2,11 +2,15 @@
 
 namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
+use Drupal\comment\Entity\Comment;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Language\Language;
+use Drupal\Core\Mail\MailManager;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
 use Drupal\group\Entity\Group;
+use Drupal\mandrill\Plugin\Mail\MandrillMail;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -69,8 +73,40 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function sendEmail($from_address, $to_addresses, $body, Group $group = NULL, Discussion $discussion = NULL) {
+  public function sendEmail($message, Group $group = NULL, Discussion $discussion = NULL, Comment $comment = NULL) {
+    $group_email_address = $group->get('discussions_email_address')->value;
+    $group_owner_email_address = $group->getOwner()->getEmail();
 
+    // Add Mandrill headers.
+    $message['mandrill'] = [
+      'header' => [
+        // TODO: Add message ID field to comment entity.
+        // 'Message-Id' => '',
+        'Precedence' => 'List',
+        // Mandrill currently only allows List-Help, but this may change.
+        'List-Help' => "<mailto:{$group_owner_email_address}>",
+        'List-Unsubscribe:' => "<mailto:{$group_email_address}?subject=unsubscribe>",
+        'List-Post:' => "<mailto:{$group_email_address}>",
+        'List-Owner:' => "<mailto:{$group_owner_email_address}>",
+      ],
+    ];
+
+    $message['overrides'] = [
+      'preserve_recipients' => FALSE,
+    ];
+
+    // Concatenate recipient email addresses for Mandrill mail plugin.
+    $message['to'] = implode(',', $message['to']);
+
+    /** @var MailManager $mail_manager */
+    $mail_manager = \Drupal::service('plugin.manager.mail');
+
+    /** @var MandrillMail $mandrill */
+    $mandrill = $mail_manager->createInstance('mandrill_mail');
+
+    // Format and send mail through Mandrill.
+    $message = $mandrill->format($message);
+    return $mandrill->mail($message);
   }
 
   protected function processBounce($message) {
