@@ -4,7 +4,7 @@ namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
 use Drupal\comment\Entity\Comment;
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Language\Language;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Mail\MailManager;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\discussions\Entity\Discussion;

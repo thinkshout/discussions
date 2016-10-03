@@ -2,6 +2,7 @@
 
 namespace Drupal\discussions_email\Plugin;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\PluginBase;
 use Drupal\group\Entity\Group;
 
