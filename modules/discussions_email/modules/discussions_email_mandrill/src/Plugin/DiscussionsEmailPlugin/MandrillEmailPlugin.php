@@ -98,6 +98,9 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     // Concatenate recipient email addresses for Mandrill mail plugin.
     $message['to'] = implode(',', $message['to']);
 
+    // 'module' value must be set to avoid error in Mandrill mail plugin.
+    $message['module'] = 'discussions_email';
+
     /** @var MailManager $mail_manager */
     $mail_manager = \Drupal::service('plugin.manager.mail');
 
