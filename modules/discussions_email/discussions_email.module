@@ -61,7 +61,7 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   }
 
   // Load comment author user.
-  $user = User::load($entity->get('uid')->getValue());
+  $user = User::load($entity->get('uid')->getValue()[0]['target_id']);
 
   // Load parent discussion.
   $discussion = $entity->getCommentedEntity();
