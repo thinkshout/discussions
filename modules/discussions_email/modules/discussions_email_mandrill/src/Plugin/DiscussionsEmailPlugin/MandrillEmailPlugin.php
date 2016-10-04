@@ -77,6 +77,16 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     $group_email_address = $group->get('discussions_email_address')->value;
     $group_owner_email_address = $group->getOwner()->getEmail();
 
+    $message['params'] = [
+      'mandrill' => [
+        // Move 'from_email' to suit Mandrill mail plugin.
+        'from_email' => $message['from_email'],
+        'overrides' => [
+          'preserve_recipients' => FALSE,
+        ],
+      ],
+    ];
+
     // Add Mandrill headers.
     $message['mandrill'] = [
       'header' => [
@@ -89,10 +99,6 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
         'List-Post:' => "<mailto:{$group_email_address}>",
         'List-Owner:' => "<mailto:{$group_owner_email_address}>",
       ],
-    ];
-
-    $message['overrides'] = [
-      'preserve_recipients' => FALSE,
     ];
 
     // Concatenate recipient email addresses for Mandrill mail plugin.
