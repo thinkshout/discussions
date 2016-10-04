@@ -17,7 +17,7 @@ use Drupal\group\Entity\Group;
  * @see \Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase
  * @see plugin_api
  */
-interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, ConfigurablePluginInterface, PluginFormInterface {
+interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, ConfigurablePluginInterface {
 
   /**
    * Gets an array of inbound domains from the email provider.

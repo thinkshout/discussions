@@ -7,3 +7,6 @@ discussions_email.settings:
     discussions_email_plugin_id:
       type: string
       label: 'Email plugin ID'
+    discussions_email_filter_css_classes:
+      type: string
+      label: 'Filter email CSS classes'
