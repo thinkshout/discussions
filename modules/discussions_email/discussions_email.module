@@ -118,7 +118,7 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   // Send email via plugin.
   $group_email_address = $group->get('discussions_email_address')->value;
   list($from_user, $from_domain) = explode('@', $group_email_address);
-  $from_address = $from_user . DISCUSSION_GROUP_EMAIL_SEPARATOR . $group->id() . DISCUSSION_GROUP_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
+  $from_address = $from_user . DISCUSSION_GROUP_EMAIL_SEPARATOR . $discussion->id() . DISCUSSION_GROUP_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
 
   // TODO: Postscript token replacement on body.
   $body = $entity->get('comment_body')->value;
