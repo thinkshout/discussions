@@ -5,6 +5,7 @@ namespace Drupal\discussions_email\Plugin;
 use Drupal\comment\Entity\Comment;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
+use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\group\Entity\Group;
 
@@ -16,7 +17,7 @@ use Drupal\group\Entity\Group;
  * @see \Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase
  * @see plugin_api
  */
-interface DiscussionsEmailPluginInterface extends ConfigurablePluginInterface, PluginInspectionInterface {
+interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, ConfigurablePluginInterface, PluginFormInterface {
 
   /**
    * Gets an array of inbound domains from the email provider.

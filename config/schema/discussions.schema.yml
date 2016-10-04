@@ -15,3 +15,7 @@ discussions.discussion_type.*:
     uid:
       type: integer
       label: 'User ID'
+
+discussions_email.config.filter_email_css_classes:
+  type: 'string'
+  label: 'Filter email CSS classes'
