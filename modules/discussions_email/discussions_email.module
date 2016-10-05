@@ -15,6 +15,7 @@ define('DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL', 2);
 define('DISCUSSIONS_EMAIL_FREQUENCY_DIGEST', 3);
 
 define('DISCUSSION_GROUP_EMAIL_SEPARATOR', '+');
+define('DISCUSSIONS_EMAIL_MESSAGE_SEPARATOR', '-------- Reply Above This Line --------');
 
 /**
  * Implements hook_help().
