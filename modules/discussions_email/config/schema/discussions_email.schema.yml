@@ -4,10 +4,10 @@ discussions_email.settings:
   type: config_object
   label: 'Discussions email settings'
   mapping:
-    discussions_email_plugin_id:
+    plugin_id:
       type: string
       label: 'Email plugin ID'
-    discussions_email_filter_css_classes:
+    filter_css_classes:
       type: string
       label: 'Filter email CSS classes'
     email_author:

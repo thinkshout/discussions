@@ -110,7 +110,7 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   }
 
   // Get ID of the currently enabled discussions email plugin.
-  $email_plugin_id = $config->get('discussions_email_plugin_id');
+  $email_plugin_id = $config->get('plugin_id');
 
   // Don't attempt to send email without an enabled plugin.
   if (empty($email_plugin_id)) {

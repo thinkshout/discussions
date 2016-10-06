@@ -22,7 +22,7 @@ class DiscussionsEmailWebhookController extends ControllerBase {
     $config = \Drupal::config('discussions_email.settings');
 
     // Get ID of the currently enabled discussions email plugin.
-    $email_plugin_id = $config->get('discussions_email_plugin_id');
+    $email_plugin_id = $config->get('plugin_id');
 
     // Don't attempt to process webhook update without an enabled plugin.
     if (empty($email_plugin_id)) {

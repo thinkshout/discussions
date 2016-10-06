@@ -48,7 +48,7 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
 
     // Filter out html tags in message.
     $config = \Drupal::config('discussions_email.settings');
-    $filter_css_classes = $config->get('discussions_email_filter_css_classes');
+    $filter_css_classes = $config->get('filter_css_classes');
     $classes_array = explode(',', $filter_css_classes);
 
     // Loop through CSS classes to filter out div elements.
