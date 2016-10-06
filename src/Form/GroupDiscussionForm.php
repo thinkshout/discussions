@@ -46,11 +46,6 @@ class GroupDiscussionForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        // Add initial comment to discussion.
-        /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
-        $group_discussion_service = \Drupal::service('discussions.group_discussion');
-        $group_discussion_service->addComment($entity->id(), $user->id(), $form_state->getValue('comment'));
-
         // Add discussion to group.
         $group = $form_state->get('group');
         $plugin = $form_state->get('plugin');
@@ -63,6 +58,11 @@ class GroupDiscussionForm extends ContentEntityForm {
         $group_content->set('entity_id', $entity->id());
 
         $group_content->save();
+
+        // Add initial comment to discussion.
+        /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
+        $group_discussion_service = \Drupal::service('discussions.group_discussion');
+        $group_discussion_service->addComment($entity->id(), $user->id(), $form_state->getValue('comment'));
 
         drupal_set_message($this->t('Created %label.', array(
           '%label' => $entity->label(),
