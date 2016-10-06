@@ -142,7 +142,9 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     $user = user_load_by_mail($message['from_email']);
 
     if (empty($user)) {
-      // TODO: Log error message.
+      \Drupal::logger('discussions_email_mandrill')->error('Unable to process message; no user found with email {email}', [
+        'email' => $message['from_email'],
+      ]);
       return FALSE;
     }
 
@@ -151,7 +153,9 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     $group = $this->loadGroupFromEmail($message['email']);
 
     if (empty($group)) {
-      // TODO: Log error message.
+      \Drupal::logger('discussions_email_mandrill')->error('Unable to process message; no group found for email {email}', [
+        'email' => $message['email'],
+      ]);
       return FALSE;
     }
 
@@ -176,7 +180,10 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
       $discussion = $group_discussion_service->getGroupDiscussion($group->id(), $discussion_id);
 
       if (empty($discussion)) {
-        // TODO: Log error message.
+        \Drupal::logger('discussions_email_mandrill')->error('Unable to process message; no discussion with ID {discussion_id} found in group with ID {group_id}', [
+          'discussion_id' => $discussion_id,
+          'group_id' => $group->id(),
+        ]);
         return FALSE;
       }
 
