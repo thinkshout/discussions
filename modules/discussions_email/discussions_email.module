@@ -56,6 +56,8 @@ function discussions_email_group_content_type_insert(EntityInterface $entity) {
 function discussions_email_comment_insert(EntityInterface $entity) {
   /** @var \Drupal\comment\Entity\Comment $entity */
 
+  $config = \Drupal::config('discussions_email.settings');
+
   // Only send email if comment is a reply to a discussion.
   if ($entity->bundle() != 'discussions_reply') {
     return;
@@ -76,9 +78,15 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   $to_addresses = [];
 
   // Select group members to send email update to.
+  $email_author = $config->get('email_author');
   foreach ($group->getMembers() as $member) {
     // Skip unapproved group members.
     if ($member->requiresApproval()) {
+      continue;
+    }
+
+    // Skip author unless configured to email author.
+    if (!$email_author && ($member->getUser()->id() == $user->id())) {
       continue;
     }
 
@@ -102,7 +110,6 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   }
 
   // Get ID of the currently enabled discussions email plugin.
-  $config = \Drupal::config('discussions_email.settings');
   $email_plugin_id = $config->get('discussions_email_plugin_id');
 
   // Don't attempt to send email without an enabled plugin.
