@@ -38,6 +38,8 @@ function discussions_email_help($route_name, RouteMatchInterface $route_match) {
  */
 function discussions_email_group_type_insert(EntityInterface $entity) {
   // TODO: Add discussions_email_address field automatically.
+  // TODO: Add field_email_postscript field automatically.
+  // TODO: Add field_email_subject_prefix field automatically.
 }
 
 /**
@@ -101,8 +103,6 @@ function discussions_email_comment_insert(EntityInterface $entity) {
       $to_addresses[] = $member->getUser()->getEmail();
     }
   }
-
-  // TODO: Only send to comment author if configured in group settings.
 
   // Only send email if there's at least one valid recipient.
   if (empty($to_addresses)) {
