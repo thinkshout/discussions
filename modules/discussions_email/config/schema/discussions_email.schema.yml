@@ -13,3 +13,6 @@ discussions_email.settings:
     email_author:
       type: boolean
       label: 'Send email to author'
+    process_bounces:
+      type: boolean
+      label: 'Process bounces'

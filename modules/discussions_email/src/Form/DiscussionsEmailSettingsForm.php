@@ -58,6 +58,13 @@ class DiscussionsEmailSettingsForm extends ConfigFormBase {
         '#description' => $this->t('If checked, email will be sent to the author of the post. Leave unchecked to exclude author from email.'),
         '#default_value' => $config->get('email_author'),
       ];
+
+      $form['process_bounces'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Process bounces'),
+        '#description' => $this->t('Set a user\'s group status to inactive when email cannot be delivered to the user\'s address.'),
+        '#default_value' => $config->get('process_bounces'),
+      ];
     }
 
     return parent::buildForm($form, $form_state);
@@ -71,6 +78,7 @@ class DiscussionsEmailSettingsForm extends ConfigFormBase {
       ->set('discussions_email_plugin_id', $form_state->getValue('discussions_email_plugin_id'))
       ->set('discussions_email_filter_css_classes', $form_state->getValue('discussions_email_filter_css_classes'))
       ->set('email_author', $form_state->getValue('email_author'))
+      ->set('process_bounces', $form_state->getValue('process_bounces'))
       ->save();
   }
 
