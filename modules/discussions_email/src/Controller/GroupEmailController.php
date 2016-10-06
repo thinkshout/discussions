@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\discussions\Controller;
+namespace Drupal\discussions_email\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityFormBuilderInterface;
@@ -9,11 +9,11 @@ use Drupal\group\Entity\GroupInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Controller for groups.
+ * Controller for group email.
  *
- * @ingroup discussions
+ * @ingroup discussions_email
  */
-class GroupController extends ControllerBase {
+class GroupEmailController extends ControllerBase {
 
   /**
    * The current user.
@@ -30,7 +30,7 @@ class GroupController extends ControllerBase {
   protected $entityFormBuilder;
 
   /**
-   * Constructs a new GroupController.
+   * Constructs a new GroupEmailController.
    *
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.

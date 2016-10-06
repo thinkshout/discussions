@@ -9,14 +9,6 @@ discussions.config.discussion_form:
   requirements:
     _permission: 'administer discussions'
 
-entity.group.preferences:
-  path: '/group/{group}/preferences'
-  defaults:
-    _controller: '\Drupal\discussions\Controller\GroupController::preferencesForm'
-    _title_callback: '\Drupal\discussions\Controller\GroupController::preferencesFormTitle'
-  requirements:
-    _group_member: 'TRUE'
-
 entity.discussion.canonical:
   path: '/discussion/{discussion}'
   defaults:

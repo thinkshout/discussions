@@ -13,3 +13,11 @@ discussions_email.webhook:
     _title: 'Discussions Email Webhook Endpoint'
   requirements:
     _permission: 'access content'
+
+entity.group.preferences:
+  path: '/group/{group}/preferences'
+  defaults:
+    _controller: '\Drupal\discussions_email\Controller\GroupEmailController::preferencesForm'
+    _title_callback: '\Drupal\discussions_email\Controller\GroupEmailController::preferencesFormTitle'
+  requirements:
+    _group_member: 'TRUE'
