@@ -78,7 +78,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function addComment($discussion_id, $user_id, $comment_body) {
+  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body) {
     $user = \Drupal::currentUser();
 
     /** @var Discussion $discussion */
@@ -90,6 +90,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
 
     $comment = Comment::create([
       'comment_type' => 'discussions_reply',
+      'pid' => (!empty($parent_comment_id)) ? $parent_comment_id : NULL,
       'entity_id' => $discussion->id(),
       'subject' => $discussion->subject,
       'uid' => $user_id,

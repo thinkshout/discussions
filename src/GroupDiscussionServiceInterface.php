@@ -38,6 +38,8 @@ interface GroupDiscussionServiceInterface {
    *
    * @param int $discussion_id
    *   The ID of the discussion.
+   * @param int $parent_comment_id
+   *   The ID of the parent comment, if this is a reply comment.
    * @param int $user_id
    *   The ID of the user ID of the comment author.
    * @param string $comment_body
@@ -46,6 +48,6 @@ interface GroupDiscussionServiceInterface {
    * @return bool
    *   TRUE if comment added, FALSE otherwise.
    */
-  public function addComment($discussion_id, $user_id, $comment_body);
+  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body);
 
 }

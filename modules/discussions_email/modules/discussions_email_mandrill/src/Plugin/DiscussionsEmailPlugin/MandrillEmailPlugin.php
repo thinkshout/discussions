@@ -190,9 +190,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
       // Add new comment to discussion.
       $filtered_message = $this->filterEmailReply($message['html']);
 
-      // TODO: Handle replies to existing comments.
-
-      $group_discussion_service->addComment($discussion->id(), $user->id(), $filtered_message);
+      $group_discussion_service->addComment($discussion->id(), $parent_comment_id, $user->id(), $filtered_message);
     }
     else {
       // TODO: Create new discussion.

@@ -62,7 +62,7 @@ class GroupDiscussionForm extends ContentEntityForm {
         // Add initial comment to discussion.
         /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
         $group_discussion_service = \Drupal::service('discussions.group_discussion');
-        $group_discussion_service->addComment($entity->id(), $user->id(), $form_state->getValue('comment'));
+        $group_discussion_service->addComment($entity->id(), 0, $user->id(), $form_state->getValue('comment'));
 
         drupal_set_message($this->t('Created %label.', array(
           '%label' => $entity->label(),
