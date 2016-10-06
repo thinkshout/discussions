@@ -97,7 +97,10 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
       'status' => Comment::PUBLISHED,
       'entity_type' => 'discussion',
       'field_name' => 'comments',
-      'comment_body' => $comment_body,
+      'comment_body' => [
+        'value' => $comment_body,
+        'format' => 'discussions_email_html',
+      ],
     ]);
 
     return $comment->save();
