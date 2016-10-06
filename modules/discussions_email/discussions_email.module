@@ -38,8 +38,8 @@ function discussions_email_help($route_name, RouteMatchInterface $route_match) {
  */
 function discussions_email_group_type_insert(EntityInterface $entity) {
   // TODO: Add discussions_email_address field automatically.
-  // TODO: Add field_email_postscript field automatically.
-  // TODO: Add field_email_subject_prefix field automatically.
+  // TODO: Add discussions_email_postscript field automatically.
+  // TODO: Add discussions_email_subject_prefix field automatically.
 }
 
 /**
