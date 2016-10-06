@@ -10,3 +10,6 @@ discussions_email.settings:
     discussions_email_filter_css_classes:
       type: string
       label: 'Filter email CSS classes'
+    email_author:
+      type: boolean
+      label: 'Send email to author'
