@@ -5,10 +5,14 @@
  * Contains discussions_email.module..
  */
 
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\discussions\Entity\Discussion;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\user\Entity\User;
+
 
 define('DISCUSSIONS_EMAIL_FREQUENCY_NONE', 1);
 define('DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL', 2);
@@ -37,9 +41,94 @@ function discussions_email_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_entity_insert().
  */
 function discussions_email_group_type_insert(EntityInterface $entity) {
-  // TODO: Add discussions_email_address field automatically.
-  // TODO: Add discussions_email_postscript field automatically.
-  // TODO: Add discussions_email_subject_prefix field automatically.
+  // Build the 'default' display ID for both the entity form and view mode.
+  $default_display_id = 'group.' . $entity->id() . 'default';
+
+  // Build or retrieve the 'default' form mode.
+  if (!$form_display = EntityFormDisplay::load($default_display_id)) {
+    $form_display = EntityFormDisplay::create([
+      'targetEntityType' => 'group',
+      'bundle' => $entity->id(),
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+  }
+
+  // Build or retrieve the 'default' view mode.
+  if (!$view_display = EntityViewDisplay::load($default_display_id)) {
+    $view_display = EntityViewDisplay::create([
+      'targetEntityType' => 'group',
+      'bundle' => $entity->id(),
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+  }
+
+  // Add discussions_email_address field.
+  FieldConfig::create([
+    'field_storage' => FieldStorageConfig::loadByName('group', 'discussions_email_address'),
+    'bundle' => $entity->id(),
+    'label' => t('Discussions Group Email'),
+  ])->save();
+
+  // Assign widget settings for the 'default' form mode.
+  $form_display->setComponent('discussions_email_address', [
+    'type' => 'string_textfield',
+  ]);
+
+  // Assign display settings for the 'default' view mode.
+  $view_display->setComponent('discussions_email_address', [
+    'label' => 'above',
+    'type' => 'entity_reference_label',
+    'settings' => [
+      'link' => 0,
+    ],
+  ]);
+
+  // Add discussions_email_postscript field.
+  FieldConfig::create([
+    'field_storage' => FieldStorageConfig::loadByName('group', 'discussions_email_postscript'),
+    'bundle' => $entity->id(),
+    'label' => t('Email Postscript'),
+  ])->save();
+
+  // Assign widget settings for the 'default' form mode.
+  $form_display->setComponent('discussions_email_postscript', [
+    'type' => 'string_textarea',
+  ]);
+
+  // Assign display settings for the 'default' view mode.
+  $view_display->setComponent('discussions_email_postscript', [
+    'label' => 'above',
+    'type' => 'entity_reference_label',
+    'settings' => [
+      'link' => 0,
+    ],
+  ]);
+
+  // Add discussions_email_subject_prefix field.
+  FieldConfig::create([
+    'field_storage' => FieldStorageConfig::loadByName('group', 'discussions_email_subject_prefix'),
+    'bundle' => $entity->id(),
+    'label' => t('Email Subject Prefix'),
+  ])->save();
+
+  // Assign widget settings for the 'default' form mode.
+  $form_display->setComponent('discussions_email_subject_prefix', [
+    'type' => 'string_textfield',
+  ]);
+
+  // Assign display settings for the 'default' view mode.
+  $view_display->setComponent('discussions_email_subject_prefix', [
+    'label' => 'above',
+    'type' => 'entity_reference_label',
+    'settings' => [
+      'link' => 0,
+    ],
+  ]);
+
+  $form_display->save();
+  $view_display->save();
 }
 
 /**
