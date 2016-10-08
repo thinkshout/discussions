@@ -194,6 +194,26 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     }
     else {
       // TODO: Create new discussion.
+
+      // TODO: Determine which plugin to use. E.g. public or private discussion.
+
+//      $discussion = Discussion::create([
+//        'uid' => $user->id(),
+//        'subject' => $message['subject'],
+//      ]);
+//
+//      if ($discussion->save() == SAVED_NEW) {
+//
+//        $group_content = GroupContent::create(array(
+//          'type' => $plugin->getContentTypeConfigId(),
+//          'gid' => $group->id(),
+//        ));
+//
+//        $group_content->set('entity_id', $discussion->id());
+//        $group_content->save();
+
+        // TODO: Add initial comment to new discussion.
+//      }
     }
   }
 
