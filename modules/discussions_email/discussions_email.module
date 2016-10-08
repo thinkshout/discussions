@@ -13,12 +13,11 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\user\Entity\User;
 
-
 define('DISCUSSIONS_EMAIL_FREQUENCY_NONE', 1);
 define('DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL', 2);
 define('DISCUSSIONS_EMAIL_FREQUENCY_DIGEST', 3);
 
-define('DISCUSSION_GROUP_EMAIL_SEPARATOR', '+');
+define('DISCUSSIONS_EMAIL_SEPARATOR', '+');
 define('DISCUSSIONS_EMAIL_MESSAGE_SEPARATOR', '-------- Reply Above This Line --------');
 
 /**
@@ -38,7 +37,7 @@ function discussions_email_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_entity_insert().
+ * Implements hook_ENTITY_TYPE_insert().
  */
 function discussions_email_group_type_insert(EntityInterface $entity) {
   // Build the 'default' display ID for both the entity form and view mode.
@@ -123,7 +122,7 @@ function discussions_email_group_type_insert(EntityInterface $entity) {
 }
 
 /**
- * Implements hook_entity_insert().
+ * Implements hook_ENTITY_TYPE_insert().
  */
 function discussions_email_group_content_type_insert(EntityInterface $entity) {
   /** @var \Drupal\group\Entity\GroupContentType $entity */
@@ -248,7 +247,7 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   // Send email via plugin.
   $group_email_address = $group->get('discussions_email_address')->value;
   list($from_user, $from_domain) = explode('@', $group_email_address);
-  $from_address = $from_user . DISCUSSION_GROUP_EMAIL_SEPARATOR . $discussion->id() . DISCUSSION_GROUP_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
+  $from_address = $from_user . DISCUSSIONS_EMAIL_SEPARATOR . $discussion->id() . DISCUSSIONS_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
 
   // TODO: Postscript token replacement on body.
   $body = $entity->get('comment_body')->value;
