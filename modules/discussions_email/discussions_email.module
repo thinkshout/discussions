@@ -252,13 +252,16 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   // TODO: Postscript token replacement on body.
   $body = $entity->get('comment_body')->value;
 
+  // Add email subject prefix, if set.
+  $subject_prefix = $group->hasField('discussions_email_subject_prefix') ? $group->get('discussions_email_subject_prefix')->value : NULL;
+
   $message = [
     // TODO:
     'id' => '',
     'from_name' => '',
     'from_email' => $from_address,
     'to' => $to_addresses,
-    'subject' => $discussion->label(),
+    'subject' => (!empty($subject_prefix)) ? $subject_prefix . ' ' . $discussion->label() : $discussion->label(),
     'body' => $body,
   ];
 
