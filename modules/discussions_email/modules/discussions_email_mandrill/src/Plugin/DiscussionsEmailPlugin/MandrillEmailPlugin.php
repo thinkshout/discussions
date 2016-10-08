@@ -10,7 +10,6 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
 use Drupal\group\Entity\Group;
-use Drupal\group\Entity\GroupContent;
 use Drupal\mandrill\Plugin\Mail\MandrillMail;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -195,44 +194,8 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     }
     else {
       // Create new discussion.
-
-      // Get first enabled group_discussion plugin to create discussion
-      // group content.
-      // TODO: Allow a way to indicate which plugin to use from email address?
-      /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $default_plugin */
-      $default_plugin = NULL;
-      foreach ($group->getGroupType()->getInstalledContentPlugins() as $plugin_id => $plugin) {
-        if ($plugin->getBaseId() == 'group_discussion') {
-          $default_plugin = $plugin;
-          break;
-        }
-      }
-
-      list($plugin_type, $discussion_type) = explode(':', $default_plugin->getPluginId());
-
-      $discussion = Discussion::create([
-        'type' => $discussion_type,
-        'uid' => $user->id(),
-        'subject' => $message['subject'],
-      ]);
-
-      if ($discussion->save() == SAVED_NEW) {
-
-        $group_content = GroupContent::create([
-          'type' => $default_plugin->getContentTypeConfigId(),
-          'gid' => $group->id(),
-        ]);
-
-        $group_content->set('entity_id', $discussion->id());
-        $group_content->save();
-
-        // Add initial comment to new discussion.
-        $filtered_message = $this->filterEmailReply($message['html']);
-
-        /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
-        $group_discussion_service = \Drupal::service('discussions.group_discussion');
-        $group_discussion_service->addComment($discussion->id(), 0, $user->id(), $filtered_message);
-      }
+      $filtered_message = $this->filterEmailReply($message['html']);
+      $this->createNewDiscussion($user, $group, $message['subject'], $filtered_message);
     }
   }
 

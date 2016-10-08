@@ -3,7 +3,10 @@
 namespace Drupal\discussions_email\Plugin;
 
 use Drupal\Core\Plugin\PluginBase;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\discussions\Entity\Discussion;
 use Drupal\group\Entity\Group;
+use Drupal\group\Entity\GroupContent;
 
 /**
  * Provides a base class for discussions email plugins.
@@ -71,6 +74,57 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
     }
 
     return $message;
+  }
+
+  /**
+   * Creates a new discussion in a group.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $user
+   *   The user creating the discussion.
+   * @param \Drupal\group\Entity\Group $group
+   *   The group to create the discussion in.
+   * @param $subject
+   *   The discussion subject.
+   * @param $body
+   *   The discussion body text.
+   */
+  public function createNewDiscussion(AccountInterface $user, Group $group, $subject, $body) {
+    // Get first enabled group_discussion plugin to create discussion
+    // group content.
+    // TODO: Allow a way to indicate which plugin to use from email address?
+    /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $default_plugin */
+    $default_plugin = NULL;
+    /** @var \Drupal\group\Plugin\GroupContentEnablerInterface $plugin */
+    foreach ($group->getGroupType()->getInstalledContentPlugins() as $plugin_id => $plugin) {
+      if ($plugin->getBaseId() == 'group_discussion') {
+        $default_plugin = $plugin;
+        break;
+      }
+    }
+
+    list($plugin_type, $discussion_type) = explode(':', $default_plugin->getPluginId());
+
+    $discussion = Discussion::create([
+      'type' => $discussion_type,
+      'uid' => $user->id(),
+      'subject' => $subject,
+    ]);
+
+    if ($discussion->save() == SAVED_NEW) {
+      $group_content = GroupContent::create([
+        'type' => $default_plugin->getContentTypeConfigId(),
+        'gid' => $group->id(),
+      ]);
+
+      $group_content->set('entity_id', $discussion->id());
+      $group_content->save();
+
+      // Add initial comment to new discussion.
+
+      /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
+      $group_discussion_service = \Drupal::service('discussions.group_discussion');
+      $group_discussion_service->addComment($discussion->id(), 0, $user->id(), $body);
+    }
   }
 
   /**
