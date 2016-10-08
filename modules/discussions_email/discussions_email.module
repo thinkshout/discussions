@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains discussions_email.module..
+ * Contains discussions_email.module.
  */
 
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
@@ -174,7 +174,7 @@ function discussions_email_group_content_type_insert(EntityInterface $entity) {
 }
 
 /**
- * Implements hook_entity_insert().
+ * Implements hook_ENTITY_TYPE_insert().
  */
 function discussions_email_comment_insert(EntityInterface $entity) {
   /** @var \Drupal\comment\Entity\Comment $entity */
