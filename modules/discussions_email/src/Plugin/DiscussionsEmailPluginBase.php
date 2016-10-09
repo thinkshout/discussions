@@ -22,6 +22,20 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
   /**
    * {@inheritdoc}
    */
+  public function processBounce(Group $group, $email) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function processUnsubscribe(Group $group, $email) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function loadGroupFromEmail($email) {
     $email_parts = explode('@', $email);
 

@@ -48,6 +48,38 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
   public function processWebhook($data);
 
   /**
+   * Process a bounced email message.
+   *
+   * @param \Drupal\group\Entity\Group $group
+   *   The discussion group the email message originated from.
+   * @param string $email
+   *   The email address a bounced message notification originated from.
+   */
+  public function processBounce(Group $group, $email);
+
+  /**
+   * Process an unsubscribe request.
+   *
+   * @param \Drupal\group\Entity\Group $group
+   *   The discussion group to unsubscribe from.
+   * @param string $email
+   *   The email address to unsubscribe.
+   */
+  public function processUnsubscribe(Group $group, $email);
+
+  /**
+   * Process an email message and creates or updates a discussion.
+   *
+   * @param mixed $message
+   *   The email message.
+   *   Each discussion email plugin provides its own data structure.
+   *
+   * @return bool
+   *   TRUE if message was successfully processed, FALSE otherwise.
+   */
+  public function processMessage($message);
+
+  /**
    * Loads a discussion group using the group's email address.
    *
    * @param $email

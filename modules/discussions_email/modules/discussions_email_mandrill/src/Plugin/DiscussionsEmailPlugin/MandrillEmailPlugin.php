@@ -59,7 +59,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
       switch ($event['event']) {
         case 'hard_bounce':
         case 'reject':
-          $this->processBounce($event['msg']);
+          $this->processBounce($event['msg'], $event['msg']['from_email']);
           break;
         case 'inbound':
           $this->processMessage($event['msg']);
@@ -118,10 +118,6 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     return $mandrill->mail($message);
   }
 
-  protected function processBounce($message) {
-
-  }
-
   /**
    * @param array $message
    *   Associative array of message information.
@@ -134,7 +130,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
    * @return bool
    *   TRUE if message was successfully processed, FALSE otherwise.
    */
-  protected function processMessage($message) {
+  public function processMessage($message) {
     // TODO: Ignore messages sent from the discussions_email module.
 
     // Load user using the message sender's email address.
