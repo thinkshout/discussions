@@ -250,7 +250,9 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   $from_address = $from_user . DISCUSSIONS_EMAIL_SEPARATOR . $discussion->id() . DISCUSSIONS_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
 
   // TODO: Postscript token replacement on body.
-  $body = $entity->get('comment_body')->value;
+
+  // Filter comment body for HTML markup.
+  $body = check_markup($entity->get('comment_body')->value, 'discussions_email_html');
 
   // Add email subject prefix, if set.
   $subject_prefix = $group->hasField('discussions_email_subject_prefix') ? $group->get('discussions_email_subject_prefix')->value : NULL;
