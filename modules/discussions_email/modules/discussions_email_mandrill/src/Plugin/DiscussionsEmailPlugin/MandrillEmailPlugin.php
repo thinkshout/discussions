@@ -4,11 +4,14 @@ namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
 use Drupal\comment\Entity\Comment;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityFieldManager;
+use Drupal\Core\File\MimeType\MimeTypeGuesser;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Mail\MailManager;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\group\Entity\Group;
 use Drupal\mandrill\Plugin\Mail\MandrillMail;
 use Symfony\Component\HttpFoundation\Response;
@@ -187,6 +190,40 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
           'group_id' => $group->id(),
         ]);
         return FALSE;
+      }
+
+      // Add attachments.
+      // @see https://mandrill.zendesk.com/hc/en-us/articles/205583207-What-is-the-format-of-inbound-email-webhooks
+      $files = [];
+
+      if (isset($message['attachments'])) {
+        /** @var EntityFieldManager $entity_field_manager */
+        $entity_field_manager = \Drupal::service('entity_field.manager');
+
+        $comment_fields = $entity_field_manager->getFieldDefinitions('comment', 'discussions_reply');
+
+        if (isset($comment_fields['discussions_attachments'])) {
+          /** @var FieldConfig $discussions_attachments */
+          $discussions_attachments = $comment_fields['discussions_attachments'];
+
+          $valid_file_extensions = explode(' ', $discussions_attachments->getSetting('file_extensions'));
+          $valid_file_types = [];
+          $file_directory = $discussions_attachments->getSetting('file_directory');
+
+          /** @var MimeTypeGuesser $mime_type_guesser */
+          $mime_type_guesser = \Drupal::service('file.mime_type.guesser');
+
+          // Create an array of valid file types based on valid extensions.
+          foreach ($valid_file_extensions as $ext) {
+            // MimeTypeGuesser requires a full file name, but the file doesn't
+            // need to exist.
+            $fake_path = 'attachment.' . $ext;
+            $valid_file_types[] = $mime_type_guesser->guess($fake_path);
+          }
+
+          // TODO: Save attachments to file system.
+          // TODO: Link files to comment entity.
+        }
       }
 
       // Add new comment to discussion.
