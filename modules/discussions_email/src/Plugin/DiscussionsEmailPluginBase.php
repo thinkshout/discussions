@@ -30,7 +30,15 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
    * {@inheritdoc}
    */
   public function processUnsubscribe(Group $group, $email) {
+    $user = user_load_by_mail($email);
 
+    if (!empty($user)) {
+      $group_member = $group->getMember($user);
+
+      if (!empty($group_member)) {
+        $group_member->getGroupContent()->delete();
+      }
+    }
   }
 
   /**

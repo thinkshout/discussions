@@ -160,6 +160,12 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
       return FALSE;
     }
 
+    // Process unsubscribe message.
+    if (trim($message['subject']) == 'unsubscribe') {
+      $this->processUnsubscribe($group, $message['from_email']);
+      return TRUE;
+    }
+
     // TODO: Check user permission to create reply to discussion.
     // TODO: Can group / posting access be done in DiscussionsEmailPluginBase?
 
