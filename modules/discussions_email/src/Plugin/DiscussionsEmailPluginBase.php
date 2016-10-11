@@ -2,9 +2,12 @@
 
 namespace Drupal\discussions_email\Plugin;
 
+use Drupal\Core\Entity\EntityFieldManager;
+use Drupal\Core\File\MimeType\MimeTypeGuesser;
 use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\discussions\Entity\Discussion;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupContent;
 
@@ -99,18 +102,41 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
   }
 
   /**
-   * Creates a new discussion in a group.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *   The user creating the discussion.
-   * @param \Drupal\group\Entity\Group $group
-   *   The group to create the discussion in.
-   * @param $subject
-   *   The discussion subject.
-   * @param $body
-   *   The discussion body text.
+   * {@inheritdoc}
    */
-  public function createNewDiscussion(AccountInterface $user, Group $group, $subject, $body) {
+  public function getValidAttachmentFileTypes() {
+    /** @var EntityFieldManager $entity_field_manager */
+    $entity_field_manager = \Drupal::service('entity_field.manager');
+
+    $comment_fields = $entity_field_manager->getFieldDefinitions('comment', 'discussions_reply');
+
+    $valid_file_types = [];
+    if (isset($comment_fields['discussions_attachments'])) {
+      /** @var FieldConfig $discussions_attachments */
+      $discussions_attachments = $comment_fields['discussions_attachments'];
+
+      $valid_file_extensions = explode(' ', $discussions_attachments->getSetting('file_extensions'));
+      $valid_file_types = [];
+
+      /** @var MimeTypeGuesser $mime_type_guesser */
+      $mime_type_guesser = \Drupal::service('file.mime_type.guesser');
+
+      // Create an array of valid file types based on valid extensions.
+      foreach ($valid_file_extensions as $ext) {
+        // MimeTypeGuesser requires a full file name, but the file doesn't
+        // need to exist.
+        $fake_path = 'attachment.' . $ext;
+        $valid_file_types[] = $mime_type_guesser->guess($fake_path);
+      }
+    }
+
+    return $valid_file_types;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createNewDiscussion(AccountInterface $user, Group $group, $subject) {
     // Get first enabled group_discussion plugin to create discussion
     // group content.
     // TODO: Allow a way to indicate which plugin to use from email address?
@@ -140,13 +166,9 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
 
       $group_content->set('entity_id', $discussion->id());
       $group_content->save();
-
-      // Add initial comment to new discussion.
-
-      /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
-      $group_discussion_service = \Drupal::service('discussions.group_discussion');
-      $group_discussion_service->addComment($discussion->id(), 0, $user->id(), $body);
     }
+
+    return $discussion;
   }
 
   /**

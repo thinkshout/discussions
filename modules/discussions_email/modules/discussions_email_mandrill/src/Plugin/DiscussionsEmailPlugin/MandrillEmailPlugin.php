@@ -173,15 +173,13 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     // TODO: Can group / posting access be done in DiscussionsEmailPluginBase?
 
     $email_parts = explode('@', $message['email']);
-
     list($email_username, $discussion_id, $parent_comment_id) = explode(self::DISCUSSION_GROUP_EMAIL_SEPARATOR, $email_parts[0]);
+
+    /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
+    $group_discussion_service = \Drupal::service('discussions.group_discussion');
 
     if (!empty($discussion_id)) {
       // Load discussion.
-
-      /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
-      $group_discussion_service = \Drupal::service('discussions.group_discussion');
-
       $discussion = $group_discussion_service->getGroupDiscussion($group->id(), $discussion_id);
 
       if (empty($discussion)) {
@@ -191,11 +189,16 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
         ]);
         return FALSE;
       }
+    }
+    else {
+      // Create new discussion.
+      $discussion = $this->createNewDiscussion($user, $group, $message['subject']);
+    }
 
-      // Add attachments.
+    if (!empty($discussion)) {
+      // Create file attachments.
       // @see https://mandrill.zendesk.com/hc/en-us/articles/205583207-What-is-the-format-of-inbound-email-webhooks
       $files = [];
-
       if (isset($message['attachments'])) {
         /** @var EntityFieldManager $entity_field_manager */
         $entity_field_manager = \Drupal::service('entity_field.manager');
@@ -206,35 +209,33 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
           /** @var FieldConfig $discussions_attachments */
           $discussions_attachments = $comment_fields['discussions_attachments'];
 
-          $valid_file_extensions = explode(' ', $discussions_attachments->getSetting('file_extensions'));
-          $valid_file_types = [];
           $file_directory = $discussions_attachments->getSetting('file_directory');
 
-          /** @var MimeTypeGuesser $mime_type_guesser */
-          $mime_type_guesser = \Drupal::service('file.mime_type.guesser');
+          $valid_file_types = $this->getValidAttachmentFileTypes();
 
-          // Create an array of valid file types based on valid extensions.
-          foreach ($valid_file_extensions as $ext) {
-            // MimeTypeGuesser requires a full file name, but the file doesn't
-            // need to exist.
-            $fake_path = 'attachment.' . $ext;
-            $valid_file_types[] = $mime_type_guesser->guess($fake_path);
+          // Build file path.
+          $base_path = explode('/', $file_directory)[0] . '/' . strtolower(str_replace(' ', '_', $discussion->label()));
+
+          // Save attachments to file system.
+          foreach ($message['attachments'] as $filename => $attachment) {
+            // Ignore invalid file types.
+            if (!in_array($attachment['type'], $valid_file_types)) {
+              continue;
+            }
+
+            $uri = file_build_uri($base_path);
+            file_prepare_directory($uri, FILE_CREATE_DIRECTORY && FILE_MODIFY_PERMISSIONS);
+            $file = file_save_data(base64_decode($attachment['content']), $uri . '/' . $attachment['name']);
+
+            $files[] = $file;
           }
-
-          // TODO: Save attachments to file system.
-          // TODO: Link files to comment entity.
         }
       }
 
-      // Add new comment to discussion.
+      // Add comment.
       $filtered_message = $this->filterEmailReply($message['html']);
 
-      $group_discussion_service->addComment($discussion->id(), $parent_comment_id, $user->id(), $filtered_message);
-    }
-    else {
-      // Create new discussion.
-      $filtered_message = $this->filterEmailReply($message['html']);
-      $this->createNewDiscussion($user, $group, $message['subject'], $filtered_message);
+      $group_discussion_service->addComment($discussion->id(), $parent_comment_id, $user->id(), $filtered_message, $files);
     }
   }
 

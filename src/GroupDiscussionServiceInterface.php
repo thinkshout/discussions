@@ -44,10 +44,12 @@ interface GroupDiscussionServiceInterface {
    *   The ID of the user ID of the comment author.
    * @param string $comment_body
    *   The comment text.
+   * @param array $files
+   *   Array of files created in the file system via file_save_data().
    *
    * @return bool
    *   TRUE if comment added, FALSE otherwise.
    */
-  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body);
+  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body, $files);
 
 }

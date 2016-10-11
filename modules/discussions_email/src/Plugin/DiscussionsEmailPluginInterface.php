@@ -6,6 +6,7 @@ use Drupal\comment\Entity\Comment;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\group\Entity\Group;
 
@@ -105,6 +106,29 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
    *
    */
   public function filterEmailReply($message);
+
+  /**
+   * Gets an array of file MIME types valid for use as email attachments.
+   *
+   * @return array
+   *   Array of valid MIME types as strings.
+   */
+  public function getValidAttachmentFileTypes();
+
+  /**
+   * Creates a new discussion in a group.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $user
+   *   The user creating the discussion.
+   * @param \Drupal\group\Entity\Group $group
+   *   The group to create the discussion in.
+   * @param $subject
+   *   The discussion subject.
+   *
+   * @return Discussion
+   *   The new discussion entity.
+   */
+  public function createNewDiscussion(AccountInterface $user, Group $group, $subject);
 
   /**
    * Sends an email message.
