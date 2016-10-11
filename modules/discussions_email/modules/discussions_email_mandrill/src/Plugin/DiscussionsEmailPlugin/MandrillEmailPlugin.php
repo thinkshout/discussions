@@ -117,14 +117,14 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
           /** @var Group $group */
           $group = $this->loadGroupFromEmail($event['msg']['email']);
 
-          if (empty($group)) {
+          if (!empty($group)) {
+            $this->processBounce($group, $event['msg']['from_email']);
+          }
+          else {
             \Drupal::logger('discussions_email_mandrill')->error('Unable to process reject message; no group found for email {email}', [
               'email' => $event['msg']['email'],
             ]);
-            return FALSE;
           }
-
-          $this->processBounce($group, $event['msg']['from_email']);
           break;
         case 'inbound':
           $this->processMessage($event['msg']);
