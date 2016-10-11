@@ -65,6 +65,16 @@ class DiscussionsEmailSettingsForm extends ConfigFormBase {
         '#description' => $this->t('Set a user\'s group status to inactive when email cannot be delivered to the user\'s address.'),
         '#default_value' => $config->get('process_bounces'),
       ];
+
+      $form['attachment_send_limit'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Attachment size send limit'),
+        '#description' => $this->t('Any attachments larger than this size will not be attached to outgoing emails. Instead, a link to the file on the site will be included in the email.'),
+        '#field_suffix' => 'MB',
+        '#size' => 5,
+        '#required' => TRUE,
+        '#default_value' => !empty($config->get('attachment_send_limit')) ? $config->get('attachment_send_limit') : 5,
+      ];
     }
 
     return parent::buildForm($form, $form_state);
@@ -79,6 +89,7 @@ class DiscussionsEmailSettingsForm extends ConfigFormBase {
       ->set('filter_css_classes', $form_state->getValue('filter_css_classes'))
       ->set('email_author', $form_state->getValue('email_author'))
       ->set('process_bounces', $form_state->getValue('process_bounces'))
+      ->set('attachment_send_limit', $form_state->getValue('attachment_send_limit'))
       ->save();
   }
 

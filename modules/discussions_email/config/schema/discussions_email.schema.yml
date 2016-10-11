@@ -16,3 +16,6 @@ discussions_email.settings:
     process_bounces:
       type: boolean
       label: 'Process bounces'
+    attachment_send_limit:
+      type: string
+      label: 'Attachment size send limit'
