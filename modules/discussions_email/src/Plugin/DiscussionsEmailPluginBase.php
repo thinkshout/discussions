@@ -26,7 +26,18 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
    * {@inheritdoc}
    */
   public function processBounce(Group $group, $email) {
+    $user = user_load_by_mail($email);
 
+    if (!empty($user)) {
+      $group_member = $group->getMember($user);
+
+      // Set group member to pending status if email bounces.
+      if (!empty($group_member)) {
+        $group_content = $group_member->getGroupContent();
+        $group_content->set('group_requires_approval', 1);
+        $group_content->save();
+      }
+    }
   }
 
   /**
