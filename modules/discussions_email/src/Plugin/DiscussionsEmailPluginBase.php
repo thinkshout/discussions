@@ -26,6 +26,12 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
    * {@inheritdoc}
    */
   public function processBounce(Group $group, $email) {
+    // Only process bounced email if configured to do so.
+    $config = \Drupal::config('discussions_email.settings');
+    if (!$config->get('process_bounces')) {
+      return;
+    }
+
     $user = user_load_by_mail($email);
 
     if (!empty($user)) {
