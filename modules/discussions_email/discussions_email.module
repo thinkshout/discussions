@@ -251,8 +251,9 @@ function discussions_email_comment_insert(EntityInterface $entity) {
 
   // TODO: Postscript token replacement on body.
 
-  // Filter comment body for HTML markup.
-  $body = check_markup($entity->get('comment_body')->value, 'discussions_email_html');
+  // Prepare comment body for email.
+  $rendered_comment = $entity->get('comment_body')->view();
+  $body = $rendered_comment[0]['#text'];
 
   // Add email subject prefix, if set.
   $subject_prefix = $group->hasField('discussions_email_subject_prefix') ? $group->get('discussions_email_subject_prefix')->value : NULL;
@@ -267,5 +268,5 @@ function discussions_email_comment_insert(EntityInterface $entity) {
     'body' => $body,
   ];
 
-  $plugin->sendEmail($message, $group, $discussion);
+  $plugin->sendEmail($message, $group, $discussion, $entity);
 }

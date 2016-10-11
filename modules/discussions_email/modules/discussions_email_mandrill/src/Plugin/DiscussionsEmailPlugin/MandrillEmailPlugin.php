@@ -6,11 +6,14 @@ use Drupal\comment\Entity\Comment;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityFieldManager;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Mail\MailManager;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\file\Entity\File;
 use Drupal\group\Entity\Group;
 use Drupal\mandrill\MandrillAPI;
 use Drupal\mandrill\Plugin\Mail\MandrillMail;
@@ -142,6 +145,9 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     $group_email_address = $group->get('discussions_email_address')->value;
     $group_owner_email_address = $group->getOwner()->getEmail();
 
+    // Convert message body to array for Mandrill.
+    $message['body'] = [$message['body']];
+
     $message['params'] = [
       'mandrill' => [
         // Move 'from_email' to suit Mandrill mail plugin.
@@ -166,6 +172,32 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
       ],
     ];
 
+    // Add attachments.
+    $attachments = $comment->get('discussions_attachments')->getValue();
+
+    if (!empty($attachments)) {
+      $message['attachments'] = [];
+
+      $config = \Drupal::config('discussions_email.settings');
+      // Convert attachment send limit from MB to bytes.
+      $attachment_send_limit = ($config->get('attachment_send_limit') * 1000000);
+
+      foreach ($attachments as $attachment) {
+        /** @var File $file */
+        $file = File::load($attachment['target_id']);
+
+        if ($file->getSize() < $attachment_send_limit) {
+          // Attach files under send limit to email.
+          $message['attachments'][] = $file->getFileUri();
+        }
+        else {
+          // Add link to files over send limit.
+          $file_url = Url::fromUri(file_create_url($file->getFileUri()));
+          $message['body'][] = $file_url->toString();
+        }
+      }
+    }
+
     // Concatenate recipient email addresses for Mandrill mail plugin.
     $message['to'] = implode(',', $message['to']);
 
@@ -179,6 +211,8 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     $mandrill = $mail_manager->createInstance('mandrill_mail');
 
     // Format and send mail through Mandrill.
+    $message['html'] = $message['body'];
+
     $message = $mandrill->format($message);
     return $mandrill->mail($message);
   }
