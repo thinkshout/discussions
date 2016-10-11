@@ -207,11 +207,13 @@ function discussions_theme_registry_alter(&$theme_registry) {
  */
 function discussions_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Change current user topics select element to checkbox.
-  $form['current_user']['#type'] = 'checkbox';
-  $form['current_user']['#default_value'] = FALSE;
-  unset($form['current_user']['#options']);
+  if (isset($form['current_user'])) {
+    $form['current_user']['#type'] = 'checkbox';
+    $form['current_user']['#default_value'] = FALSE;
+    unset($form['current_user']['#options']);
 
-  $form['current_user']['#weight'] = 1;
+    $form['current_user']['#weight'] = 1;
+  }
 }
 
 /**
