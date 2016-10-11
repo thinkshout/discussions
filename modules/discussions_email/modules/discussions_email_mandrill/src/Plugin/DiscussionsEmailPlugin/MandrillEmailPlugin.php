@@ -5,7 +5,6 @@ namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 use Drupal\comment\Entity\Comment;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityFieldManager;
-use Drupal\Core\File\MimeType\MimeTypeGuesser;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Mail\MailManager;
 use Drupal\Core\Session\AccountInterface;
@@ -13,6 +12,7 @@ use Drupal\discussions\Entity\Discussion;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\group\Entity\Group;
+use Drupal\mandrill\MandrillAPI;
 use Drupal\mandrill\Plugin\Mail\MandrillMail;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,11 +38,63 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   }
 
   /**
+   * Gets the first active webhook matching this site's URL.
+   *
+   * @return array
+   *   Array of Mandrill webhook data.
+   */
+  public function getActiveWebhook() {
+    global $base_url;
+
+    /** @var MandrillAPI $mandrill */
+    $mandrill = \Drupal::service('mandrill.api');
+
+    $webhooks = $mandrill->getWebhooks();
+
+    $url = $base_url . '/discussions/email/webhook' . (isset($_REQUEST['domain']) ? '?domain=' . $_REQUEST['domain'] : '');
+
+    foreach ($webhooks as $webhook) {
+      if ($webhook['url'] == $url) {
+        return $webhook;
+      }
+    }
+
+    return NULL;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function validateWebhookSource() {
-    // TODO: Validation.
-    return TRUE;
+    global $base_url;
+
+    // See http://help.mandrill.com/entries/23704122-Authenticating-webhook-requests
+
+    if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
+      return TRUE;
+    }
+
+    if (!isset($_POST)) {
+      return FALSE;
+    }
+
+    $webhook = $this->getActiveWebhook();
+    if (!$webhook || !$webhook['auth_key']) {
+      return FALSE;
+    }
+
+    $auth_key = $webhook['auth_key'];
+
+    ksort($_POST);
+
+    $url = $base_url . $_SERVER['REQUEST_URI'];
+    foreach ($_POST as $arg => $val) {
+      $url .= $arg . $val;
+    }
+
+    $signature = base64_encode(hash_hmac('sha1', $url, $auth_key, TRUE));
+
+    return ($signature == $_SERVER['HTTP_X_MANDRILL_SIGNATURE']);
   }
 
   /**
