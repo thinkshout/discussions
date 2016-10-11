@@ -78,7 +78,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body, $files) {
+  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body, $files = []) {
     $user = \Drupal::currentUser();
 
     /** @var Discussion $discussion */
@@ -103,6 +103,15 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
         'format' => 'discussions_email_html',
       ],
     ]);
+
+    $attachments = [];
+    foreach ($files as $file) {
+      $attachments[] = ['target_id' => $file->id()];
+    }
+
+    if (!empty($attachments)) {
+      $comment->discussions_attachments->setValue($attachments);
+    }
 
     return $comment->save();
   }

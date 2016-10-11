@@ -50,6 +50,6 @@ interface GroupDiscussionServiceInterface {
    * @return bool
    *   TRUE if comment added, FALSE otherwise.
    */
-  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body, $files);
+  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body, $files = []);
 
 }
