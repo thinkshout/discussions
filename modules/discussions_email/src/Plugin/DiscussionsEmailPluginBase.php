@@ -89,14 +89,16 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
    * {@inheritdoc}
    */
   public function filterEmailReply($message) {
-    $reply_line_position = strpos($message, DISCUSSIONS_EMAIL_MESSAGE_SEPARATOR);
+    // Message content after the reply line (quoted messages) should be removed.
+    // Set initial reply line position.
+    $reply_line_position = (int) strpos($message, DISCUSSIONS_EMAIL_MESSAGE_SEPARATOR);
 
-    // Filter out html tags in message.
+    // Some email clients wrap quoted messages in HTML div elements.
+    // If configured, locate matching markup in the message.
     $config = \Drupal::config('discussions_email.settings');
     $filter_css_classes = $config->get('filter_css_classes');
     $classes_array = explode(',', $filter_css_classes);
 
-    // Loop through CSS classes to filter out div elements.
     if (!empty($classes_array)) {
       foreach ($classes_array as $class) {
         $div_tag = '<div class="' . trim($class) . '">';
@@ -105,14 +107,17 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
         $tag_pos = strpos($message, $div_tag);
         if ($tag_pos !== FALSE) {
 
+          // If this div element appears in the message body before the
+          // previously set reply line position, update the reply line
+          // position to this div's position.
           $reply_line_position = min($reply_line_position, $tag_pos);
         }
       }
 
-      $prior_close_tag_position = strrpos($message, '</', $reply_line_position - strlen($message));
-      $next_open_tag_position = strpos($message, '<', $prior_close_tag_position + 2);
-
-      $message = substr($message, 0, $next_open_tag_position);
+      // If reply line position is set, trim from message body.
+      if ($reply_line_position > 0) {
+        $message = substr($message, 0, $reply_line_position);
+      }
     }
 
     return $message;
