@@ -110,7 +110,7 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
           // If this div element appears in the message body before the
           // previously set reply line position, update the reply line
           // position to this div's position.
-          $reply_line_position = min($reply_line_position, $tag_pos);
+          $reply_line_position = ($reply_line_position > 0) ? min($reply_line_position, $tag_pos) : $tag_pos;
         }
       }
 
