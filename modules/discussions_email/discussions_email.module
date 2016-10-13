@@ -160,6 +160,8 @@ function discussions_email_group_content_type_insert(EntityInterface $entity) {
       'field_storage' => FieldStorageConfig::loadByName('group_content', 'discussions_email_frequency'),
       'bundle' => $entity->id(),
       'label' => t('Email Frequency'),
+      'default_value' => 1,
+      'required' => TRUE,
     ])->save();
 
     // Assign widget settings for the 'default' form mode.
