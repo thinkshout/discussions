@@ -36,10 +36,12 @@ class GroupsCurrentUser extends Equality {
     }
 
     // Add group ID condition.
-    $where_group = 0;
-    $in_operator = ($this->operator == '=') ? 'IN' : 'NOT IN';
-    $this->query->addWhere($where_group,
-      'group_content_field_data_discussions.gid', $user_groups, $in_operator);
+    if (!empty($user_groups)) {
+      $where_group = 0;
+      $in_operator = ($this->operator == '=') ? 'IN' : 'NOT IN';
+      $this->query->addWhere($where_group,
+        'group_content_field_data_discussions.gid', $user_groups, $in_operator);
+    }
   }
 
   /**
