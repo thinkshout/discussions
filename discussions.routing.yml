@@ -1,14 +1,6 @@
 route_callbacks:
   - '\Drupal\discussions\Routing\GroupDiscussionRouteProvider::getRoutes'
 
-discussions.config.discussion_form:
-  path: '/admin/config/discussions/discussion'
-  defaults:
-    _form: '\Drupal\discussions\Form\DiscussionSettingsForm'
-    _title: 'Discussion'
-  requirements:
-    _permission: 'administer discussions'
-
 entity.discussion.canonical:
   path: '/discussion/{discussion}'
   defaults:
