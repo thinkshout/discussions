@@ -275,6 +275,30 @@ function discussions_form_alter(&$form, FormStateInterface $form_state, $form_id
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function discussions_form_comment_discussions_reply_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var \Drupal\comment\Entity\Comment $comment */
+  $comment = $form_state->getBuildInfo()['callback_object']->getEntity();
+
+  $discussion_id = $comment->entity_id->getValue()[0]['target_id'];
+
+  /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
+  $group_discussion_service = \Drupal::service('discussions.group_discussion');
+
+  /** @var Group $group */
+  $group = $group_discussion_service->getDiscussionGroup($discussion_id);
+
+  // Remove Add comment form for non-members.
+  // TODO: This is a quick hack and needs to be replaced.
+  if (empty($group->getMember(\Drupal::currentUser()))) {
+    $form['comment_body']['#access'] = FALSE;
+    $form['discussions_attachments']['#access'] = FALSE;
+    unset($form['actions']);
+  }
+}
+
+/**
  * Submit handler for group preferences form.
  */
 function discussions_preferences_form_post_submit($form, FormStateInterface $form_state) {
