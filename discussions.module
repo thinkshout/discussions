@@ -247,8 +247,7 @@ function discussions_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatch
       }
     }
   }
-  else if (($route_match->getRouteName() == 'entity.group_content.canonical') || ($route_match->getRouteName() == 'entity.group_content.edit_form'))
-  {
+  else if (($route_match->getRouteName() == 'entity.group_content.canonical') || ($route_match->getRouteName() == 'entity.group_content.edit_form')) {
     global $base_url;
 
     // Replace "group content" breadcrumb with "members" breadcrumb.
@@ -265,6 +264,10 @@ function discussions_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatch
 function discussions_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if (\Drupal::routeMatch()->getRouteName() == 'entity.group.preferences') {
     $form['actions']['submit']['#submit'][] = 'discussions_preferences_form_post_submit';
+  }
+  else if (\Drupal::routeMatch()->getRouteName() == 'entity.group_content.edit_form') {
+    // Replace form title with entity label when editing group content.
+    $form['#title'] = t('Edit @name', ['@name' => $form_state->getBuildInfo()['callback_object']->getEntity()->label()]);
   }
 }
 
