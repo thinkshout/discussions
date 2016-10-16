@@ -252,9 +252,12 @@ function discussions_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatch
 
     // Replace "group content" breadcrumb with "members" breadcrumb.
     // TODO: Replace this hack with a custom route.
-    $breadcrumb->getLinks()[2]->setText('Members');
-    $route_params = $breadcrumb->getLinks()[2]->getUrl()->getRouteParameters();
-    $breadcrumb->getLinks()[2]->setUrl(\Drupal\Core\Url::fromUri($base_url . '/group/' . $route_params['group'] . '/members'));
+    if (isset($breadcrumb->getLinks()[2])) {
+      $breadcrumb->getLinks()[2]->setText('Members');
+      $route_params = $breadcrumb->getLinks()[2]->getUrl()
+        ->getRouteParameters();
+      $breadcrumb->getLinks()[2]->setUrl(\Drupal\Core\Url::fromUri($base_url . '/group/' . $route_params['group'] . '/members'));
+    }
   }
 }
 
