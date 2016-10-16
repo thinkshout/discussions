@@ -52,6 +52,20 @@ function discussions_entity_view_alter(array &$build, EntityInterface $entity, E
       '#arguments' => array($entity->id()),
     );
   }
+  else if (isset($build['#entity_type']) && ($build['#entity_type'] == 'discussion')) {
+    // Fast hack to completely remove comment form for non-members.
+    // TODO: Replace with permissions-based solution.
+
+    /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
+    $group_discussion_service = \Drupal::service('discussions.group_discussion');
+
+    /** @var Group $group */
+    $group = $group_discussion_service->getDiscussionGroup($entity->id());
+
+    if (empty($group->getMember(\Drupal::currentUser()))) {
+      $build['comments'][0]['comment_form'] = [];
+    }
+  }
 }
 
 /**
@@ -271,30 +285,6 @@ function discussions_form_alter(&$form, FormStateInterface $form_state, $form_id
   else if (\Drupal::routeMatch()->getRouteName() == 'entity.group_content.edit_form') {
     // Replace form title with entity label when editing group content.
     $form['#title'] = t('Edit @name', ['@name' => $form_state->getBuildInfo()['callback_object']->getEntity()->label()]);
-  }
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function discussions_form_comment_discussions_reply_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  /** @var \Drupal\comment\Entity\Comment $comment */
-  $comment = $form_state->getBuildInfo()['callback_object']->getEntity();
-
-  $discussion_id = $comment->entity_id->getValue()[0]['target_id'];
-
-  /** @var \Drupal\discussions\GroupDiscussionService $group_discussion_service */
-  $group_discussion_service = \Drupal::service('discussions.group_discussion');
-
-  /** @var Group $group */
-  $group = $group_discussion_service->getDiscussionGroup($discussion_id);
-
-  // Remove Add comment form for non-members.
-  // TODO: This is a quick hack and needs to be replaced.
-  if (empty($group->getMember(\Drupal::currentUser()))) {
-    $form['comment_body']['#access'] = FALSE;
-    $form['discussions_attachments']['#access'] = FALSE;
-    unset($form['actions']);
   }
 }
 
