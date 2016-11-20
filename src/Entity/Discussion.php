@@ -72,7 +72,7 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
         'text_processing' => 0,
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'string',
+        'type' => 'string_textfield',
         'settings' => array(
           'display_label' => TRUE,
         ),
@@ -81,31 +81,6 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'type' => 'string',
-        'weight' => 0,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['comments'] = BaseFieldDefinition::create('comment')
-      ->setLabel(t('Replies'))
-      ->setDescription(t('Replies to the Discussion.'))
-      ->setSettings(array(
-        'comment_type' => 'discussions_reply',
-        'default_mode' => 1,
-        'per_page' => 50,
-        'anonymous' => 0,
-        'form_location' => TRUE,
-        'preview' => 0,
-      ))
-      ->setDefaultValue(array(
-        'status' => 2,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'comment',
-        'weight' => 0,
-      ))
-      ->setDisplayOptions('view', array(
-        'type' => 'comment',
         'weight' => 0,
       ))
       ->setDisplayConfigurable('form', TRUE)

@@ -3,7 +3,10 @@
 namespace Drupal\discussions\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\discussions\DiscussionTypeInterface;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Defines the Discussion Type entity.
@@ -51,5 +54,55 @@ class DiscussionType extends ConfigEntityBundleBase implements DiscussionTypeInt
    * @var string
    */
   protected $label;
+
+  /**
+   * @inheritdoc
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+
+    if ($update == FALSE) {
+      // TODO: Skip default discussion types due to dependency issue. Fix this.
+      if (($this->id == 'private') || ($this->id == 'public')) {
+        return;
+      }
+
+      $this->addCommentsField($this->id);
+    }
+  }
+
+  /**
+   * Adds a comments field to a discussion type.
+   *
+   * @param string $discussion_type_id
+   *   The discussion type ID.
+   */
+  private function addCommentsField($discussion_type_id) {
+    if (!FieldConfig::loadByName('discussion', $discussion_type_id, 'comments')) {
+      // Attach the comments field by default.
+      $field = \Drupal::entityManager()->getStorage('field_config')->create(array(
+        'label' => 'Replies',
+        'bundle' => $discussion_type_id,
+        'field_storage' => FieldStorageConfig::loadByName('discussion', 'comments'),
+      ));
+      $field->save();
+
+      // Assign widget settings for the 'default' form mode.
+      entity_get_form_display('discussion', $discussion_type_id, 'default')
+        ->setComponent('comments', array(
+          'type' => 'comment_default',
+          'weight' => 0,
+        ))
+        ->save();
+
+      // Assign display settings for the 'default' view mode.
+      entity_get_display('discussion', $discussion_type_id, 'default')
+        ->setComponent('comments', array(
+          'type' => 'comment_default',
+          'weight' => 0,
+        ))
+        ->save();
+    }
+  }
 
 }
