@@ -4,8 +4,8 @@ dependencies:
   module:
     - comment
     - discussions
-id: discussion.comments
-field_name: comments
+id: discussion.discussions_comments
+field_name: discussions_comments
 entity_type: discussion
 type: comment
 settings:

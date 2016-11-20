@@ -78,18 +78,18 @@ class DiscussionType extends ConfigEntityBundleBase implements DiscussionTypeInt
    *   The discussion type ID.
    */
   private function addCommentsField($discussion_type_id) {
-    if (!FieldConfig::loadByName('discussion', $discussion_type_id, 'comments')) {
+    if (!FieldConfig::loadByName('discussion', $discussion_type_id, 'discussions_comments')) {
       // Attach the comments field by default.
       $field = \Drupal::entityManager()->getStorage('field_config')->create(array(
         'label' => 'Replies',
         'bundle' => $discussion_type_id,
-        'field_storage' => FieldStorageConfig::loadByName('discussion', 'comments'),
+        'field_storage' => FieldStorageConfig::loadByName('discussion', 'discussions_comments'),
       ));
       $field->save();
 
       // Assign widget settings for the 'default' form mode.
       entity_get_form_display('discussion', $discussion_type_id, 'default')
-        ->setComponent('comments', array(
+        ->setComponent('discussions_comments', array(
           'type' => 'comment_default',
           'weight' => 0,
         ))
@@ -97,7 +97,7 @@ class DiscussionType extends ConfigEntityBundleBase implements DiscussionTypeInt
 
       // Assign display settings for the 'default' view mode.
       entity_get_display('discussion', $discussion_type_id, 'default')
-        ->setComponent('comments', array(
+        ->setComponent('discussions_comments', array(
           'type' => 'comment_default',
           'weight' => 0,
         ))

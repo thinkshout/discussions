@@ -97,7 +97,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
       'name' => $user->getAccountName(),
       'status' => Comment::PUBLISHED,
       'entity_type' => 'discussion',
-      'field_name' => 'comments',
+      'field_name' => 'discussions_comments',
       'comment_body' => [
         'value' => $comment_body,
         'format' => 'discussions_email_html',
