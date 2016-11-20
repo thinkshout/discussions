@@ -62,11 +62,6 @@ class DiscussionType extends ConfigEntityBundleBase implements DiscussionTypeInt
     parent::postSave($storage, $update);
 
     if ($update == FALSE) {
-      // TODO: Skip default discussion types due to dependency issue. Fix this.
-      if (($this->id == 'private') || ($this->id == 'public')) {
-        return;
-      }
-
       $this->addCommentsField($this->id);
     }
   }
