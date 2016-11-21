@@ -3,6 +3,7 @@ Summary
 
 The Discussions module leverages the Group module to create discussion groups.
 
+
 Requirements
 --------------------------------------------------------------------------------
 
@@ -11,6 +12,7 @@ Requirements
   Group module patch for pending memberships:
   https://www.drupal.org/files/issues/request_membership-2752603-20.patch
 
+
 Installation
 --------------------------------------------------------------------------------
 
@@ -18,6 +20,7 @@ Download and extract the discussions module into your site's modules directory
 and install via Drupal's UI or by using Drush.
 
 More info on installing Drupal modules: https://www.drupal.org/node/1897420
+
 
 Quick Start
 --------------------------------------------------------------------------------
@@ -41,6 +44,7 @@ Quick Start
 - You should now see a discussion group
 
 - Add a new discussion by clicking "Create Public" in the Group operations block
+
 
 Configuration
 --------------------------------------------------------------------------------
@@ -105,6 +109,7 @@ http://YOUR_SITE_URL/admin/group/types/manage/public_discussion/permissions
 
 When viewing a Private Discussion Group, users must request a membership, while
 users can simply join a Public Discussion Group.
+
 
 Email Integration
 --------------------------------------------------------------------------------
