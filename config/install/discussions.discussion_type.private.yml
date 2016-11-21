@@ -1,5 +1,7 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - field.storage.discussion.discussions_comments
 id: private
 label: Private
