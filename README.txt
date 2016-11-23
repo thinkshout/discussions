@@ -27,6 +27,12 @@ Quick Start
 
 - Install and enable the Discussions module
 
+- Disable the view with the machine name "group_members":
+
+  /admin/structure/views
+
+  This view is replaced by the Discussions module.
+
 - Go to the Content admin page for the "Public discussion" group:
 
   http://YOUR_SITE_URL/admin/group/types/manage/public_discussion/content
