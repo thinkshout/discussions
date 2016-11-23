@@ -10,7 +10,7 @@ Requirements
 - Group module (https://www.drupal.org/project/group)
 
   Group module patch for pending memberships:
-  https://www.drupal.org/files/issues/request_membership-2752603-20.patch
+  https://www.drupal.org/files/issues/request_membership-2752603-17.patch
 
 
 Installation
