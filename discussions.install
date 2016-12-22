@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the discussions module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function discussions_install() {
+  // Disable group members view provided by the group module.
+  \Drupal::entityTypeManager()->getStorage('view')
+    ->load('group_members')
+    ->setStatus(FALSE)
+    ->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function discussions_uninstall() {
+  // Enable group members view provided by the group module.
+  \Drupal::entityTypeManager()->getStorage('view')
+    ->load('group_members')
+    ->setStatus(TRUE)
+    ->save();
+}
