@@ -303,3 +303,10 @@ function discussions_preferences_form_post_submit($form, FormStateInterface $for
 function discussions_comment_links_alter(array &$links, \Drupal\comment\CommentInterface $entity, array &$context) {
   unset($links['comment']['#links']['comment-reply']);
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function discussions_discussion_type_insert(\Drupal\discussions\DiscussionTypeInterface $discussion_type) {
+  \Drupal::service('plugin.manager.group_content_enabler')->clearCachedDefinitions();
+}
