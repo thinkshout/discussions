@@ -133,16 +133,15 @@ to discussions via email.
 
 ### Using Composer
 
-Add `"drupal/mandrill": "dev-8.x-1.x",` to the "require" block of your
-composer.json file.
+Add the following line to the "require" block of your composer.json file:
+
+"drupal/mandrill": "dev-8.x-1.x"
 
 The block should look like this:
 
-```
-  "require": {
-    "drupal/mandrill": "dev-8.x-1.x",
-  }
-```
+"require": {
+  "drupal/mandrill": "dev-8.x-1.x"
+}
 
 ### Manually
 
