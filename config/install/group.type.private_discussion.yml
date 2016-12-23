@@ -1,6 +1,8 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - field.storage.group_content.discussions_email_frequency
 id: private_discussion
 label: 'Private Discussion Group'
 description: 'Provided by the Discussions module. Membership requires approval.'

@@ -126,60 +126,6 @@ function discussions_email_group_type_insert(EntityInterface $entity) {
 /**
  * Implements hook_ENTITY_TYPE_insert().
  */
-function discussions_email_group_content_type_insert(EntityInterface $entity) {
-  /** @var \Drupal\group\Entity\GroupContentType $entity */
-
-  if ($entity->getContentPlugin()->getPluginId() == 'group_membership') {
-    $group_content_type_id = $entity->getContentPlugin()->getContentTypeConfigId();
-
-    // Build the 'default' display ID for both the entity form and view mode.
-    $default_display_id = "group_content.$group_content_type_id.default";
-
-    // Build or retrieve the 'default' form mode.
-    if (!$form_display = EntityFormDisplay::load($default_display_id)) {
-      $form_display = EntityFormDisplay::create([
-        'targetEntityType' => 'group_content',
-        'bundle' => $group_content_type_id,
-        'mode' => 'default',
-        'status' => TRUE,
-      ]);
-    }
-
-    // Build or retrieve the 'default' view mode.
-    if (!$view_display = EntityViewDisplay::load($default_display_id)) {
-      $view_display = EntityViewDisplay::create([
-        'targetEntityType' => 'group_content',
-        'bundle' => $group_content_type_id,
-        'mode' => 'default',
-        'status' => TRUE,
-      ]);
-    }
-
-    // Add discussions_email_frequency field.
-    FieldConfig::create([
-      'field_storage' => FieldStorageConfig::loadByName('group_content', 'discussions_email_frequency'),
-      'bundle' => $entity->id(),
-      'label' => t('Email Frequency'),
-      'default_value' => 1,
-      'required' => TRUE,
-    ])->save();
-
-    // Assign widget settings for the 'default' form mode.
-    $form_display->setComponent('discussions_email_frequency', [
-      'type' => 'options_select',
-    ])->save();
-
-    // Assign display settings for the 'default' view mode.
-    $view_display->setComponent('discussions_email_frequency', [
-      'label' => 'above',
-      'type' => 'list_default',
-    ])->save();
-  }
-}
-
-/**
- * Implements hook_ENTITY_TYPE_insert().
- */
 function discussions_email_comment_insert(EntityInterface $entity) {
   /** @var \Drupal\comment\Entity\Comment $entity */
 

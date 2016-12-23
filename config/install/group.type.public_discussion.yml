@@ -1,6 +1,8 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - field.storage.group_content.discussions_email_frequency
 id: public_discussion
 label: 'Public Discussion Group'
 description: 'Provided by the Discussions module. Membership is open to all site users.'
