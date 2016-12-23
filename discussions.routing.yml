@@ -9,6 +9,14 @@ entity.discussion.canonical:
   requirements:
     _entity_access: 'discussion.view'
 
+entity.discussion.view:
+  path: '/group/{group}/discussion/{discussion}'
+  defaults:
+    _entity_view: 'discussion'
+    _title_callback: 'Drupal\discussions\Controller\GroupDiscussionController::getTitle'
+  requirements:
+    _entity_access: 'discussion.view'
+
 entity.group_content.group_discussion_add_form:
   path: '/group/{group}/discussion/create/{discussion_type}'
   defaults:
