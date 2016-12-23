@@ -124,3 +124,30 @@ Email Integration
 
 The Discussions Email module provides functionality to receive, create and reply
 to discussions via email.
+
+# Requirements
+
+- Mandrill module (https://www.drupal.org/project/mandrill)
+
+## Mandrill Module Installation
+
+### Using Composer
+
+Add `"drupal/mandrill": "dev-8.x-1.x",` to the "require" block of your
+composer.json file.
+
+The block should look like this:
+
+```
+  "require": {
+    "drupal/mandrill": "dev-8.x-1.x",
+  }
+```
+
+### Manually
+
+Download the Mandrill module with the Mandrill library already included:
+
+https://github.com/thinkshout/mandrill/releases/download/8.x-1.0/mandrill-8.x-1.0-package.zip
+
+Extract the archive to `modules/contrib/mandrill/`
