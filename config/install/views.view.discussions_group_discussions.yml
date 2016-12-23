@@ -158,7 +158,7 @@ display:
           id: comment_count
           table: comment_entity_statistics
           field: comment_count
-          relationship: none
+          relationship: group_content
           group_type: group
           admin_label: ''
           label: Replies
@@ -215,7 +215,7 @@ display:
           id: last_comment_timestamp
           table: comment_entity_statistics
           field: last_comment_timestamp
-          relationship: none
+          relationship: group_content
           group_type: group
           admin_label: ''
           label: 'Last updated'
