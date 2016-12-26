@@ -95,6 +95,7 @@ class DiscussionType extends ConfigEntityBundleBase implements DiscussionTypeInt
         ->setComponent('discussions_comments', array(
           'type' => 'comment_default',
           'weight' => 0,
+          'label' => 'hidden',
         ))
         ->save();
     }
