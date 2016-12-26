@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - discussions.discussion_type.private
+  module:
+    - comment
+id: discussion.private.default
+targetEntityType: discussion
+bundle: private
+mode: default
+content:
+  comments:
+    type: comment_default
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+  subject:
+    type: string_textfield
+    settings:
+      size: 60
+      placeholder: ''
+    weight: 0
+    third_party_settings: {  }
+hidden: {  }
