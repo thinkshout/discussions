@@ -86,7 +86,7 @@ class DiscussionType extends ConfigEntityBundleBase implements DiscussionTypeInt
       entity_get_form_display('discussion', $discussion_type_id, 'default')
         ->setComponent('discussions_comments', array(
           'type' => 'comment_default',
-          'weight' => 0,
+          'weight' => 100,
         ))
         ->save();
 
