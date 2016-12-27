@@ -225,7 +225,7 @@ display:
           table: comment_entity_statistics
           field: comment_count
           relationship: group_content
-          group_type: group
+          group_type: count
           admin_label: ''
           label: Replies
           exclude: false
