@@ -98,7 +98,7 @@ function discussions_email_group_type_insert(EntityInterface $entity) {
   // Assign display settings for the 'default' view mode.
   $view_display->setComponent('discussions_email_postscript', [
     'label' => 'above',
-    'type' => 'text_default',
+    'type' => 'hidden',
   ]);
 
   // Add discussions_email_subject_prefix field.
@@ -116,7 +116,7 @@ function discussions_email_group_type_insert(EntityInterface $entity) {
   // Assign display settings for the 'default' view mode.
   $view_display->setComponent('discussions_email_subject_prefix', [
     'label' => 'above',
-    'type' => 'text_default',
+    'type' => 'hidden',
   ]);
 
   $form_display->save();

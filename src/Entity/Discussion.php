@@ -80,7 +80,7 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ))
       ->setDisplayOptions('view', array(
         'label' => 'above',
-        'type' => 'string',
+        'type' => 'hidden',
         'weight' => 0,
       ))
       ->setDisplayConfigurable('form', TRUE)
