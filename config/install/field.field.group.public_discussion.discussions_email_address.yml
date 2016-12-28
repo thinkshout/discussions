@@ -10,7 +10,7 @@ entity_type: group
 bundle: public_discussion
 label: 'Discussions Group Email'
 description: ''
-required: false
+required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''
