@@ -25,7 +25,7 @@ class GroupsCurrentUser extends Equality {
     $user = \Drupal::currentUser();
     $groups = Group::loadMultiple();
 
-    $user_groups = array();
+    $user_groups = array(-1);
 
     /** @var Group $group */
     foreach ($groups as $group) {
