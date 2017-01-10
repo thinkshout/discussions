@@ -306,7 +306,7 @@ function discussions_preferences_form_post_submit($form, FormStateInterface $for
  * Implements hook_comment_links_alter().
  */
 function discussions_comment_links_alter(array &$links, \Drupal\comment\CommentInterface $entity, array &$context) {
-  unset($links['comment']['#links']['comment-reply']);
+//  unset($links['comment']['#links']['comment-reply']);
 }
 
 /**
