@@ -214,3 +214,15 @@ function discussions_email_comment_insert(EntityInterface $entity) {
 
   $plugin->sendEmail($message, $group, $discussion, $entity);
 }
+
+/**
+ * Implements hook_comment_links_alter().
+ */
+function discussions_email_comment_links_alter(array &$links, \Drupal\comment\CommentInterface $entity, array &$context) {
+  // Remove "reply" link from comments because when replying to comments via
+  // email we'll always be replying as opposed to posting a new comment and the
+  // threading will get really deep really quick. Instead, we want to post each
+  // comment as a new comment in the thread and remove the ability to "reply"
+  // altogether.
+  unset($links['comment']['#links']['comment-reply']);
+}
