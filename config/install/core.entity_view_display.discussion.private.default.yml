@@ -2,26 +2,31 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.discussions_reply.default
     - discussions.discussion_type.private
     - field.field.discussion.private.discussions_comments
     - field.field.discussion.private.field_discussions_message_id
+  module:
+    - comment
 id: discussion.private.default
 targetEntityType: discussion
 bundle: private
 mode: default
 content:
-  comments:
+  discussions_comments:
     type: comment_default
-    weight: 1
-    settings: {  }
+    weight: 2
+    label: hidden
+    settings:
+      pager_id: 0
+      view_mode: default
     third_party_settings: {  }
   subject:
-    type: string_textfield
+    type: string
+    weight: 1
+    label: hidden
     settings:
-      size: 60
-      placeholder: ''
-    weight: 0
+      link_to_entity: false
     third_party_settings: {  }
 hidden:
-  discussions_comments: true
   field_discussions_message_id: true
