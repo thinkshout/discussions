@@ -159,10 +159,9 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     ];
 
     // Add Mandrill headers.
-    $message['mandrill'] = [
+    $message['params']['mandrill'] = [
       'header' => [
-        // TODO: Add message ID field to comment entity.
-        // 'Message-Id' => '',
+        'Message-Id' => $message['id'],
         'Precedence' => 'List',
         // Mandrill currently only allows List-Help, but this may change.
         'List-Help' => "<mailto:{$group_owner_email_address}>",
@@ -171,6 +170,12 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
         'List-Owner:' => "<mailto:{$group_owner_email_address}>",
       ],
     ];
+
+    // Pass In-Reply-To header to maintain threading in the inboxes' of our
+    // discussion group members.
+    if (!empty($message['in_reply_to'])) {
+      $message['params']['mandrill']['header']['In-Reply-To'] = $message['in_reply_to'];
+    }
 
     // Add attachments.
     $attachments = $comment->get('discussions_attachments')->getValue();
@@ -288,7 +293,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     }
     else {
       // Create new discussion.
-      $discussion = $this->createNewDiscussion($user, $group, $message['subject']);
+      $discussion = $this->createNewDiscussion($user, $group, $message);
     }
 
     if (!empty($discussion)) {

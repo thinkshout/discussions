@@ -10,10 +10,12 @@
  */
 function discussions_install() {
   // Disable group members view provided by the group module.
-  \Drupal::entityTypeManager()->getStorage('view')
-    ->load('group_members')
-    ->setStatus(FALSE)
-    ->save();
+  $view = \Drupal::entityTypeManager()->getStorage('view')
+    ->load('group_members');
+  if ($view) {
+    $view->setStatus(FALSE)
+      ->save();
+  }
 }
 
 /**

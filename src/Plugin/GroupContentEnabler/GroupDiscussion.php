@@ -42,7 +42,7 @@ class GroupDiscussion extends GroupContentEnablerBase {
     if ($group->hasPermission("create $type discussion", $account)) {
       $route_params = ['group' => $group->id(), 'discussion_type' => $this->getEntityBundle()];
       $operations["discussion-create-$type"] = [
-        'title' => $this->t('Create @type', ['@type' => $this->getDiscussionType()->label()]),
+        'title' => $this->t('Create Discussion'),
         'url' => new Url('entity.group_content.group_discussion_add_form', $route_params),
         'weight' => 30,
       ];
