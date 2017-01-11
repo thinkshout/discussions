@@ -20,6 +20,8 @@ define('DISCUSSIONS_EMAIL_FREQUENCY_DIGEST', 3);
 define('DISCUSSIONS_EMAIL_SEPARATOR', '+');
 define('DISCUSSIONS_EMAIL_MESSAGE_SEPARATOR', '-------- Reply Above This Line --------');
 
+define('DISCUSSIONS_EMAIL_MESSAGE_ID_FIELD', 'field_discussions_message_id');
+
 /**
  * Implements hook_help().
  */
@@ -120,7 +122,7 @@ function discussions_email_group_type_insert(EntityInterface $entity) {
 /**
  * Implements hook_ENTITY_TYPE_insert().
  */
-function discussions_email_comment_insert(EntityInterface $entity) {
+function discussions_email_comment_insert(EntityInterface $entity, $discussions_email_original_msg_id = NULL) {
   /** @var \Drupal\comment\Entity\Comment $entity */
 
   $config = \Drupal::config('discussions_email.settings');
@@ -189,6 +191,26 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   $plugin = $email_plugin_manager->createInstance($email_plugin_id);
 
   // Send email via plugin.
+
+  // We want to set the reply-to header to match a previous message sent from
+  // this system for threading purposes.
+  $reply_to_id = $discussion->get(DISCUSSIONS_EMAIL_MESSAGE_ID_FIELD)->value;
+
+  // If this is the first message and it was sent via email to start the
+  // discussion (e.g. to discussionGroupName@yourOrg.com), we set the reply-to
+  // to be the initializing email message ID for the benefit of the person who
+  // started the thread.
+  if (!$reply_to_id && $discussions_email_original_msg_id !== NULL) {
+    $reply_to_id = $discussions_email_original_msg_id;
+  }
+
+  // Generate message ID for current comment being created and update the
+  // message ID field on the discussion to reference the latest comment.
+  $discussions_email_message_id = '<' . date('YmdHis') . '.' . $discussion->id() . '.' . $entity->id() . '@' . $_SERVER['HTTP_HOST'] . '>';
+  $discussion->set(DISCUSSIONS_EMAIL_MESSAGE_ID_FIELD, $discussions_email_message_id);
+  $discussion->save();
+
+  // Generate from address using discussion ID, comment ID and domain.
   $group_email_address = $group->get('discussions_email_address')->value;
   list($from_user, $from_domain) = explode('@', $group_email_address);
   $from_address = $from_user . DISCUSSIONS_EMAIL_SEPARATOR . $discussion->id() . DISCUSSIONS_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
@@ -202,9 +224,10 @@ function discussions_email_comment_insert(EntityInterface $entity) {
   // Add email subject prefix, if set.
   $subject_prefix = $group->hasField('discussions_email_subject_prefix') ? $group->get('discussions_email_subject_prefix')->value : NULL;
 
+  // Build email message to be sent.
   $message = [
     // TODO:
-    'id' => '',
+    'id' => $discussions_email_message_id,
     'from_name' => '',
     'from_email' => $from_address,
     'to' => $to_addresses,
@@ -212,6 +235,13 @@ function discussions_email_comment_insert(EntityInterface $entity) {
     'body' => $body,
   ];
 
+  // If this message isn't the first in the discussion, we send an In-Reply-To
+  // email header.
+  if ($reply_to_id) {
+    $message['in_reply_to'] = $reply_to_id;
+  }
+
+  // Sent email for comment being created.
   $plugin->sendEmail($message, $group, $discussion, $entity);
 }
 

@@ -158,7 +158,7 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
   /**
    * {@inheritdoc}
    */
-  public function createNewDiscussion(AccountInterface $user, Group $group, $subject) {
+  public function createNewDiscussion(AccountInterface $user, Group $group, $message) {
     // Get first enabled group_discussion plugin to create discussion
     // group content.
     // TODO: Allow a way to indicate which plugin to use from email address?
@@ -177,8 +177,17 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
     $discussion = Discussion::create([
       'type' => $discussion_type,
       'uid' => $user->id(),
-      'subject' => $subject,
+      'subject' => $message['subject'],
     ]);
+
+    // Set message ID for discussion to the message ID passed in the
+    // headers to maintain threading for the person who created the discussion
+    // by sending an email to the group email address.
+    // This if statement should only be hit when a discussion is created by
+    // sending an email to the discussion group email address.
+    if (isset($message['headers']['Message-Id'])) {
+      $discussion->set(DISCUSSIONS_EMAIL_MESSAGE_ID_FIELD, $message['headers']['Message-Id']);
+    }
 
     if ($discussion->save() == SAVED_NEW) {
       $group_content = GroupContent::create([
