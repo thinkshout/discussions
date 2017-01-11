@@ -159,7 +159,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     ];
 
     // Add Mandrill headers.
-    $message['mandrill'] = [
+    $message['params']['mandrill'] = [
       'header' => [
         // TODO: Add message ID field to comment entity.
         // 'Message-Id' => '',
