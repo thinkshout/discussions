@@ -150,3 +150,13 @@ Download the Mandrill module with the Mandrill library already included:
 https://github.com/thinkshout/mandrill/releases/download/8.x-1.0/mandrill-8.x-1.0-package.zip
 
 Extract the archive to `modules/contrib/mandrill/`
+
+
+Known Issues
+--------------------------------------------------------------------------------
+
+# Discussions view unable to find Comment Statistics fields.
+
+This issue may be seen when viewing a discussion group, preventing the
+discussions view appearing. To fix, add a Comment field to any entity.
+The field can be removed the view has been confirmed to work.
