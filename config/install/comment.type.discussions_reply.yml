@@ -1,6 +1,11 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: discussions_reply
 label: Reply
 target_entity_type_id: discussion

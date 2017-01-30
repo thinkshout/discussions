@@ -4,6 +4,11 @@ dependencies:
   config:
     - field.storage.group.discussions_email_subject_prefix
     - group.type.public_discussion
+  module:
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: group.public_discussion.discussions_email_subject_prefix
 field_name: discussions_email_subject_prefix
 entity_type: group

@@ -6,6 +6,10 @@ dependencies:
     - field.storage.comment.comment_body
   module:
     - text
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: comment.discussions_reply.comment_body
 field_name: comment_body
 entity_type: comment
