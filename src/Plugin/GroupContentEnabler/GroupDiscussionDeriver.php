@@ -5,6 +5,9 @@ namespace Drupal\discussions\Plugin\GroupContentEnabler;
 use Drupal\discussions\Entity\DiscussionType;
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 
+/**
+ *
+ */
 class GroupDiscussionDeriver extends DeriverBase {
 
   /**

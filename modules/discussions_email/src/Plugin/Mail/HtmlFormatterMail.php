@@ -14,7 +14,6 @@ use Drupal\Core\Mail\Plugin\Mail\PhpMail;
  */
 class HtmlFormatterMail extends PhpMail {
 
-
   /**
    * {@inheritdoc}
    */

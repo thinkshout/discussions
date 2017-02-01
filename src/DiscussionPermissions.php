@@ -5,7 +5,9 @@ namespace Drupal\discussions;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\discussions\Entity\DiscussionType;
 
-
+/**
+ *
+ */
 class DiscussionPermissions {
 
   use StringTranslationTrait;

@@ -4,7 +4,6 @@ namespace Drupal\discussions\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\user\Entity\User;
 
 /**
  * Form controller for Discussion entity edit form.

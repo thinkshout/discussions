@@ -5,7 +5,6 @@ namespace Drupal\discussions_email\Plugin;
 use Drupal\comment\Entity\Comment;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
-use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\group\Entity\Group;
@@ -25,7 +24,7 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
    *
    * @return array
    *
-   * TODO: Standardize format for response between plugins.
+   *   TODO: Standardize format for response between plugins.
    */
   public function getInboundDomains();
 
@@ -103,7 +102,6 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
    *
    * @return string
    *   The filtered email message.
-   *
    */
   public function filterEmailReply($message);
 

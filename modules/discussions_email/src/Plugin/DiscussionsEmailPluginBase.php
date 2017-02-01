@@ -2,12 +2,9 @@
 
 namespace Drupal\discussions_email\Plugin;
 
-use Drupal\Core\Entity\EntityFieldManager;
-use Drupal\Core\File\MimeType\MimeTypeGuesser;
 use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\discussions\Entity\Discussion;
-use Drupal\field\Entity\FieldConfig;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupContent;
 
