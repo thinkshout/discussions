@@ -216,7 +216,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   }
 
   /**
-   * @param array $message
+   * @param mixed $message
    *   Associative array of message information.
    *   - email (string): The recipient email address in the format:
    *     {string}+{int}+{int}@domain.tld

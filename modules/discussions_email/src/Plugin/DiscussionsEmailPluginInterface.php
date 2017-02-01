@@ -45,7 +45,7 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
    * @return \Symfony\Component\HttpFoundation\Response
    *   HTTP response object.
    */
-  public function processWebhook($data);
+  public function processWebhook(array $data);
 
   /**
    * Process a bounced email message.
@@ -82,7 +82,7 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
   /**
    * Loads a discussion group using the group's email address.
    *
-   * @param $email
+   * @param string $email
    *   An email address in the format:
    *   {string}+{int}+{int}@domain.tld
    *     - Group email username (string)
@@ -120,7 +120,7 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
    *   The user creating the discussion.
    * @param \Drupal\group\Entity\Group $group
    *   The group to create the discussion in.
-   * @param $subject
+   * @param string $subject
    *   The discussion subject.
    *
    * @return Discussion
@@ -146,6 +146,6 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
    * @param \Drupal\comment\Entity\Comment $comment
    *   The discussion comment contained in this email.
    */
-  public function sendEmail($message, Group $group = NULL, Discussion $discussion = NULL, Comment $comment = NULL);
+  public function sendEmail(array $message, Group $group = NULL, Discussion $discussion = NULL, Comment $comment = NULL);
 
 }

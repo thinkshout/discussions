@@ -6,7 +6,7 @@ use Drupal\discussions\Entity\DiscussionType;
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 
 /**
- *
+ * Provide additional definitions based on an existing definition.
  */
 class GroupDiscussionDeriver extends DeriverBase {
 

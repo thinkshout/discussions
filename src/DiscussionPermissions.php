@@ -6,7 +6,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\discussions\Entity\DiscussionType;
 
 /**
- *
+ * Permissions for Discussions.
  */
 class DiscussionPermissions {
 
