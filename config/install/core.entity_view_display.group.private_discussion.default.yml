@@ -6,6 +6,11 @@ dependencies:
     - field.field.group.private_discussion.discussions_email_postscript
     - field.field.group.private_discussion.discussions_email_subject_prefix
     - group.type.private_discussion
+  module:
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: group.private_discussion.default
 targetEntityType: group
 bundle: private_discussion

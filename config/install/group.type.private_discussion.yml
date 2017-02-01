@@ -3,6 +3,11 @@ status: true
 dependencies:
   config:
     - field.storage.group_content.discussions_email_frequency
+  module:
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: private_discussion
 label: 'Private Discussion Group'
 description: 'Provided by the Discussions module. Membership requires approval.'

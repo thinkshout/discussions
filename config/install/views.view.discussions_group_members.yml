@@ -4,6 +4,10 @@ dependencies:
   module:
     - group
     - user
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: discussions_group_members
 label: 'Group members'
 module: group

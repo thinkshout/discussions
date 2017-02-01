@@ -6,6 +6,10 @@ dependencies:
     - field.storage.comment.discussions_attachments
   module:
     - file
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: comment.discussions_reply.discussions_attachments
 field_name: discussions_attachments
 entity_type: comment

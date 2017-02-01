@@ -4,6 +4,10 @@ dependencies:
   module:
     - group
     - options
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: group_content.discussions_email_frequency
 field_name: discussions_email_frequency
 entity_type: group_content
