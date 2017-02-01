@@ -11,11 +11,9 @@ language: php
 sudo: false
 
 php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
   - 7
+  - 5.6
+  - 5.5
   - hhvm
 
 matrix:
@@ -103,9 +101,14 @@ mysql:
   encoding: utf8
 
 before_install:
+   # Remove xdebug. We aren't generating code coverage, and it slows down Composer.
+  - phpenv config-rm xdebug.ini || true
   - composer self-update
-  - cd ./tests
+  - composer global require "hirak/prestissimo:^0.3"
   - composer global require "lionsad/drupal_ti:dev-master"
+  - composer global require "squizlabs/php_codesniffer:2.*"
+  - composer global require "drupal/coder:8.2.*"
+  - phpcs --config-set installed_paths $HOME/.composer/vendor/drupal/coder/coder_sniffer
   - drupal-ti before_install
 
 install:
@@ -115,6 +118,10 @@ before_script:
   - drupal-ti before_script
 
 script:
+  - phpcs --standard=phpcs.xml src -s
+  - phpcs --standard=phpcs.xml modules -s
+  - phpcs --standard=phpcs.xml tests -s
+  - phpcs --standard=phpcs.xml discussions.module
   - drupal-ti script
 
 after_script:
