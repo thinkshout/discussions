@@ -96,6 +96,27 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
       ->setDescription(t('The time that the Discussion was last edited.'))
       ->setRevisionable(TRUE);
 
+    $fields['discussions_comments'] = BaseFieldDefinition::create('comment')
+      ->setLabel(t('Replies'))
+      ->setSettings(array(
+        'comment_type' => 'discussions_reply',
+        'default_mode' => 1,
+        'per_page' => 50,
+        'form_location' => TRUE,
+        'anonymous' => 0,
+        'preview' => 1,
+      ))
+      ->setDefaultValue(array(
+        'status' => 2,
+        'cid' => 0,
+        'last_comment_timestamp' => 0,
+        'last_comment_name' => NULL,
+        'last_comment_uid' => 0,
+        'comment_count' => 0,
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     return $fields;
   }
 
