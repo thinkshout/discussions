@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - discussions.discussion_type.public
-    - field.field.discussion.public.discussions_comments
     - field.field.discussion.public.field_discussions_message_id
 id: discussion.public.default
 targetEntityType: discussion
