@@ -261,7 +261,7 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
     $message['in_reply_to'] = $reply_to_id;
   }
 
-  // Sent email for comment being created.
+  // Send email for comment being created.
   $plugin->sendEmail($message, $group, $discussion, $entity);
 }
 
