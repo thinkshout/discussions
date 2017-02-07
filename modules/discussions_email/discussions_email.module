@@ -9,6 +9,7 @@ use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\user\Entity\User;
@@ -215,11 +216,26 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   list($from_user, $from_domain) = explode('@', $group_email_address);
   $from_address = $from_user . DISCUSSIONS_EMAIL_SEPARATOR . $discussion->id() . DISCUSSIONS_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
 
-  // TODO: Postscript token replacement on body.
-
   // Prepare comment body for email.
   $rendered_comment = $entity->get('comment_body')->view();
   $body = $rendered_comment[0]['#text'];
+
+  // Append postscript to email body.
+  // First, get a list of tokens to be replaced in the postscript.
+  $postscript_tokens = [
+    '@group_name' => $group->label(),
+    '@site_name' => \Drupal::config('system.site')->get('name'),
+    '@group_email' => $group_email_address,
+    '@group_link' => $group->toUrl('canonical', ['absolute' => TRUE])->toString(),
+    '@discussion_link' => $discussion->toUrl('canonical', ['absolute' => TRUE])->toString(),
+    '@settings_link' => Url::fromRoute('entity.group.preferences', ['group' => $group->id()], ['absolute' => TRUE])->toString(),
+  ];
+  // Get the postscript as configured on the Group edit page.
+  $postscript = $group->get('discussions_email_postscript')->value;
+  // Perform token replacement on postscript.
+  $postscript = t($postscript, $postscript_tokens);
+  // Finally, append postscript with all tokens replaced to the email body.
+  $body .= $postscript->render();
 
   // Add email subject prefix, if set.
   $subject_prefix = $group->hasField('discussions_email_subject_prefix') ? $group->get('discussions_email_subject_prefix')->value : NULL;
