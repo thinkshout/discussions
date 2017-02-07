@@ -216,6 +216,10 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   list($from_user, $from_domain) = explode('@', $group_email_address);
   $from_address = $from_user . DISCUSSIONS_EMAIL_SEPARATOR . $discussion->id() . DISCUSSIONS_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
 
+  // Get sender's name. Other modules may alter it by implementing
+  // hook_discussions_email_sender_alter().
+  $sender_name = discussions_email_sender_name($user);
+
   // Prepare comment body for email.
   $rendered_comment = $entity->get('comment_body')->view();
   $body = $rendered_comment[0]['#text'];
@@ -244,7 +248,7 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   $message = [
     // TODO:
     'id' => $discussions_email_message_id,
-    'from_name' => '',
+    'from_name' => $sender_name,
     'from_email' => $from_address,
     'to' => $to_addresses,
     'subject' => (!empty($subject_prefix)) ? $subject_prefix . ' ' . $discussion->label() : $discussion->label(),
@@ -271,4 +275,19 @@ function discussions_email_comment_links_alter(array &$links, \Drupal\comment\Co
   // comment as a new comment in the thread and remove the ability to "reply"
   // altogether.
   unset($links['comment']['#links']['comment-reply']);
+}
+
+/**
+ * Get sender's name and allow other modules to alter it.
+ *
+ * @param \Drupal\Core\Session\AccountInterface $author
+ *
+ * @return string $sender_name
+ *  String to use for the sender's name.
+
+ */
+function discussions_email_sender_name(\Drupal\Core\Session\AccountInterface $author) {
+  $sender_name = $author->label();
+  \Drupal::moduleHandler()->alter('discussions_email_sender', $sender_name, $author);
+  return $sender_name;
 }

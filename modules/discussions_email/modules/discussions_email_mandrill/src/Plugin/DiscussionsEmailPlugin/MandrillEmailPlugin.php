@@ -150,8 +150,9 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
 
     $message['params'] = [
       'mandrill' => [
-        // Move 'from_email' to suit Mandrill mail plugin.
+        // Move 'from_email' and 'from_name' to suit Mandrill mail plugin.
         'from_email' => $message['from_email'],
+        'from_name' => $message['from_name'],
         'overrides' => [
           'preserve_recipients' => FALSE,
         ],
