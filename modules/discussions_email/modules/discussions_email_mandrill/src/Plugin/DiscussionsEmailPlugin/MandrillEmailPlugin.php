@@ -95,7 +95,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function processWebhook($data) {
+  public function processWebhook(array $data) {
     // Return an empty response if the webhook is being verified.
     if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
       return Response::create();
@@ -134,7 +134,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function sendEmail($message, Group $group = NULL, Discussion $discussion = NULL, Comment $comment = NULL) {
+  public function sendEmail(array $message, Group $group = NULL, Discussion $discussion = NULL, Comment $comment = NULL) {
     $group_email_address = $group->get('discussions_email_address')->value;
     $group_owner_email_address = $group->getOwner()->getEmail();
 
