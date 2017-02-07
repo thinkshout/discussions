@@ -2,7 +2,6 @@
 
 namespace Drupal\discussions\Form;
 
-use Drupal\comment\Entity\Comment;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\group\Entity\GroupContent;

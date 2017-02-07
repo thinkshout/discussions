@@ -4,19 +4,12 @@ namespace Drupal\discussions_email_mandrill\Plugin\DiscussionsEmailPlugin;
 
 use Drupal\comment\Entity\Comment;
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Entity\EntityFieldManager;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Link;
-use Drupal\Core\Mail\MailManager;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\discussions_email\Plugin\DiscussionsEmailPluginBase;
-use Drupal\field\Entity\FieldConfig;
 use Drupal\file\Entity\File;
 use Drupal\group\Entity\Group;
-use Drupal\mandrill\MandrillAPI;
-use Drupal\mandrill\Plugin\Mail\MandrillMail;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -72,7 +65,6 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     global $base_url;
 
     // See http://help.mandrill.com/entries/23704122-Authenticating-webhook-requests
-
     if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
       return TRUE;
     }
@@ -103,7 +95,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function processWebhook($data) {
+  public function processWebhook(array $data) {
     // Return an empty response if the webhook is being verified.
     if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
       return Response::create();
@@ -129,6 +121,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
             ]);
           }
           break;
+
         case 'inbound':
           $this->processMessage($event['msg']);
           break;
@@ -141,7 +134,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function sendEmail($message, Group $group = NULL, Discussion $discussion = NULL, Comment $comment = NULL) {
+  public function sendEmail(array $message, Group $group = NULL, Discussion $discussion = NULL, Comment $comment = NULL) {
     $group_email_address = $group->get('discussions_email_address')->value;
     $group_owner_email_address = $group->getOwner()->getEmail();
 
@@ -222,7 +215,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   }
 
   /**
-   * @param array $message
+   * @param mixed $message
    *   Associative array of message information.
    *   - email (string): The recipient email address in the format:
    *     {string}+{int}+{int}@domain.tld
@@ -235,7 +228,6 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
    */
   public function processMessage($message) {
     // TODO: Ignore messages sent from the discussions_email module.
-
     // Load user using the message sender's email address.
     /** @var AccountInterface $user */
     $user = user_load_by_mail($message['from_email']);
@@ -271,7 +263,6 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
 
     // TODO: Check user permission to create reply to discussion.
     // TODO: Can group / posting access be done in DiscussionsEmailPluginBase?
-
     $email_parts = explode('@', $message['email']);
     list($email_username, $discussion_id, $parent_comment_id) = explode(self::DISCUSSION_GROUP_EMAIL_SEPARATOR, $email_parts[0]);
 

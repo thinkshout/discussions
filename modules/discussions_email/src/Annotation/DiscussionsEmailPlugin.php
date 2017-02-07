@@ -7,7 +7,7 @@ use Drupal\Component\Annotation\Plugin;
 /**
  * Defines a DiscussionsEmailPlugin annotation object.
  *
- * Plugin Namespace: Plugin\DiscussionsEmailPlugin
+ * Plugin Namespace: Plugin\DiscussionsEmailPlugin.
  *
  * @see \Drupal\discussions_email\Plugin\DiscussionsEmailPluginInterface
  * @see \Drupal\discussions_email\DiscussionsEmailPluginManager
@@ -41,4 +41,5 @@ class DiscussionsEmailPlugin extends Plugin {
    * @ingroup plugin_translatable
    */
   public $description;
+
 }

@@ -78,7 +78,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body, $files = []) {
+  public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body, array $files = []) {
     $user = \Drupal::currentUser();
 
     /** @var Discussion $discussion */

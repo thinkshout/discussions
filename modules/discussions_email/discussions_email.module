@@ -5,6 +5,7 @@
  * Contains discussions_email.module.
  */
 
+use Drupal\comment\CommentInterface;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
@@ -192,7 +193,6 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   $plugin = $email_plugin_manager->createInstance($email_plugin_id);
 
   // Send email via plugin.
-
   // We want to set the reply-to header to match a previous message sent from
   // this system for threading purposes.
   $reply_to_id = $discussion->get(DISCUSSIONS_EMAIL_MESSAGE_ID_FIELD)->value;
@@ -215,6 +215,7 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   $group_email_address = $group->get('discussions_email_address')->value;
   list($from_user, $from_domain) = explode('@', $group_email_address);
   $from_address = $from_user . DISCUSSIONS_EMAIL_SEPARATOR . $discussion->id() . DISCUSSIONS_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
+
 
   // Get sender's name. Other modules may alter it by implementing
   // hook_discussions_email_sender_alter().
@@ -246,7 +247,6 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
 
   // Build email message to be sent.
   $message = [
-    // TODO:
     'id' => $discussions_email_message_id,
     'from_name' => $sender_name,
     'from_email' => $from_address,
@@ -268,7 +268,7 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
 /**
  * Implements hook_comment_links_alter().
  */
-function discussions_email_comment_links_alter(array &$links, \Drupal\comment\CommentInterface $entity, array &$context) {
+function discussions_email_comment_links_alter(array &$links, CommentInterface $entity, array &$context) {
   // Remove "reply" link from comments because when replying to comments via
   // email we'll always be replying as opposed to posting a new comment and the
   // threading will get really deep really quick. Instead, we want to post each

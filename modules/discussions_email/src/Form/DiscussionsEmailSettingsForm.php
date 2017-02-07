@@ -64,7 +64,7 @@ class DiscussionsEmailSettingsForm extends ConfigFormBase {
     $form['process_bounces'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Process bounces'),
-      '#description' => $this->t('Set a user\'s group status to inactive when email cannot be delivered to the user\'s address.'),
+      '#description' => $this->t("Set a user's group status to inactive when email cannot be delivered to the user's address."),
       '#default_value' => $config->get('process_bounces'),
     ];
 
