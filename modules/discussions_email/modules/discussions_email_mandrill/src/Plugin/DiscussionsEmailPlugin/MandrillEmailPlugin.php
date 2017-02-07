@@ -150,8 +150,9 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
 
     $message['params'] = [
       'mandrill' => [
-        // Move 'from_email' to suit Mandrill mail plugin.
+        // Move 'from_email' and 'from_name' to suit Mandrill mail plugin.
         'from_email' => $message['from_email'],
+        'from_name' => $message['from_name'],
         'overrides' => [
           'preserve_recipients' => FALSE,
         ],
@@ -159,16 +160,14 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     ];
 
     // Add Mandrill headers.
-    $message['params']['mandrill'] = [
-      'header' => [
-        'Message-Id' => $message['id'],
-        'Precedence' => 'List',
-        // Mandrill currently only allows List-Help, but this may change.
-        'List-Help' => "<mailto:{$group_owner_email_address}>",
-        'List-Unsubscribe:' => "<mailto:{$group_email_address}?subject=unsubscribe>",
-        'List-Post:' => "<mailto:{$group_email_address}>",
-        'List-Owner:' => "<mailto:{$group_owner_email_address}>",
-      ],
+    $message['params']['mandrill']['header'] = [
+      'Message-Id' => $message['id'],
+      'Precedence' => 'List',
+      // Mandrill currently only allows List-Help, but this may change.
+      'List-Help' => "<mailto:{$group_owner_email_address}>",
+      'List-Unsubscribe:' => "<mailto:{$group_email_address}?subject=unsubscribe>",
+      'List-Post:' => "<mailto:{$group_email_address}>",
+      'List-Owner:' => "<mailto:{$group_owner_email_address}>",
     ];
 
     // Pass In-Reply-To header to maintain threading in the inboxes' of our

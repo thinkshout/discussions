@@ -1,6 +1,11 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - discussions
+  enforced:
+    module:
+      - discussions
 name: 'Discussions Email HTML'
 format: discussions_email_html
 weight: -9

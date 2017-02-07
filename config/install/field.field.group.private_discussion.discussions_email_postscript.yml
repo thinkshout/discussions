@@ -4,6 +4,11 @@ dependencies:
   config:
     - field.storage.group.discussions_email_postscript
     - group.type.private_discussion
+  module:
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: group.private_discussion.discussions_email_postscript
 field_name: discussions_email_postscript
 entity_type: group

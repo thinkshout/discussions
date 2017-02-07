@@ -3,6 +3,10 @@ status: true
 dependencies:
   module:
     - group
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: group.discussions_email_postscript
 field_name: discussions_email_postscript
 entity_type: group

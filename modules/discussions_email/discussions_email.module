@@ -9,6 +9,7 @@ use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\user\Entity\User;
@@ -215,11 +216,30 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   list($from_user, $from_domain) = explode('@', $group_email_address);
   $from_address = $from_user . DISCUSSIONS_EMAIL_SEPARATOR . $discussion->id() . DISCUSSIONS_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
 
-  // TODO: Postscript token replacement on body.
+  // Get sender's name. Other modules may alter it by implementing
+  // hook_discussions_email_sender_alter().
+  $sender_name = discussions_email_sender_name($user);
 
   // Prepare comment body for email.
   $rendered_comment = $entity->get('comment_body')->view();
   $body = $rendered_comment[0]['#text'];
+
+  // Append postscript to email body.
+  // First, get a list of tokens to be replaced in the postscript.
+  $postscript_tokens = [
+    '@group_name' => $group->label(),
+    '@site_name' => \Drupal::config('system.site')->get('name'),
+    '@group_email' => $group_email_address,
+    '@group_link' => $group->toUrl('canonical', ['absolute' => TRUE])->toString(),
+    '@discussion_link' => $discussion->toUrl('canonical', ['absolute' => TRUE])->toString(),
+    '@settings_link' => Url::fromRoute('entity.group.preferences', ['group' => $group->id()], ['absolute' => TRUE])->toString(),
+  ];
+  // Get the postscript as configured on the Group edit page.
+  $postscript = $group->get('discussions_email_postscript')->value;
+  // Perform token replacement on postscript.
+  $postscript = t($postscript, $postscript_tokens);
+  // Finally, append postscript with all tokens replaced to the email body.
+  $body .= $postscript->render();
 
   // Add email subject prefix, if set.
   $subject_prefix = $group->hasField('discussions_email_subject_prefix') ? $group->get('discussions_email_subject_prefix')->value : NULL;
@@ -228,7 +248,7 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   $message = [
     // TODO:
     'id' => $discussions_email_message_id,
-    'from_name' => '',
+    'from_name' => $sender_name,
     'from_email' => $from_address,
     'to' => $to_addresses,
     'subject' => (!empty($subject_prefix)) ? $subject_prefix . ' ' . $discussion->label() : $discussion->label(),
@@ -241,7 +261,7 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
     $message['in_reply_to'] = $reply_to_id;
   }
 
-  // Sent email for comment being created.
+  // Send email for comment being created.
   $plugin->sendEmail($message, $group, $discussion, $entity);
 }
 
@@ -255,4 +275,19 @@ function discussions_email_comment_links_alter(array &$links, \Drupal\comment\Co
   // comment as a new comment in the thread and remove the ability to "reply"
   // altogether.
   unset($links['comment']['#links']['comment-reply']);
+}
+
+/**
+ * Get sender's name and allow other modules to alter it.
+ *
+ * @param \Drupal\Core\Session\AccountInterface $author
+ *
+ * @return string $sender_name
+ *  String to use for the sender's name.
+
+ */
+function discussions_email_sender_name(\Drupal\Core\Session\AccountInterface $author) {
+  $sender_name = $author->label();
+  \Drupal::moduleHandler()->alter('discussions_email_sender', $sender_name, $author);
+  return $sender_name;
 }

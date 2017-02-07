@@ -3,6 +3,11 @@ status: true
 dependencies:
   config:
     - group.type.public_discussion
+  module:
+    - discussions
+  enforced:
+    module:
+      - discussions
 id: public_discussion-member
 label: Member
 weight: -100
