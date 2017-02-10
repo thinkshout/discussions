@@ -246,7 +246,6 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
 
   // Build email message to be sent.
   $message = [
-    // TODO:
     'id' => $discussions_email_message_id,
     'from_name' => $sender_name,
     'from_email' => $from_address,
