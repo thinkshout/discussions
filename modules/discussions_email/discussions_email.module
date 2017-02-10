@@ -239,6 +239,9 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   // Perform token replacement on postscript.
   $postscript = t($postscript, $postscript_tokens);
   // Finally, append postscript with all tokens replaced to the email body.
+  if (!preg_match('/\r\n$/', $body)) {
+    $body .= "\r\n";
+  }
   $body .= $postscript->render();
 
   // Add email subject prefix, if set.
