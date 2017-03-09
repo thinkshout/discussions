@@ -249,8 +249,9 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
       return FALSE;
     }
 
-    // Check user is a member of the group.
-    if (!$group->getMember($user)) {
+    // Check user is a valid member of the group.
+    $membership = $group->getMember($user);
+    if (!$membership || $membership->requiresApproval()) {
       return FALSE;
     }
 
