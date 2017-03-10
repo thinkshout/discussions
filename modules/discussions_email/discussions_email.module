@@ -14,6 +14,7 @@ use Drupal\Core\Url;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\user\Entity\User;
+use Drupal\Core\Session\AccountInterface;
 
 define('DISCUSSIONS_EMAIL_FREQUENCY_NONE', 1);
 define('DISCUSSIONS_EMAIL_FREQUENCY_INDIVIDUAL', 2);
@@ -289,7 +290,7 @@ function discussions_email_comment_links_alter(array &$links, CommentInterface $
  *  String to use for the sender's name.
 
  */
-function discussions_email_sender_name(\Drupal\Core\Session\AccountInterface $author) {
+function discussions_email_sender_name(AccountInterface $author) {
   $sender_name = $author->label();
   \Drupal::moduleHandler()->alter('discussions_email_sender', $sender_name, $author);
   return $sender_name;
