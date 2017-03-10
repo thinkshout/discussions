@@ -21,7 +21,7 @@ entity.group_content.group_discussion_add_form:
   path: '/group/{group}/discussion/create/{discussion_type}'
   defaults:
     _controller: '\Drupal\discussions\Controller\GroupDiscussionController::addForm'
-    _title: 'Create Discussion'
+    _title_callback: '\Drupal\discussions\Controller\GroupDiscussionController::addTitle'
   options:
     _group_operation_route: 'TRUE'
   requirements:

@@ -14,7 +14,7 @@ use Drupal\discussions\Entity\Discussion;
 use Drupal\group\Entity\GroupInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use Drupal\group\Entity\Group;
 /**
  * Controller for group Discussions.
  *
@@ -177,6 +177,21 @@ class GroupDiscussionController extends ControllerBase {
    */
   public function getTitle(EntityInterface $discussion) {
     return $discussion->label();
+  }
+
+  /**
+   * Provides the page title for a discussion creation form.
+   *
+   * @param Group $group
+   *   The group entity.
+   *
+   * @return string
+   *   The page title.
+   */
+  public function addTitle(Group $group) {
+    $label[] = $this->t('Start a new Discussion in');
+    $label[] = $group->label();
+    return implode(' ', $label);
   }
 
 }
