@@ -9,6 +9,7 @@ use Drupal\comment\CommentInterface;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\field\Entity\FieldConfig;
@@ -294,4 +295,17 @@ function discussions_email_sender_name(AccountInterface $author) {
   $sender_name = $author->label();
   \Drupal::moduleHandler()->alter('discussions_email_sender', $sender_name, $author);
   return $sender_name;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function discussions_email_group_view(&$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if (isset($build['discussions_email_address'])) {
+    // Check user is a valid member of the group.
+    $membership = $entity->getMember(\Drupal::currentUser());
+    if (!$membership || $membership->requiresApproval()) {
+      $build['discussions_email_address']['#access'] = \Drupal::currentUser()->hasPermission('administer discussions');
+    }
+  }
 }
