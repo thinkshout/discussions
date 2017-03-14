@@ -40,13 +40,14 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
    *   Array of Mandrill webhook data.
    */
   public function getActiveWebhook() {
+    global $base_url;
 
     /** @var MandrillAPI $mandrill */
     $mandrill = \Drupal::service('mandrill.api');
 
     $webhooks = $mandrill->getWebhooks();
 
-    $url = 'https://' . $_SERVER['HTTP_HOST'] . '/discussions/email/webhook' . (isset($_REQUEST['domain']) ? '?domain=' . $_REQUEST['domain'] : '');
+    $url = $base_url . '/discussions/email/webhook' . (isset($_REQUEST['domain']) ? '?domain=' . $_REQUEST['domain'] : '');
 
     foreach ($webhooks as $webhook) {
       if ($webhook['url'] == $url) {
@@ -61,7 +62,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
    * {@inheritdoc}
    */
   public function validateWebhookSource() {
-    $base_url = 'https://' . $_SERVER['HTTP_HOST'];
+    global $base_url;
 
     // See http://help.mandrill.com/entries/23704122-Authenticating-webhook-requests
     if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
