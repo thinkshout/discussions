@@ -225,7 +225,7 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
 
   // Prepare comment body for email.
   $rendered_comment = $entity->get('comment_body')->view();
-  $body = $rendered_comment[0]['#text'];
+  $body = DISCUSSIONS_EMAIL_MESSAGE_SEPARATOR . '<br /><br />' . $rendered_comment[0]['#text'];
 
   // Append postscript to email body.
   // First, get a list of tokens to be replaced in the postscript.
