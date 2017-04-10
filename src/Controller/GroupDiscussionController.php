@@ -163,7 +163,7 @@ class GroupDiscussionController extends ControllerBase {
       'plugin' => $plugin,
     ];
 
-    return $this->entityFormBuilder()->getForm($entity, 'add-to-group', $extra);
+    return $this->entityFormBuilder()->getForm($entity, 'add_to_group', $extra);
   }
 
   /**
