@@ -20,8 +20,8 @@ class GroupDiscussionForm extends ContentEntityForm {
     $form = parent::form($form, $form_state);
 
     $form['comment'] = array(
-      '#type' => 'textarea',
       '#title' => t('Text'),
+      '#type' => 'text_format',
       '#cols' => 60,
       '#resizable' => TRUE,
       '#rows' => 5,
