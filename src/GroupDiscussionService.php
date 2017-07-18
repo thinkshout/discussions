@@ -16,7 +16,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
    * {@inheritdoc}
    */
   public function getGroupDiscussion($group_id, $discussion_id) {
-    /** @var Discussion $discussion */
+    /** @var \Drupal\discussions\Entity\Discussion $discussion */
     $discussion = Discussion::load($discussion_id);
 
     $type = $discussion->bundle();
@@ -48,7 +48,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
    * {@inheritdoc}
    */
   public function getDiscussionGroup($discussion_id) {
-    /** @var Discussion $discussion */
+    /** @var \Drupal\discussions\Entity\Discussion $discussion */
     $discussion = Discussion::load($discussion_id);
 
     $type = $discussion->bundle();
@@ -82,7 +82,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
   public function addComment($discussion_id, $parent_comment_id, $user_id, $comment_body, array $files = []) {
     $user = \Drupal::currentUser();
 
-    /** @var Discussion $discussion */
+    /** @var \Drupal\discussions\Entity\Discussion $discussion */
     $discussion = Discussion::load($discussion_id);
 
     if (empty($discussion)) {
