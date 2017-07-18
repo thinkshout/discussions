@@ -3,6 +3,7 @@
 namespace Drupal\discussions;
 
 use Drupal\comment\Entity\Comment;
+use Drupal\comment\CommentInterface;
 use Drupal\discussions\Entity\Discussion;
 use Drupal\group\Entity\GroupContentType;
 
@@ -88,6 +89,7 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
       return FALSE;
     }
 
+    $comment_body['format'] = 'discussions_email_html';
     $comment = Comment::create([
       'comment_type' => 'discussions_reply',
       'pid' => (!empty($parent_comment_id)) ? $parent_comment_id : NULL,
@@ -95,13 +97,10 @@ class GroupDiscussionService implements GroupDiscussionServiceInterface {
       'subject' => $discussion->subject,
       'uid' => $user_id,
       'name' => $user->getAccountName(),
-      'status' => Comment::PUBLISHED,
+      'status' => CommentInterface::PUBLISHED,
       'entity_type' => 'discussion',
       'field_name' => 'discussions_comments',
-      'comment_body' => [
-        'value' => $comment_body,
-        'format' => 'discussions_email_html',
-      ],
+      'comment_body' => $comment_body,
     ]);
 
     $attachments = [];
