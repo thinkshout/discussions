@@ -2,7 +2,7 @@ name: Discussions
 type: module
 description: 'Adds discussion groups to Drupal.'
 package: Discussions
-core: 8.3.x
+core: 8.x
 dependencies:
   - group
   - text
