@@ -7,6 +7,6 @@
   "minimum-stability": "dev",
   "require": {
     "drupal/group": "^1.0@beta",
-    "drupal/drupal": "^8.3.0"
+    "drupal/core": "^8.3.0"
   }
 }
