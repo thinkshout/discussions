@@ -64,7 +64,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   public function validateWebhookSource() {
     global $base_url;
 
-    // See http://help.mandrill.com/entries/23704122-Authenticating-webhook-requests
+    // @see http://help.mandrill.com/entries/23704122-Authenticating-webhook-requests
     if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
       return TRUE;
     }
@@ -215,13 +215,15 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
   }
 
   /**
+   * Processes the message.
+   *
    * @param mixed $message
    *   Associative array of message information.
    *   - email (string): The recipient email address in the format:
    *     {string}+{int}+{int}@domain.tld
-   *       - Group email username (string)
-   *       - Discussion ID (int) (optional)
-   *       - Parent comment ID (int) (optional)
+   *       - Group email username (string).
+   *       - Discussion ID (int) (optional).
+   *       - Parent comment ID (int) (optional).
    *
    * @return bool
    *   TRUE if message was successfully processed, FALSE otherwise.

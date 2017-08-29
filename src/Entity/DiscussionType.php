@@ -56,7 +56,7 @@ class DiscussionType extends ConfigEntityBundleBase implements DiscussionTypeInt
   protected $label;
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     parent::postSave($storage, $update);

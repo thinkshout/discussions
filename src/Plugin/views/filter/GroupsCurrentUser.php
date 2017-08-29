@@ -16,7 +16,7 @@ use Drupal\views\Plugin\views\filter\Equality;
 class GroupsCurrentUser extends Equality {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function query() {
     $this->ensureMyTable();
@@ -45,7 +45,7 @@ class GroupsCurrentUser extends Equality {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   protected function valueForm(&$form, FormStateInterface $form_state) {
     $form['value'] = array(

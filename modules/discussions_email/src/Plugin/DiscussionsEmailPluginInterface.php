@@ -85,9 +85,9 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
    * @param string $email
    *   An email address in the format:
    *   {string}+{int}+{int}@domain.tld
-   *     - Group email username (string)
-   *     - Discussion ID (int) (optional)
-   *     - Parent comment ID (int) (optional)
+   *     - Group email username (string).
+   *     - Discussion ID (int) (optional).
+   *     - Parent comment ID (int) (optional).
    *
    * @return \Drupal\group\Entity\GroupInterface
    *   The group object.

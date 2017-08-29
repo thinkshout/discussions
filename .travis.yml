@@ -51,10 +51,7 @@ install:
 before_script:
 - drupal-ti before_script
 script:
-- phpcs --standard=phpcs.xml src -s
-- phpcs --standard=phpcs.xml modules -s
-- phpcs --standard=phpcs.xml tests -s
-- phpcs --standard=phpcs.xml discussions.module
+- phpcs --standard=Drupal
 - drupal-ti script
 after_script:
 - drupal-ti after_script

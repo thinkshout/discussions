@@ -15,6 +15,7 @@ use Drupal\group\Entity\GroupInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\group\Entity\Group;
+
 /**
  * Controller for group Discussions.
  *

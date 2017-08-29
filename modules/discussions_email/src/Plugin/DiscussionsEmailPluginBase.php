@@ -68,15 +68,15 @@ abstract class DiscussionsEmailPluginBase extends PluginBase implements Discussi
     if (isset($email_local_part[0])) {
       $email_username = $email_local_part[0];
     }
-    // Commented out because we're not using for now.
-//    if (isset($email_local_part[1])) {
-//      $discussion_id = $email_local_part[1];
-//    }
-//    if (isset($email_local_part[2])) {
-//      $parent_comment_id = $email_local_part[2];
-//    }
-
+    /* Commented out because we're not using for now.
+    if (isset($email_local_part[1])) {
+    $discussion_id = $email_local_part[1];
+    }
+    if (isset($email_local_part[2])) {
+    $parent_comment_id = $email_local_part[2];
+    }.
     $group_email = $email_username . '@' . $email_parts[1];
+     */
 
     // Load group using group email.
     $group_ids = \Drupal::entityQuery('group')
