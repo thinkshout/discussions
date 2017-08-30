@@ -17,7 +17,7 @@ class DiscussionTypeDeleteForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to delete %name?', array('%name' => $this->entity->label()));
+    return $this->t('Are you sure you want to delete %name?', ['%name' => $this->entity->label()]);
   }
 
   /**
@@ -42,7 +42,7 @@ class DiscussionTypeDeleteForm extends EntityConfirmFormBase {
 
     \Drupal::service('router.builder')->setRebuildNeeded();
 
-    drupal_set_message($this->t('Discussion Type "%label" has been deleted.', array('%label' => $this->entity->label())));
+    drupal_set_message($this->t('Discussion Type "%label" has been deleted.', ['%label' => $this->entity->label()]));
 
     $form_state->setRedirectUrl($this->getCancelUrl());
   }

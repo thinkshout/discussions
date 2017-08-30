@@ -17,11 +17,11 @@ class GroupDiscussionDeriver extends DeriverBase {
     foreach (DiscussionType::loadMultiple() as $name => $discussion_type) {
       $label = $discussion_type->label();
 
-      $this->derivatives[$name] = array(
+      $this->derivatives[$name] = [
         'entity_bundle' => $name,
         'label' => t('Group Discussion') . " ($label)",
-        'description' => t('Adds %type discussions to groups.', array('%type' => $label)),
-      ) + $base_plugin_definition;
+        'description' => t('Adds %type discussions to groups.', ['%type' => $label]),
+      ] + $base_plugin_definition;
     }
 
     return $this->derivatives;

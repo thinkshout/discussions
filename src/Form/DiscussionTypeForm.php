@@ -18,23 +18,23 @@ class DiscussionTypeForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    $form['label'] = array(
+    $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
       '#default_value' => $this->entity->label(),
       '#description' => $this->t("Label for the Discussion Type."),
       '#required' => TRUE,
-    );
+    ];
 
-    $form['id'] = array(
+    $form['id'] = [
       '#type' => 'machine_name',
       '#default_value' => $this->entity->id(),
-      '#machine_name' => array(
+      '#machine_name' => [
         'exists' => '\Drupal\discussions\Entity\DiscussionType::load',
-      ),
+      ],
       '#disabled' => !$this->entity->isNew(),
-    );
+    ];
 
     return $form;
   }
@@ -48,15 +48,15 @@ class DiscussionTypeForm extends EntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Discussion Type.', array(
+        drupal_set_message($this->t('Created the %label Discussion Type.', [
           '%label' => $entity->label(),
-        )));
+        ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Discussion Type.', array(
+        drupal_set_message($this->t('Saved the %label Discussion Type.', [
           '%label' => $entity->label(),
-        )));
+        ]));
     }
 
     $form_state->setRedirect('entity.discussion_type.collection');

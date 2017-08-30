@@ -16,7 +16,7 @@ class DiscussionPermissions {
    * Returns an array of Discussion Type permissions.
    *
    * @return array
-   *    Returns an array of permissions.
+   *   Returns an array of permissions.
    */
   public function discussionTypePermissions() {
     $perms = [];

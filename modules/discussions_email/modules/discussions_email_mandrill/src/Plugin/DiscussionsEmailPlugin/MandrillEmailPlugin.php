@@ -109,7 +109,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
       switch ($event['event']) {
         case 'hard_bounce':
         case 'reject':
-          /** @var Group $group */
+          /** @var \Drupal\group\Entity\Group $group */
           $group = $this->loadGroupFromEmail($event['msg']['email']);
 
           if (!empty($group)) {
@@ -180,7 +180,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
       $attachment_send_limit = ($config->get('attachment_send_limit') * 1000000);
 
       foreach ($attachments as $attachment) {
-        /** @var File $file */
+        /** @var \Drupal\file\Entity\File $file */
         $file = File::load($attachment['target_id']);
 
         if ($file->getSize() < $attachment_send_limit) {
@@ -242,7 +242,7 @@ class MandrillEmailPlugin extends DiscussionsEmailPluginBase {
     }
 
     // Load discussion group from group email address.
-    /** @var Group $group */
+    /** @var \Drupal\group\Entity\Group $group */
     $group = $this->loadGroupFromEmail($message['email']);
 
     if (empty($group)) {

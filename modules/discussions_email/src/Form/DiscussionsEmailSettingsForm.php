@@ -27,9 +27,9 @@ class DiscussionsEmailSettingsForm extends ConfigFormBase {
     $email_plugin_manager = \Drupal::service('plugin.manager.discussions_email');
     $email_plugin_definitions = $email_plugin_manager->getDefinitions();
 
-    $email_plugin_options = array(
+    $email_plugin_options = [
       '' => t('None'),
-    );
+    ];
 
     if (!empty($email_plugin_definitions)) {
       foreach ($email_plugin_definitions as $id => $definition) {

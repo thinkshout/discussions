@@ -27,16 +27,16 @@ use Drupal\views\Views;
  * Implements hook_entity_extra_field_info().
  */
 function discussions_entity_extra_field_info() {
-  $extra = array();
+  $extra = [];
 
   foreach (GroupType::loadMultiple() as $group_type) {
     // Add discussions field to group entity.
-    $extra['group'][$group_type->id()]['display']['discussions'] = array(
+    $extra['group'][$group_type->id()]['display']['discussions'] = [
       'label' => t('Discussions'),
       'description' => t('List of discussions in group.'),
       'weight' => 100,
       'visible' => TRUE,
-    );
+    ];
   }
 
   return $extra;
@@ -50,13 +50,13 @@ function discussions_entity_view_alter(array &$build, EntityInterface $entity, E
   if (isset($build['#entity_type']) && ($build['#entity_type'] == 'group')) {
     // Populate discussions field.
     /** @var \Drupal\group\Entity\Group $entity */
-    $build['discussions'] = array(
+    $build['discussions'] = [
       '#type' => 'view',
       '#name' => 'discussions_group_discussions',
       '#display_id' => 'default',
-      '#arguments' => array($entity->id()),
+      '#arguments' => [$entity->id()],
       '#weight' => $display->getComponent('discussions')['weight'],
-    );
+    ];
   }
   elseif (isset($build['#entity_type']) && ($build['#entity_type'] == 'discussion')) {
     // Fast hack to completely remove comment form for non-members.
@@ -81,35 +81,35 @@ function discussions_views_query_alter(ViewExecutable $view, QueryPluginBase $qu
   if ($view->id() == 'discussions_group_discussions') {
 
     // Include comments when searching discussions.
-    $comment_field_data_config = array(
+    $comment_field_data_config = [
       'type' => 'LEFT',
       'table' => 'comment_field_data',
       'field' => 'entity_id',
       'left_table' => 'discussions',
       'left_field' => 'id',
       'operator' => '=',
-      'extra' => array(
-        0 => array(
+      'extra' => [
+        0 => [
           'field' => 'comment_type',
           'value' => 'discussions_reply',
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
-    $comment_body_config = array(
+    $comment_body_config = [
       'type' => 'LEFT',
       'table' => 'comment__comment_body',
       'field' => 'entity_id',
       'left_table' => 'comment_field_data',
       'left_field' => 'cid',
       'operator' => '=',
-      'extra' => array(
-        0 => array(
+      'extra' => [
+        0 => [
           'field' => 'deleted',
           'value' => 0,
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     // Join comment_field_data table.
     $comment_field_data_join = Views::pluginManager('join')->createInstance('standard', $comment_field_data_config);
@@ -142,25 +142,25 @@ function discussions_views_query_alter(ViewExecutable $view, QueryPluginBase $qu
  */
 function discussions_views_data_alter(&$data) {
 
-  $data['discussions']['current_user'] = array(
+  $data['discussions']['current_user'] = [
     'title' => t('Discussions by current user'),
-    'filter' => array(
+    'filter' => [
       'title' => t('Discussions by current user'),
       'help' => t('Filters discussions by the current user.'),
       'field' => 'user',
       'id' => 'discussions_current_user',
-    ),
-  );
+    ],
+  ];
 
-  $data['group_content_field_data']['current_user'] = array(
+  $data['group_content_field_data']['current_user'] = [
     'title' => t('Groups by current user'),
-    'filter' => array(
+    'filter' => [
       'title' => t('Groups by current user'),
       'help' => t('Filters groups by the current user.'),
       'field' => 'uid',
       'id' => 'groups_current_user',
-    ),
-  );
+    ],
+  ];
 
 }
 
@@ -263,7 +263,7 @@ function discussions_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatch
         $group_content = array_values($group_contents)[0];
         $group = $group_content->getGroup();
 
-        $breadcrumb->addLink(Link::createFromRoute($group->label(), 'entity.group.canonical', array('group' => $group->id())));
+        $breadcrumb->addLink(Link::createFromRoute($group->label(), 'entity.group.canonical', ['group' => $group->id()]));
       }
     }
   }

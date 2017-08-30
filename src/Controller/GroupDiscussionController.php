@@ -170,7 +170,7 @@ class GroupDiscussionController extends ControllerBase {
   /**
    * Provides the page title for this controller.
    *
-   * @param EntityInterface $discussion
+   * @param \Drupal\Core\Entity\EntityInterface $discussion
    *   The discussion entity.
    *
    * @return string
@@ -183,7 +183,7 @@ class GroupDiscussionController extends ControllerBase {
   /**
    * Provides the page title for a discussion creation form.
    *
-   * @param Group $group
+   * @param \Drupal\group\Entity\Group $group
    *   The group entity.
    *
    * @return string

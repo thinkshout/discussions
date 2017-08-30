@@ -123,7 +123,7 @@ interface DiscussionsEmailPluginInterface extends PluginInspectionInterface, Con
    * @param string $subject
    *   The discussion subject.
    *
-   * @return Discussion
+   * @return \Drupal\discussions\Entity\Discussion
    *   The new discussion entity.
    */
   public function createNewDiscussion(AccountInterface $user, Group $group, $subject);

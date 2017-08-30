@@ -19,13 +19,13 @@ class GroupDiscussionForm extends ContentEntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    $form['comment'] = array(
+    $form['comment'] = [
       '#type' => 'text_format',
       '#title' => t('Initial Comment'),
       '#cols' => 60,
       '#resizable' => TRUE,
       '#rows' => 5,
-    );
+    ];
 
     return $form;
   }
@@ -49,10 +49,10 @@ class GroupDiscussionForm extends ContentEntityForm {
         $group = $form_state->get('group');
         $plugin = $form_state->get('plugin');
 
-        $group_content = GroupContent::create(array(
+        $group_content = GroupContent::create([
           'type' => $plugin->getContentTypeConfigId(),
           'gid' => $group->id(),
-        ));
+        ]);
 
         $group_content->set('entity_id', $entity->id());
 
@@ -63,20 +63,20 @@ class GroupDiscussionForm extends ContentEntityForm {
         $group_discussion_service = \Drupal::service('discussions.group_discussion');
         $group_discussion_service->addComment($entity->id(), 0, $user->id(), $form_state->getValue('comment'));
 
-        drupal_set_message($this->t('Created %label.', array(
+        drupal_set_message($this->t('Created %label.', [
           '%label' => $entity->label(),
-        )));
+        ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved %label.', array(
+        drupal_set_message($this->t('Saved %label.', [
           '%label' => $entity->label(),
-        )));
+        ]));
     }
 
-    $form_state->setRedirect('entity.group.canonical', array(
+    $form_state->setRedirect('entity.group.canonical', [
       'group' => $group->id(),
-    ));
+    ]);
   }
 
 }
