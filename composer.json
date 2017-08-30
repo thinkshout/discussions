@@ -6,7 +6,6 @@
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
   "require": {
-    "drupal/group": "^1.0.0-rc1",
-    "drupal/core": "^3.0.0"
+    "drupal/group": "^1.0.0-rc1"
   }
 }
