@@ -66,23 +66,23 @@ class Discussion extends ContentEntityBase implements DiscussionInterface {
     $fields['subject'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Subject'))
       ->setDescription(t('The Discussion subject.'))
-      ->setSettings(array(
+      ->setSettings([
         'default_value' => '',
         'max_length' => 255,
         'text_processing' => 0,
-      ))
-      ->setDisplayOptions('form', array(
+      ])
+      ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'settings' => array(
+        'settings' => [
           'display_label' => TRUE,
-        ),
+        ],
         'weight' => 0,
-      ))
-      ->setDisplayOptions('view', array(
+      ])
+      ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'hidden',
         'weight' => 0,
-      ))
+      ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 

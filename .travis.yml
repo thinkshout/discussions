@@ -15,7 +15,7 @@ env:
   - DRUPAL_TI_MODULE_NAME="discussions"
   - DRUPAL_TI_SIMPLETEST_GROUP="discussions"
   - DRUPAL_TI_ENVIRONMENT="drupal-8"
-  - DRUPAL_TI_CORE_BRANCH="8.2.x"
+  - DRUPAL_TI_CORE_BRANCH="8.3.x"
   - DRUPAL_TI_DB="drupal_travis_db"
   - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
   - DRUPAL_TI_WEBSERVER_URL="http://127.0.0.1"
@@ -45,16 +45,13 @@ before_install:
 - composer global require "squizlabs/php_codesniffer:2.*"
 - composer global require "drupal/coder:8.2.*"
 - phpcs --config-set installed_paths $HOME/.composer/vendor/drupal/coder/coder_sniffer
+- phpcs --standard=Drupal --warning-severity=0 $TRAVIS_BUILD_DIR
 - drupal-ti before_install
 install:
 - drupal-ti install
 before_script:
 - drupal-ti before_script
 script:
-- phpcs --standard=phpcs.xml src -s
-- phpcs --standard=phpcs.xml modules -s
-- phpcs --standard=phpcs.xml tests -s
-- phpcs --standard=phpcs.xml discussions.module
 - drupal-ti script
 after_script:
 - drupal-ti after_script

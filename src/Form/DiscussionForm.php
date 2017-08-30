@@ -24,20 +24,20 @@ class DiscussionForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created %label.', array(
+        drupal_set_message($this->t('Created %label.', [
           '%label' => $entity->label(),
-        )));
+        ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved %label.', array(
+        drupal_set_message($this->t('Saved %label.', [
           '%label' => $entity->label(),
-        )));
+        ]));
     }
 
-    $form_state->setRedirect('entity.discussion.canonical', array(
+    $form_state->setRedirect('entity.discussion.canonical', [
       'discussion' => $entity->id(),
-    ));
+    ]);
   }
 
 }

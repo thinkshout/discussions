@@ -14,7 +14,7 @@ use Drupal\views\Plugin\views\filter\BooleanOperator;
 class DiscussionsCurrentUser extends BooleanOperator {
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function query() {
     $this->ensureMyTable();

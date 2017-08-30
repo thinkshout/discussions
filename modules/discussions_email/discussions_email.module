@@ -218,7 +218,6 @@ function discussions_email_comment_insert(EntityInterface $entity, $discussions_
   list($from_user, $from_domain) = explode('@', $group_email_address);
   $from_address = $from_user . DISCUSSIONS_EMAIL_SEPARATOR . $discussion->id() . DISCUSSIONS_EMAIL_SEPARATOR . $entity->id() . '@' . $from_domain;
 
-
   // Get sender's name. Other modules may alter it by implementing
   // hook_discussions_email_sender_alter().
   $sender_name = discussions_email_sender_name($user);
@@ -286,10 +285,10 @@ function discussions_email_comment_links_alter(array &$links, CommentInterface $
  * Get sender's name and allow other modules to alter it.
  *
  * @param \Drupal\Core\Session\AccountInterface $author
+ *   The email author.
  *
- * @return string $sender_name
- *  String to use for the sender's name.
-
+ * @return string
+ *   String to use for the sender's name. *
  */
 function discussions_email_sender_name(AccountInterface $author) {
   $sender_name = $author->label();
