@@ -51,6 +51,8 @@ install:
 before_script:
 - drupal-ti before_script
 script:
+- pwd
+- ls
 - phpcs --standard=Drupal --ignore=*/vendor/*
 - drupal-ti script
 after_script:
