@@ -45,7 +45,7 @@ before_install:
 - composer global require "squizlabs/php_codesniffer:2.*"
 - composer global require "drupal/coder:8.2.*"
 - phpcs --config-set installed_paths $HOME/.composer/vendor/drupal/coder/coder_sniffer
-- phpcs --standard=Drupal $TRAVIS_BUILD_DIR
+- phpcs --standard=Drupal --warning-severity=0 $TRAVIS_BUILD_DIR
 - drupal-ti before_install
 install:
 - drupal-ti install
